@@ -48,6 +48,6 @@ Le projet sera intégralement réalisé en C. Il devra être fait en binôme (ou
 - De fichiers sources (fichiers .c et fichiers .h) qui devront être dûment commentés et documentés
 - D'un rapport d'une dizaine de pages présentant le travail réalisé, notamment la structure générale de votre code, les choix réalisés pour le développement du jeu, et le résultat final (en faisant le bilan de ce qui a été réussi et des points d’amélioration éventuels)
 
-Le projet donnera également lieu à une soutenance pendant laquelle le projet sera présenté. Cette soutenance aura lieu pendant les heures de cours. 
-L’ensemble des fichiers seront déposés sur Moodle dans l’espace de dépôt “Dépôt projet P20”. Ils devront être contenus dans une archive nommée **NOM-BINOME1_NOM-BINOME2.zip**
-Cette archive contiendra : votre rapport au format PDF et vos sources dans un dossier séparé.
+Le projet donnera également lieu à une soutenance pendant laquelle le projet sera présenté. Cette soutenance aura lieu pendant les heures de cours.  
+L’ensemble des fichiers seront déposés sur Moodle dans l’espace de dépôt “Dépôt projet P20”. Ils devront être contenus dans une archive nommée **NOM-BINOME1_NOM-BINOME2.zip**  
+Cette archive contiendra : votre rapport au format PDF et vos sources dans un dossier séparé.  
