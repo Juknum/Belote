@@ -3,15 +3,22 @@
 #include <stdlib.h>
 #include <math.h>
 
-// Tableau contenant toute les cartes jouées
-char *TabValCol[] = {"7 Pique", "8 Pique", "9 Pique", "10 Pique", "Valet Pique", "Dame Pique", "Roi Pique", "As Pique", "7 Carreau", "8 Carreau", "9 Carreau", "10 Carreau", "Valet Carreau", "Dame Carreau", "Roi Carreau", "As Carreau", "7 Coeur", "8 Coeur", "9 Coeur", "10 Coeur", "Valet Coeur", "Dame Coeur", "Roi Coeur", "As Coeur", "7 Trefle", "8 Trefle", "9 Trefle", "10 Trefle", "Valet Trefle", "Dame Trefle", "Roi Trefle", "As Trefle"};
+
 
 // score provisoir, a voir si on peut stocker les scores max dans un fichier txt
 int score_max_1 = 0, score_max_2 = 0, score_max_3 = 0;
 
 int nouvelle_partie(char* nom_joueur){
+	// Tableau contenant toute les cartes jouées
+	char* TabValCol[] = {
+		" 7♠", " 8♠", " 9♠", "10♠", " V♠", " D♠", " R♠", "As♠", 
+		" 7♦", " 8♦", " 9♦", "10♦", " V♦", " D♦", " R♦", "As♦", 
+		" 7♥", " 8♥", " 9♥", "10♥", " V♥", " D♥", " R♥", "As♥", 
+		" 7♣", " 8♣", " 9♣", "10♣", " V♣", " D♣", " R♣", "As♣" };
 
-	printf(" \nNom choisi: %s",nom_joueur);
+	printf("\n Nom choisi: %s",nom_joueur);
+
+	printf("\n Cartes non mélangées : %s",TabValCol[1]);
 
 	return 0;
 }
@@ -21,11 +28,12 @@ int menu(void){
 	char* nom_joueur;
 
 	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
-	printf("            ♣ ♥ BELOTE ♠ ♦\n");
+	printf(u8"            ♣ ♥ BELOTE ♠ ♦\n");
 	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
 	printf(" (1) Nouvelle Partie\n");
 	printf(" (2) Voir les meilleurs scores\n");
-	printf(" (3) Quitter\n");
+	printf(" (3) Afficher les caractères spéciaux\n");
+	printf(" (4) Quitter\n");
 
 	printf(" Votre choix : "); // scanf("%d",&choix);
 
@@ -39,7 +47,7 @@ int menu(void){
 			printf(" Donnez-nous votre nom : ");
 
 			//scanf("%s",nom_joueur);
-			//DEBUG
+			//DEBUG :
 			nom_joueur = "julien";
 
 			nouvelle_partie(nom_joueur);
@@ -51,6 +59,16 @@ int menu(void){
 			menu();
 			break;
 		case 3 :
+			// On explique comment passer en utf-8
+			printf("\n-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-");
+			printf("\n| Afin d'afficher les caractères speciaux,");
+			printf("\n| il est necessaire d'etre en utf-8, pour cela,");
+			printf("\n| rentrez la commande 'chcp 65001' dans l'invite de commande,");
+			printf("\n| Puis depuis la meme console, executez le main.exe");
+			printf("\n| en vous deplacant dans son repertoire avec 'cd C:/etc...'\n");
+			menu();
+			break;
+		case 4 :
 			// On quitte le programme
 			printf("\n-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
 			exit(0);
@@ -66,16 +84,8 @@ int menu(void){
 }
 
 int main(void){
-	
-
-	// DEBUG : Affiche l'ensemble des cartes
-	/*
-	for(int i = 0; i < 32; i++){
-			printf("%s\n",TabValCol[i]);
-		}
-	*/
 
 	menu();
 
-return EXIT_SUCCESS;
+return 0;
 }
