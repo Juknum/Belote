@@ -66,10 +66,10 @@ int menu(void){
 	printf(" (3) Afficher les caractères spéciaux\n");
 	printf(" (4) Quitter\n");
 
-	printf(" Votre choix : "); // scanf("%d",&choix);
+	printf(" Votre choix : "); // scanf("%d",&choix); // A ACTIVER
 
 	// DEBUG :
-	choix = 1; //boucle infini si placé sur 2 (normal car il n'est pas redéfini)
+	choix = 1; //boucle infini si placé sur 2 (normal car il n'est pas redéfini) A DESACTIVER
 
 	switch(choix){
 		case 1 :	
@@ -77,9 +77,9 @@ int menu(void){
 			printf("\n-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
 			printf(" Donnez-nous votre nom : ");
 
-			//scanf("%s",nom_joueur);
-			//DEBUG :
-			nom_joueur = "julien";
+			//scanf("%s",nom_joueur); // A ACTIVER
+			// DEBUG :
+			nom_joueur = "julien"; // A DESACTIVER
 
 			printf("\n");
 			nouvelle_partie(nom_joueur);
