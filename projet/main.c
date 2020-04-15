@@ -1,31 +1,62 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
+/*
 
+		BELOTE EN C : Groupe F
+		- Julien Constant
+		- Théo Silva
+
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <string.h>
+
+#include <math.h>
+#include <time.h>
 
 
 // score provisoir, a voir si on peut stocker les scores max dans un fichier txt
 int score_max_1 = 0, score_max_2 = 0, score_max_3 = 0;
 
+char* nom_joueur;
+
+char* cartes[] = {
+		"7♠", "8♠", "9♠", "10♠", "V♠", "D♠", "R♠", "As♠", 
+		"7♦", "8♦", "9♦", "10♦", "V♦", "D♦", "R♦", "As♦", 
+		"7♥", "8♥", "9♥", "10♥", "V♥", "D♥", "R♥", "As♥", 
+		"7♣", "8♣", "9♣", "10♣", "V♣", "D♣", "R♣", "As♣" };
+
+
 int nouvelle_partie(char* nom_joueur){
-	// Tableau contenant toute les cartes jouées
-	char* TabValCol[] = {
-		" 7♠", " 8♠", " 9♠", "10♠", " V♠", " D♠", " R♠", "As♠", 
-		" 7♦", " 8♦", " 9♦", "10♦", " V♦", " D♦", " R♦", "As♦", 
-		" 7♥", " 8♥", " 9♥", "10♥", " V♥", " D♥", " R♥", "As♥", 
-		" 7♣", " 8♣", " 9♣", "10♣", " V♣", " D♣", " R♣", "As♣" };
 
-	printf("\n Nom choisi: %s",nom_joueur);
+	// melange du jeu de carte : 
+	/*
+	Fonctionnement : 
+	- on coupe le paquet (ici le tableau) en 2
+	- on intervertit aléatoirement les cartes de chaque côtés
+	*/
+	for(int i = 1; i < 1000; i++){
+		int alea_1 = rand()%16; // de 0 à 16
+		int alea_2 = 32 - (rand()%16 + 1); // de 16 à 32
+		
+		char* temp[] = {"0"};
 
-	printf("\n Cartes non mélangées : %s",TabValCol[1]);
+		temp[0] = cartes[alea_1];
+		cartes[alea_1] = cartes[alea_2];
+		cartes[alea_2] = temp[0];
+
+	}
+
+	// DEBUG : affiche les cartes mélangées
+	for(int i = 0; i < 32; i++){
+		printf("%s",cartes[i]);
+	}
 
 	return 0;
 }
 
 int menu(void){
 	int choix = 0;
-	char* nom_joueur;
 
 	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
 	printf(u8"            ♣ ♥ BELOTE ♠ ♦\n");
@@ -50,6 +81,7 @@ int menu(void){
 			//DEBUG :
 			nom_joueur = "julien";
 
+			printf("\n");
 			nouvelle_partie(nom_joueur);
 			break;
 		case 2 :
@@ -84,6 +116,8 @@ int menu(void){
 }
 
 int main(void){
+
+	srand(time(NULL));
 
 	menu();
 
