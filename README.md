@@ -1,4 +1,4 @@
-# Projet IFB - Jeu de Belote
+# [SUJET] Projet IFB - Jeu de Belote
 L'objectif du projet est de créer un programme en mode console permettant à un joueur de jouer à la belote, et plus précisément à la Coinche, dont les règles sont mentionnées ci-après.
 
 ## Règles du jeu
