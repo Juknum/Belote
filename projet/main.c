@@ -170,20 +170,14 @@ char* dictionnaire(int tableau){
 void start_partie(char* nom_joueur){
 	int cartes[32] = {1,2,3,4,5,6,7,8, 9,10,11,12,13,14,15,16, 17,18,19,20,21,22,23,24, 25,26,27,28,29,30,31,32};
 	// Necessite un dictionnaire (faire une fonction) pour traduire et afficher correctement les cartes
-	// de 7 a AS dans cet ordre : pique carreau coeur trèfle
-	/*
-		" 7♠", " 8♠", " 9♠", "10♠", " V♠", " D♠", " R♠", "As♠", 
-		" 7♦", " 8♦", " 9♦", "10♦", " V♦", " D♦", " R♦", "As♦", 
-		" 7♥", " 8♥", " 9♥", "10♥", " V♥", " D♥", " R♥", "As♥", 
-		" 7♣", " 8♣", " 9♣", "10♣", " V♣", " D♣", " R♣", "As♣"
-	*/
+	// de 7 a AS dans cet ordre : pique carreau coeur trèfle (voir dictionnaire() )
 
 	int taille_cartes = (sizeof(cartes)/sizeof(int));
 
 	/* 
 		Mélange des cartes : 
 	*/
-	melanger(cartes, taille_cartes );
+	melanger(cartes, taille_cartes);
 
 	/*
 		Distribution des cartes :
@@ -215,31 +209,30 @@ void start_partie(char* nom_joueur){
 	// DEBUG : Affiche les decks de chaque joueurs:
 	/*
 	for(int i = 0; i < 8; i++){
-		printf("cartes_joueur[%d] = %d\n",i,cartes_joueur[i]);
+		printf("cartes_joueur[%d] = %d = %s\n",i,cartes_joueur[i],dictionnaire(cartes_joueur[i]));
 	}
 	printf("\n");
 	for(int i = 0; i < 8; i++){
-		printf("cartes_ordi_1[%d] = %d\n",i,cartes_ordi_1[i]);
+		printf("cartes_ordi_1[%d] = %d = %s\n",i,cartes_ordi_1[i],dictionnaire(cartes_ordi_1[i]));
 	}
 	printf("\n");
 	for(int i = 0; i < 8; i++){
-		printf("cartes_ordi_2[%d] = %d\n",i,cartes_ordi_2[i]);
+		printf("cartes_ordi_2[%d] = %d = %s\n",i,cartes_ordi_2[i],dictionnaire(cartes_ordi_2[i]));
 	}
 	printf("\n");
 	for(int i = 0; i < 8; i++){
-		printf("cartes_ordi_3[%d] = %d\n",i,cartes_ordi_3[i]);
+		printf("cartes_ordi_3[%d] = %d = %s\n",i,cartes_ordi_3[i],dictionnaire(cartes_ordi_3[i]));
 	}
-	*/
-	
+	*/	
 	// test dictionnaire:
-	dictionnaire(cartes_joueur[0]);
+	
 }
 
 void menu(void){
 	int choix = 0;
 
 	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
-	printf("                BELOTE                \n");
+	printf("            ♠ ♦ BELOTE ♥ ♣            \n");
 	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
 	printf(" (1) Nouvelle Partie                  \n");
 	printf(" (2) Voir les meilleurs scores        \n");
