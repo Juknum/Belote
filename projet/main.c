@@ -30,9 +30,9 @@ int taille_cartes = (sizeof(cartes)/sizeof(int));
 
 unsigned int distributeur;
 
-int cartes_joueur[8] = {0}; 
-int cartes_east[8]   = {0}; 
-int cartes_north[8]  = {0}; 
+int cartes_joueur[8] = {0};
+int cartes_east[8]   = {0};
+int cartes_north[8]  = {0};
 int cartes_west[8]   = {0};
 
 
@@ -206,27 +206,32 @@ void melanger(int* tableau, int taille){
 
 // Distribution des cartes
 void distribuer(void){
+	char* distributeur_char;
 
 	int alea = rand()% 4 + 1;
 	switch(alea){
 		case 1:
 			distributeur = 1; // Joueur
+			distributeur_char = "Joueur";
 			break;
 		case 2:
 			distributeur = 2; // Ouest
+			distributeur_char = "Ouest";
 			break;
 		case 3:
 			distributeur = 3; // Nord
+			distributeur_char = "Nord";
 			break;
 		case 4:
 			distributeur = 4; // Est
+			distributeur_char = "Est";
 			break;
 		default:
 			printf("Erreur pendant le choix du distributeur");
 			break;
 	}
 
-	printf("%s distribue... ",distributeur);
+	printf("%s distribue... ",distributeur_char);
 
 	// Distribue 3 cartes par personne
 	for(int i = 0; i < 3; i++){
@@ -269,8 +274,10 @@ void enchere(int encherisseur){
 		case 1: // Joueur
 			break;
 		case 2: // Ouest
+			ia_enchere(2);
 			break;
 		case 3: // Nord
+			ia_enchere(3);
 			break;
 		case 4: // Est
 			break;
