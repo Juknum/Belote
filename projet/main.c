@@ -1,6 +1,6 @@
 /*
 
-		BELOTE EN C : Groupe F
+		BELOTE COINCHEE EN C : Groupe F
 		- Julien Constant
 		- Théo Silva
 
@@ -17,7 +17,7 @@
 //////////////////// VARIABLES GLOBALBES ////////////////////
 
 // Joueur :
-char* nom_joueur = "undefined";
+char* nom_joueur = "name_undefined";
 
 // Scores max:
 int score_max_1;
@@ -27,6 +27,8 @@ int score_max_3;
 // Jeux de cartes (non trié) et mains des joueurs:
 int cartes[32] = {1,2,3,4,5,6,7,8, 9,10,11,12,13,14,15,16, 17,18,19,20,21,22,23,24, 25,26,27,28,29,30,31,32};
 int taille_cartes = (sizeof(cartes)/sizeof(int));
+
+unsigned int distributeur;
 
 int cartes_joueur[8] = {0}; 
 int cartes_east[8]   = {0}; 
@@ -204,6 +206,29 @@ void melanger(int* tableau, int taille){
 
 // Distribution des cartes
 void distribuer(void){
+
+	int alea = rand()% 4 + 1;
+	switch(alea){
+		case 1:
+			distributeur = 1; // Joueur
+			break;
+		case 2:
+			distributeur = 2; // Ouest
+			break;
+		case 3:
+			distributeur = 3; // Nord
+			break;
+		case 4:
+			distributeur = 4; // Est
+			break;
+		default:
+			printf("Erreur pendant le choix du distributeur");
+			break;
+	}
+
+	printf("%s distribue... ",distributeur);
+
+	// Distribue 3 cartes par personne
 	for(int i = 0; i < 3; i++){
 		cartes_joueur[i] = cartes[i];
 		cartes_east[i] = cartes[i+3];
@@ -229,43 +254,7 @@ void distribuer(void){
 }
 
 // Phase d'Enchère
-/*
-Stratégies d’enchères pour débuter
-	Pour les débutants, il est généralement recommandé de suivre dans un premier temps une stratégie d’enchères classique, 
-    telle qu’exposée ci-dessous :
-
-    - Passer : 
-    	Le joueur n’a pas un jeu suffisant pour remporter 80 points ou surenchérir.
-
-    - Attendre : 
-	    Le joueur n’a pas un jeu suffisant pour remporter 80 points ou surenchérir, 
-	    toutefois il dispose dans son jeu de plusieurs cartes maîtresses potentielles 
-	    telles que des As et des valets.
-
-    - Enchère à 80 : 
-    	Il manque à l’annonceur un des deux atouts maîtres, 
-    	à savoir le valet ou le neuf. Mais il est très bien servi en atout (deux ou trois autres) 
-    	et sur les autres couleurs (As, 10 … Son partenaire pourra augmenter l’enchère s’il possède l’atout maître complémentaire 
-    	à celui de l’annonceur (ce que recherche à la base l’annonceur), si cet atout n’est pas trop seul.
-
-    - Enchère à 90 : 
-    	L’annonceur a les deux atouts maîtres (le valet et le neuf) avec quelques intéressantes en plus. 
-    	Par exemple un ou deux atouts supplémentaires et quelques cartes maîtresses.  
-    	Aussi, le partenaire pourra-t-il surenchérir s’il possède au moins un atout et quelques cartes maîtresses ou 
-    	bien simplement 3 atouts ou plus.
-    	
-    - Enchère à 100 : 
-	    L’annonceur est maître à l’atout (valet, neuf, As) et possède au moins un as ou une coupe franche.
-	    Le rôle du partenaire sera alors de compléter les As. 
-	    Ainsi, il lui est conseillé d’augmenter l’enchère de 10 points par As (sauf l’As d’atout), et ce, 
-	    même s’il ne possède pas beaucoup d’atouts.
-
-Monter systématiquement de 10 points avec As dans la main est une règle suivie par beaucoup de débutants. 
-Or, il faut également considérer le reste de la main et la complémentarité avec son partenaire : 
-si le joueur possède un dix seul (“tout nu”) ou bien s’il possède une longe avec son As (qui risque alors d’être coupé), 
-la prudence est de mise.
-*/
-void enchere(void){
+void enchere(int encherisseur){
 	espace_vide(1);
 
 	printf("Phase d'enchères...\n\n");
@@ -276,7 +265,19 @@ void enchere(void){
 	}
 	printf("\n\n");
 
-	
+	switch(encherisseur){
+		case 1: // Joueur
+			break;
+		case 2: // Ouest
+			break;
+		case 3: // Nord
+			break;
+		case 4: // Est
+			break;
+		default:
+			printf("Erreur dans le choix du 1er encherisseur");
+			break;
+	}
 }
 
 // Lancement de la partie:
@@ -297,7 +298,7 @@ void nouvelle_partie(){
 
 	printf("\n");
 
-	enchere();
+	enchere(distributeur);
 }
 
 // Fonction pour afficher les meilleurs scores enregistrés
