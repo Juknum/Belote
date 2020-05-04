@@ -14,43 +14,45 @@
 #include <math.h>
 #include <time.h>
 
-////////////////// VARIABLES : //////////////////
+//////////////////// VARIABLES GLOBALBES ////////////////////
 
-// score provisoir, a voir si on peut stocker les scores max dans un fichier txt
-int score_max_1 = 0, score_max_2 = 0, score_max_3 = 0;
-char* nom_joueur;
+// Joueur :
+char* nom_joueur = "undefined";
 
-////////////////// FONCTIONS : //////////////////
+// Scores max:
+int score_max_1;
+int score_max_2;
+int score_max_3;
 
-void melanger(int* tableau, int taille){
-	int alea_1, alea_2;
-	int temp[1];
+// Jeux de cartes (non trié) et mains des joueurs:
+int cartes[32] = {1,2,3,4,5,6,7,8, 9,10,11,12,13,14,15,16, 17,18,19,20,21,22,23,24, 25,26,27,28,29,30,31,32};
+int taille_cartes = (sizeof(cartes)/sizeof(int));
 
-	/*
-	Melange d'un tableau:
-	- On coupe le tableau en 2
-	- On choisi au hasard une position dans chaque partie du tableau
-	- On les inverses et on recommence un grand nombre de fois
-	*/
-	
-	for(int i = 0; i < 1000; i++){
-		alea_1 = rand()%(taille/2);
-		alea_2 = taille - (rand()%(taille/2) + 1);
-		
-		temp[0] = tableau[alea_1];
-		tableau[alea_1] = tableau[alea_2];
-		tableau[alea_2] = temp[0];
+int cartes_joueur[8] = {0}; 
+int cartes_east[8]   = {0}; 
+int cartes_north[8]  = {0}; 
+int cartes_west[8]   = {0};
+
+
+////////////////////     FONCTIONS     ////////////////////
+
+// Fonction pour vider l'écran
+void espace_vide(int titre){
+
+	for(int i = 0; i < 5; i++){
+		printf("\n");
 	}
 
-	//DEBUG : affichage du tableau mélangé :
-	/*
-	for(int i = 0; i < taille ; i++){
-		printf("%d ",tableau[i]);
+	if(titre == 1){
+		printf("**************************\n");
+		printf("*                        *\n");
+		printf("*     Belote Coinchée    *\n");
+		printf("*                        *\n");
+		printf("**************************\n");
 	}
-	printf("\n");
-	*/
 }
 
+// Dictionnaire pour la traduction d'un int en carte
 char* dictionnaire(int tableau){
 	char* result = "undefined";
 
@@ -167,121 +169,184 @@ char* dictionnaire(int tableau){
 	return result;
 }
 
-void start_partie(char* nom_joueur){
-	int cartes[32] = {1,2,3,4,5,6,7,8, 9,10,11,12,13,14,15,16, 17,18,19,20,21,22,23,24, 25,26,27,28,29,30,31,32};
-	// Necessite un dictionnaire (faire une fonction) pour traduire et afficher correctement les cartes
-	// de 7 a AS dans cet ordre : pique carreau coeur trèfle (voir dictionnaire() )
 
-	int taille_cartes = (sizeof(cartes)/sizeof(int));
-
-	/* 
-		Mélange des cartes : 
-	*/
-	melanger(cartes, taille_cartes);
+// Mélange des cartes
+void melanger(int* tableau, int taille){
+	int alea_1, alea_2;
+	int temp[1];
 
 	/*
-		Distribution des cartes :
+	Melange d'un tableau:
+	- On coupe le tableau en 2
+	- On choisi au hasard une position dans chaque partie du tableau
+	- On les inverses et on recommence un grand nombre de fois
 	*/
-	int cartes_joueur[8] = {0}, cartes_ordi_1[8] = {0}, cartes_ordi_2[8] = {0}, cartes_ordi_3[8] = {0};
+	
+	for(int i = 0; i < 1000; i++){
+		alea_1 = rand()%(taille/2);
+		alea_2 = taille - (rand()%(taille/2) + 1);
+		
+		temp[0] = tableau[alea_1];
+		tableau[alea_1] = tableau[alea_2];
+		tableau[alea_2] = temp[0];
+	}
 
-	// Distribue 3 cartes par personne
+	//DEBUG : affichage du tableau mélangé :
+	/*
+	for(int i = 0; i < taille ; i++){
+		printf("%d ",tableau[i]);
+	}
+	printf("\n");
+	*/
+
+	printf("Fait!\n");
+}
+
+// Distribution des cartes
+void distribuer(void){
 	for(int i = 0; i < 3; i++){
 		cartes_joueur[i] = cartes[i];
-		cartes_ordi_1[i] = cartes[i+3];
-		cartes_ordi_2[i] = cartes[i+6];
-		cartes_ordi_3[i] = cartes[i+9];
+		cartes_east[i] = cartes[i+3];
+		cartes_north[i] = cartes[i+6];
+		cartes_west[i] = cartes[i+9];
 	}
 	// Distribue 2 cartes par personne
 	for(int i = 3; i < 5; i++){
 		cartes_joueur[i] = cartes[i+9];
-		cartes_ordi_1[i] = cartes[i+11];
-		cartes_ordi_2[i] = cartes[i+13];
-		cartes_ordi_3[i] = cartes[i+15];		
+		cartes_east[i] = cartes[i+11];
+		cartes_north[i] = cartes[i+13];
+		cartes_west[i] = cartes[i+15];		
 	}
 	// Distribue 3 cartes par personne
 	for(int i = 5; i < 8; i++){
 		cartes_joueur[i] = cartes[i+15];
-		cartes_ordi_1[i] = cartes[i+18];
-		cartes_ordi_2[i] = cartes[i+21];
-		cartes_ordi_3[i] = cartes[i+24];		
+		cartes_east[i] = cartes[i+18];
+		cartes_north[i] = cartes[i+21];
+		cartes_west[i] = cartes[i+24];		
 	}
 
-	// DEBUG : Affiche les decks de chaque joueurs:
-	/*
+	printf("Fait!\n");
+}
+
+// Phase d'Enchère
+/*
+Stratégies d’enchères pour débuter
+	Pour les débutants, il est généralement recommandé de suivre dans un premier temps une stratégie d’enchères classique, 
+    telle qu’exposée ci-dessous :
+
+    - Passer : 
+    	Le joueur n’a pas un jeu suffisant pour remporter 80 points ou surenchérir.
+
+    - Attendre : 
+	    Le joueur n’a pas un jeu suffisant pour remporter 80 points ou surenchérir, 
+	    toutefois il dispose dans son jeu de plusieurs cartes maîtresses potentielles 
+	    telles que des As et des valets.
+
+    - Enchère à 80 : 
+    	Il manque à l’annonceur un des deux atouts maîtres, 
+    	à savoir le valet ou le neuf. Mais il est très bien servi en atout (deux ou trois autres) 
+    	et sur les autres couleurs (As, 10 … Son partenaire pourra augmenter l’enchère s’il possède l’atout maître complémentaire 
+    	à celui de l’annonceur (ce que recherche à la base l’annonceur), si cet atout n’est pas trop seul.
+
+    - Enchère à 90 : 
+    	L’annonceur a les deux atouts maîtres (le valet et le neuf) avec quelques intéressantes en plus. 
+    	Par exemple un ou deux atouts supplémentaires et quelques cartes maîtresses.  
+    	Aussi, le partenaire pourra-t-il surenchérir s’il possède au moins un atout et quelques cartes maîtresses ou 
+    	bien simplement 3 atouts ou plus.
+    	
+    - Enchère à 100 : 
+	    L’annonceur est maître à l’atout (valet, neuf, As) et possède au moins un as ou une coupe franche.
+	    Le rôle du partenaire sera alors de compléter les As. 
+	    Ainsi, il lui est conseillé d’augmenter l’enchère de 10 points par As (sauf l’As d’atout), et ce, 
+	    même s’il ne possède pas beaucoup d’atouts.
+
+Monter systématiquement de 10 points avec As dans la main est une règle suivie par beaucoup de débutants. 
+Or, il faut également considérer le reste de la main et la complémentarité avec son partenaire : 
+si le joueur possède un dix seul (“tout nu”) ou bien s’il possède une longe avec son As (qui risque alors d’être coupé), 
+la prudence est de mise.
+*/
+void enchere(void){
+	espace_vide(1);
+
+	printf("Phase d'enchères...\n\n");
+
+	printf("Vos cartes :");
 	for(int i = 0; i < 8; i++){
-		printf("cartes_joueur[%d] = %d = %s\n",i,cartes_joueur[i],dictionnaire(cartes_joueur[i]));
+		printf(" %s",dictionnaire(cartes_joueur[i]));
 	}
-	printf("\n");
-	for(int i = 0; i < 8; i++){
-		printf("cartes_ordi_1[%d] = %d = %s\n",i,cartes_ordi_1[i],dictionnaire(cartes_ordi_1[i]));
-	}
-	printf("\n");
-	for(int i = 0; i < 8; i++){
-		printf("cartes_ordi_2[%d] = %d = %s\n",i,cartes_ordi_2[i],dictionnaire(cartes_ordi_2[i]));
-	}
-	printf("\n");
-	for(int i = 0; i < 8; i++){
-		printf("cartes_ordi_3[%d] = %d = %s\n",i,cartes_ordi_3[i],dictionnaire(cartes_ordi_3[i]));
-	}
-	*/	
-	// test dictionnaire:
+	printf("\n\n");
+
 	
 }
 
+// Lancement de la partie:
+void nouvelle_partie(){
+	espace_vide(1);
+
+	// Demande du nom du joueur
+	printf("Entrez votre nom : ");
+	//scanf("%s",&nom_joueur); // A ACTIVER
+	printf("\n\n");
+
+	// Mélange des cartes
+	printf("Mélange des cartes... ");
+	melanger(cartes, taille_cartes);
+
+	printf("Distribution des cartes... ");
+	distribuer();
+
+	printf("\n");
+
+	enchere();
+}
+
+// Fonction pour afficher les meilleurs scores enregistrés
+void meilleurs_score(){
+	printf("meilleurs_score() undefined\n");
+}
+
+// Menu
 void menu(void){
-	int choix = 0;
+	printf("**************************\n");
+	printf("*                        *\n");
+	printf("*     Belote Coinchée    *\n");
+	printf("*                        *\n");
+	printf("**************************\n");
 
-	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
-	printf("            ♠ ♦ BELOTE ♥ ♣            \n");
-	printf("-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
-	printf(" (1) Nouvelle Partie                  \n");
-	printf(" (2) Voir les meilleurs scores        \n");
-	printf(" (3) Quitter                          \n");
+	printf("Que voulez-vous faire?\n\n");
 
-	printf(" Votre choix : ");
+	printf("1 | Nouvelle Partie\n");
+	printf("2 | Meilleurs Scores\n");
+	printf("3 | Quitter\n\n");
 
-	// scanf("%d",&choix); // A ACTIVER
-	// DEBUG :
-	choix = 1; //boucle infini si placé sur 2 (normal car il n'est pas redéfini à chaque itération) A DESACTIVER
+	int choix = 1;
+	//scanf("%d",&choix); // A ACTIVER
 
 	switch(choix){
-		case 1 :
-			// Ici on demande le nom du joueur avant de lancer une nouvelle partie
-			printf("\n-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
-			printf(" Donnez-nous votre nom : ");
-
-			//scanf("%s",nom_joueur); // A ACTIVER
-			// DEBUG :
-			nom_joueur = "julien"; // A DESACTIVER
-
-			printf("\n");
-			start_partie(nom_joueur);
+		case 1:
+			nouvelle_partie();
 			break;
-		case 2 :
-			// On affiche les meilleurs scores précédents
-			printf("\n Meilleurs scores précédents :\n");
-			printf(" 1er : %d\n 2e  : %d\n 3e  : %d\n",score_max_1,score_max_2,score_max_3);
-			menu();
+		case 2:
+			meilleurs_score();
 			break;
-		case 3 :
-			// On quitte le programme
-			printf("\n-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-\n");
+		case 3:
 			exit(0);
 			break;
-		default :
-			// Si l'utilisateur entre un choix qui n'existe pas, on relance menu()
-			printf("\nCe choix n'existe pas");
+		default:
+			printf("Erreur dans les choix");
+			espace_vide(0);
 			menu();
 			break;
 	}
-
 }
 
+
+// Main
 int main(void){
 
 	srand(time(NULL));
 
 	menu();
-
+	
 return 0;
 }
