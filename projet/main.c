@@ -35,7 +35,8 @@ int cartes_east[8]   = {0};
 int cartes_north[8]  = {0};
 int cartes_west[8]   = {0};
 
-
+char* atout = "atout_undefined";
+int choix_couleur = 0;
 ////////////////////     FONCTIONS     ////////////////////
 
 // Fonction pour vider l'écran
@@ -160,7 +161,7 @@ char* dictionnaire(int tableau){
 		break;
 
 		default :
-		result = "error";
+		result = "error carte non définie";
 		break;
 	}
 
@@ -170,7 +171,6 @@ char* dictionnaire(int tableau){
 
 	return result;
 }
-
 
 // Mélange des cartes
 void melanger(int* tableau, int taille){
@@ -258,20 +258,60 @@ void distribuer(void){
 	printf("Fait!\n");
 }
 
-// Phase d'Enchère
+// Permet de trier nos cartes (tri a bulle)
+void tableau_tri(int *tableau){
+	int N = 8; // Nombre d'itération du tri (plante au dessus de 32)
+
+	for(int j = 1; j < N; j++){
+		for(int i = 0; i < N-1; i++){
+			if( tableau[i] > tableau[i+1]){
+				int temp = tableau[i];
+				tableau[i] = tableau[i+1];
+				tableau[i+1] = temp;
+			}
+		}
+	}
+}
+
+void ia_enchere(int bot){
+}
+
+// Phase d'Enchère - CONTIENT DES VARIABLES A ACTIVER
 void enchere(int encherisseur){
 	espace_vide(1);
 
 	printf("Phase d'enchères...\n\n");
-
 	printf("Vos cartes :");
+
+	tableau_tri(cartes_joueur);
+	
 	for(int i = 0; i < 8; i++){
 		printf(" %s",dictionnaire(cartes_joueur[i]));
 	}
 	printf("\n\n");
 
+	// DEBUG : Affiches les cartes des autres ordis
+	/*
+	tableau_tri(cartes_west);
+	printf("Cartes Ouest:\n");
+	for(int i = 0; i < 8; i++){
+		printf(" %s",dictionnaire(cartes_west[i]));
+	}
+	printf("\nCartes Est:\n");
+	tableau_tri(cartes_east);
+	for(int i = 0; i < 8; i++){
+		printf(" %s",dictionnaire(cartes_east[i]));
+	}
+	printf("\nCartes Nord:\n");
+	tableau_tri(cartes_north);
+	for(int i = 0; i < 8; i++){
+		printf(" %s",dictionnaire(cartes_north[i]));
+	}
+	printf("\n\n");
+	*/
+
 	switch(encherisseur){
-		case 1: // Joueur
+		case 1: // Joueur on laisse le joueur choisir dans la suite du programme
 			break;
 		case 2: // Ouest
 			ia_enchere(2);
@@ -280,11 +320,45 @@ void enchere(int encherisseur){
 			ia_enchere(3);
 			break;
 		case 4: // Est
+		    ia_enchere(4);
 			break;
 		default:
 			printf("Erreur dans le choix du 1er encherisseur");
 			break;
 	}
+
+	int type_enchere;
+
+	/* l'encherisseur choisit la couleur de l'atout*/
+
+	printf("Choisissez la couleur de l'atout:\n");
+	printf("1: Couleur Unique\n");
+	printf("2: Tout Atout (TA)\n");
+	printf("3: Sans Atout (SA)\n");
+
+	// scanf("%d",&type_enchere); // A ACTIVER
+	type_enchere = 1; // A DESACTIVER
+
+	switch(type_enchere){
+    	case 1: /*une seule couleur est choisit comme Atout*/
+			do{
+				printf("\nVeuillez choisir une des couleurs en marquant le nombre qui lui est attribué\n");
+				printf("1: Trèfle\n2: Pique\n3: Carreau\n4: Coeur\n");
+				// scanf("%d",&choix_couleur); // A ACTIVER
+				choix_couleur = 1; // A DESACTIVER
+            }while(choix_couleur < 1 || choix_couleur > 4);
+            break;
+
+        case 2: /*toute les couleurs sont atout*/
+            atout = "TA";
+            break;
+
+        case 3: /*toute les couleurs sont atout*/
+            atout = "SA";
+            break;
+        default :
+            printf("Erreur dans les encheres");
+    }
 }
 
 // Lancement de la partie:
@@ -313,7 +387,7 @@ void meilleurs_score(){
 	printf("meilleurs_score() undefined\n");
 }
 
-// Menu
+// Menu - CONTIENT DES VARIABLES A ACTIVER
 void menu(void){
 	printf("**************************\n");
 	printf("*                        *\n");
