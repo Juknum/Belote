@@ -15,8 +15,8 @@
 #include <time.h>
 
 /* 
-	Permet le changement la table des caractères de la console 
-	si le programme est utilisé sous Windows
+	Permet le changement de la table des caractères de la console 
+	> si le programme est utilisé sous Windows
 */
 #ifdef _WIN32
 #include <windows.h>
@@ -45,12 +45,15 @@ int cartes_west[8]   = {0};
 
 char* atout = "atout_undefined";
 int choix_couleur = 0;
+
+int passer = 0; // personne qui passe lors de l'enchère
+
 ////////////////////     FONCTIONS     ////////////////////
 
 // Fonction pour vider l'écran
 void espace_vide(int titre){
 
-	for(int i = 0; i < 5; i++){
+	for(int i = 0; i < 1; i++){
 		printf("\n");
 	}
 
@@ -281,7 +284,23 @@ void tableau_tri(int *tableau){
 	}
 }
 
+// Plis en cours (phase de jeu)
+void plis(int num_plis){
+	espace_vide(1);
+	printf("Plis : %d/8\n",num_plis);
+	printf("Atout: %s\n",atout);
+}
+
 void ia_enchere(int bot){
+	// bot = 2,3,4 : Ouest, Nord, Est
+	/*
+		Les modes Sans-Atout et Tout-Atout sont eux aussi sources de stratégies qui leur sont propres.
+		D’une manière générale, pour le Tout-Atout, veillez à avoir au moins trois Valets ou une ou 
+		deux suites de cartes d’atouts (Valet, 9, As) et privilégiez ces enchères lorsque vous êtes 
+		placé tout de suite après le donneur, ce qui vous permet d’avoir la main à coup sûr.
+		En mode Sans-Atout, veillez à avoir au moins trois As ou deux As et au moins une grande suite 
+		(As, 10, Roi, Dame, Valet) si vous êtes placé après le donneur.
+	*/
 }
 
 // Phase d'Enchère - CONTIENT DES VARIABLES A ACTIVER
@@ -318,58 +337,122 @@ void enchere(int encherisseur){
 	printf("\n\n");
 	*/
 
+	encherisseur = 1; // A DESACTIVER
+	int type_enchere;
+	char* couleur;
+	int choix;
+
+	passer = 2; // A DESACTIVER
+
+	/*
+		Lorsque Est distribue, l'enrichisseur est le joueur
+		il faut donc remettre à 1 l'enrichisseur
+	*/
+	if(encherisseur > 4){
+		encherisseur = 1;
+	}
+
 	switch(encherisseur){
-		case 1: // Joueur on laisse le joueur choisir dans la suite du programme
+		case 1: // Joueur
+			printf("%s examine son jeu!\n\n",nom_joueur);
+
+			printf("Souhaitez-vous passer ou annoncer?\n1 | Annoncer\n2 | Passer\n");
+			//scanf("%d",&choix); // A ACTIVER
+			choix = 2; // A DESACTIVER
+
+			if(choix == 1){
+				// l'encherisseur choisit la couleur de l'atout
+				printf("Choisissez la couleur de l'atout:\n");
+				printf("1 | Couleur Unique\n");
+				printf("2 | Tout Atout (TA)\n");
+				printf("3 | Sans Atout (SA)\n");
+
+				scanf("%d",&type_enchere); // A ACTIVER
+				//type_enchere = 3; // A DESACTIVER
+
+				switch(type_enchere){
+			    	case 1: //une seule couleur est choisit comme Atout
+						do{
+							printf("\nVeuillez choisir une des couleurs en marquant le nombre qui lui est attribué\n");
+							printf("1 | Trèfle\n2 | Pique\n3 | Carreau\n4 | Coeur\n");
+							
+							scanf("%d",&choix_couleur); // A ACTIVER
+							//choix_couleur = 1; // A DESACTIVER
+
+			            }while(choix_couleur < 1 || choix_couleur > 4);
+
+			            atout = "Couleur";
+			           	
+			            switch(choix_couleur){
+			            	case 1:
+			            		couleur = "Trèfle";
+			            		break;
+			            	case 2:
+			            		couleur = "Pique";
+			            		break;
+			            	case 3:
+			            		couleur = "Carreau";
+			            		break;
+			            	case 4:
+			            		couleur = "Coeur";
+			            		break;
+			            	default:
+			            		couleur = "couleur_undefined";
+			            		break;
+			            }
+			            printf("\n%s annonce une couleur de %s!\n",nom_joueur,couleur);
+			            break;
+
+			        case 2: //toute les couleurs sont atout
+			            atout = "TA";
+			            printf("\n%s annonce un Tout Atout!\n",nom_joueur);
+			            break;
+
+			        case 3: //toute les couleurs sont sans atout
+			            atout = "SA";
+			            printf("\n%s annonce un Sans Atout!\n",nom_joueur);
+			            break;
+			        default :
+			            printf("Erreur dans les enchères");
+			    }
+			}
+			else{ // choix == 2;
+				printf("\n%s passe!",nom_joueur);
+				passer ++;
+				if(passer == 3){
+					printf("\nLes enchères sont terminées, le jeu démarre!"); // On lance la partie si 3 personnes consécutives décident de passer
+					plis(1);
+				} 
+				else{
+					enchere(encherisseur+1); // On passe au joueur suivant
+				}
+			}
 			break;
+
 		case 2: // Ouest
+			printf("Ouest examine son jeu!\n");
 			ia_enchere(2);
 			break;
+
 		case 3: // Nord
+			printf("Nord examine son jeu!\n");
 			ia_enchere(3);
 			break;
+
 		case 4: // Est
+			printf("Est examine son jeu!\n");
 		    ia_enchere(4);
 			break;
+
 		default:
 			printf("Erreur dans le choix du 1er encherisseur");
 			break;
 	}
 
-	int type_enchere;
-
-	/* l'encherisseur choisit la couleur de l'atout*/
-
-	printf("Choisissez la couleur de l'atout:\n");
-	printf("1: Couleur Unique\n");
-	printf("2: Tout Atout (TA)\n");
-	printf("3: Sans Atout (SA)\n");
-
-	// scanf("%d",&type_enchere); // A ACTIVER
-	type_enchere = 1; // A DESACTIVER
-
-	switch(type_enchere){
-    	case 1: /*une seule couleur est choisit comme Atout*/
-			do{
-				printf("\nVeuillez choisir une des couleurs en marquant le nombre qui lui est attribué\n");
-				printf("1: Trèfle\n2: Pique\n3: Carreau\n4: Coeur\n");
-				// scanf("%d",&choix_couleur); // A ACTIVER
-				choix_couleur = 1; // A DESACTIVER
-            }while(choix_couleur < 1 || choix_couleur > 4);
-            break;
-
-        case 2: /*toute les couleurs sont atout*/
-            atout = "TA";
-            break;
-
-        case 3: /*toute les couleurs sont atout*/
-            atout = "SA";
-            break;
-        default :
-            printf("Erreur dans les encheres");
-    }
+	
 }
 
-// Lancement de la partie:
+// Lancement de la partie: - CONTIENT DES VARIABLES A ACTIVER
 void nouvelle_partie(){
 	espace_vide(1);
 
@@ -387,7 +470,7 @@ void nouvelle_partie(){
 
 	printf("\n");
 
-	enchere(distributeur);
+	enchere(distributeur+1);
 }
 
 // Fonction pour afficher les meilleurs scores enregistrés
@@ -409,8 +492,9 @@ void menu(void){
 	printf("2 | Meilleurs Scores\n");
 	printf("3 | Quitter\n\n");
 
-	int choix = 1;
-	scanf("%d",&choix); // A ACTIVER
+	int choix;
+	choix = 1; // A DESACTIVER
+	//scanf("%d",&choix); // A ACTIVER
 
 	switch(choix){
 		case 1:
@@ -434,7 +518,10 @@ void menu(void){
 // Main
 int main(void){
 
-	// Change la table des caractères de la console si le programme est utilisé sous Windows
+	/* 
+		Change la table des caractères de la console 
+		> si le programme est utilisé sous Windows
+	*/
 	#ifdef _WIN32
 	    SetConsoleOutputCP(65001);
 	#endif
