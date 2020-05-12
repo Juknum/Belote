@@ -329,7 +329,7 @@ void enchere(int encherisseur){
 	printf("\n\n");
 	
 
-	encherisseur = 2; // A DESACTIVER
+	encherisseur = 1; // A DESACTIVER
 
 	int type_enchere;
 	int choix;
@@ -337,7 +337,7 @@ void enchere(int encherisseur){
 	char* couleur;
 	
 	//passer = 2; // A DESACTIVER
-	tour_enrichisseur ++;
+	tour_enrichisseur++;
 
 	/*
 		Lorsque Est distribue, l'enrichisseur est le joueur
@@ -413,7 +413,7 @@ void enchere(int encherisseur){
 			}
 			else{ // choix == 2;
 				printf("\n%s passe!",nom_joueur);
-				passer ++;
+				passer++;
 				if(passer == 3){
 					printf("\nLes enchères sont terminées, la partie démarre!\n"); // On lance la partie si 3 personnes consécutives décident de passer
 					plis(1);
@@ -574,26 +574,274 @@ void enchere(int encherisseur){
 						atout = "SA";
 						printf("\nOuest annonce Sans Atout");
 					}
-					else atout = "Couleur Unique";
-					}
-				
+					else{
+						atout = "Couleur Unique";
+						printf("Ouest annonce Couleur Unique");
+					} 
 				}
+			}
 
-				// compte chaque cartes par couleur
-				// regarde le nombre de cartes hautes dans la couleur la plus représentée et annonce les pts
+			// compte chaque cartes par couleur
+			// regarde le nombre de cartes hautes dans la couleur la plus représentée et annonce les pts
 
 			break;
 
 		//////////////////////// Nord ////////////////////////
 		case 3:
 			printf("Nord examine son jeu!\n");
-			bot = 3;
+			if(tour_enrichisseur == 1){
+
+				int	ordi_north_as    = 0;
+				int ordi_north_valet = 0;
+
+				//////////////////////// Test si TA possible ////////////////////////
+				/*
+					Les Valets ont pour valeur : 5, 13, 21, 29
+				*/
+				/*
+					Les suites ont pour valeur : 3, 5, 8 // 11, 13, 16 // 19, 21, 24 // 27, 29, 32
+				*/
+
+				// On compte les valets
+				for(int i = 0; i < 8; i++){
+					if(cartes_north[i] == 5 || cartes_north[i] == 13 || cartes_north[i] == 21 || cartes_north[i] == 29){
+						ordi_north_valet++;
+					}
+				}
+				// DEBUG : printf("\nOuest Valets : %d",ordi_north_valet);
+
+				// On vérifie que Nord possède une suite si il a moins de 3 valets
+				int suite_ta = 0;
+				if( ordi_north_valet < 3){
+					int suite_coeur_ta   = 0;
+					int suite_carreau_ta = 0;
+					int suite_trefle_ta  = 0;
+					int suite_pique_ta   = 0;
+
+					for(int i = 0; i < 8; i++){
+						// test de la suite dans les coeurs
+						if(cartes_north[i] == 3 || cartes_north[i] == 5 || cartes_north[i] == 8){
+							suite_coeur_ta++;
+						}
+
+						// test de la suite dans les carreau
+						if(cartes_north[i] == 11 || cartes_north[i] == 13 || cartes_north[i] == 16){
+							suite_carreau_ta++;
+						}
+
+						// test de la suite dans les trèfles
+						if(cartes_north[i] == 19 || cartes_north[i] == 21 || cartes_north[i] == 24){
+							suite_trefle_ta++;
+						}
+
+						// test de la suite dans les pique
+						if(cartes_north[i] == 27 || cartes_north[i] == 29 || cartes_north[i] == 32){
+							suite_pique_ta++;
+						}
+					}
+
+					// si l'une des trois variables suites == 3 alors Nord possède une suite;
+					if(suite_pique_ta == 3 || suite_trefle_ta == 3 || suite_carreau_ta == 3 || suite_coeur_ta == 3){
+						suite_ta = 1;
+						// DEBUG : printf("\nsuite : %d",suite);
+					}
+				}
+
+				if( ordi_north_valet == 3 || suite_ta == 1 ){
+					atout = "TA";
+					printf("\nNord annonce Tout Atout");
+				}
+				else{
+					//////////////////////// Test si SA possible ////////////////////////
+					/*
+						Les As ont pour valeur 8, 16, 24, 32
+					*/
+					/*
+						Les suites 10,V,D,R,As ont pour valeur : 4,5,6,7,8 // 12,13,14,15,16 // 20,21,22,23,24 // 28,29,30,31,32
+					*/
+
+					// On compte les As
+					for(int i = 0; i < 8; i++){
+						if(cartes_north[i] == 8 || cartes_north[i] == 16 || cartes_north[i] == 24 || cartes_north[i] == 32){
+							ordi_north_as++;
+						}
+					}
+					// DEBUG : printf("\nNord As     : %d",ordi_north_as);
+
+					// On vérifie que l'ordi possède la suite (dans tout les cas == elle est nécessaire)
+					int suite_sa = 0;
+					int suite_coeur_sa   = 0;
+					int suite_carreau_sa = 0;
+					int suite_trefle_sa  = 0;
+					int suite_pique_sa   = 0;
+
+					for(int i = 0; i < 8; i++){
+						// test de la suite dans les coeurs
+						if(cartes_north[i] == 4 || cartes_north[i] == 5 || cartes_north[i] == 6 || cartes_north[i] == 7 || cartes_north[i] == 8){
+							suite_coeur_sa++;
+						}
+
+						// test de la suite dans les carreau
+						if(cartes_north[i] == 12 || cartes_north[i] == 13 || cartes_north[i] ==  14 || cartes_north[i] == 15 || cartes_north[i] == 16){
+							suite_carreau_sa++;
+						}
+
+						// test de la suite dans les trèfles
+						if(cartes_north[i] == 20 || cartes_north[i] == 21 || cartes_north[i] == 22 || cartes_north[i] == 23 || cartes_north[i] == 24){
+							suite_trefle_sa++;
+						}
+
+						// test de la suite dans les pique
+						if(cartes_north[i] == 28 || cartes_north[i] == 29 || cartes_north[i] == 30 || cartes_north[i] == 31 || cartes_north[i] == 32){
+							suite_pique_sa++;
+						}
+					}
+
+					// si l'une des trois variables suites == 5 alors Nord possède une suite;
+					if(suite_pique_sa == 5 || suite_trefle_sa == 5 || suite_carreau_sa == 5 || suite_coeur_sa == 5){
+						suite_sa = 1;
+						// DEBUG : printf("\nsuite : %d",suite);
+					}
+
+					if( ordi_north_as >= 2 && suite_sa == 1 ){
+						atout = "SA";
+						printf("\nNord annonce Sans Atout");
+					}
+					else{
+						atout = "Couleur Unique";
+						printf("Nord annonce Couleur Unique");
+					}
+				}
+			}
 			break;
 
 		//////////////////////// Est ////////////////////////
 		case 4:
 			printf("Est examine son jeu!\n");
-		    bot = 4;
+		  if(tour_enrichisseur == 1){
+
+				int	ordi_east_as    = 0;
+				int ordi_east_valet = 0;
+
+				//////////////////////// Test si TA possible ////////////////////////
+				/*
+					Les Valets ont pour valeur : 5, 13, 21, 29
+				*/
+				/*
+					Les suites ont pour valeur : 3, 5, 8 // 11, 13, 16 // 19, 21, 24 // 27, 29, 32
+				*/
+
+				// On compte les valets
+				for(int i = 0; i < 8; i++){
+					if(cartes_east[i] == 5 || cartes_east[i] == 13 || cartes_east[i] == 21 || cartes_east[i] == 29){
+						ordi_east_valet++;
+					}
+				}
+				// DEBUG : printf("\nOuest Valets : %d",ordi_east_valet);
+
+				// On vérifie que Est possède une suite si il a moins de 3 valets
+				int suite_ta = 0;
+				if( ordi_east_valet < 3){
+					int suite_coeur_ta   = 0;
+					int suite_carreau_ta = 0;
+					int suite_trefle_ta  = 0;
+					int suite_pique_ta   = 0;
+
+					for(int i = 0; i < 8; i++){
+						// test de la suite dans les coeurs
+						if(cartes_east[i] == 3 || cartes_east[i] == 5 || cartes_east[i] == 8){
+							suite_coeur_ta++;
+						}
+
+						// test de la suite dans les carreau
+						if(cartes_east[i] == 11 || cartes_east[i] == 13 || cartes_east[i] == 16){
+							suite_carreau_ta++;
+						}
+
+						// test de la suite dans les trèfles
+						if(cartes_east[i] == 19 || cartes_east[i] == 21 || cartes_east[i] == 24){
+							suite_trefle_ta++;
+						}
+
+						// test de la suite dans les pique
+						if(cartes_east[i] == 27 || cartes_east[i] == 29 || cartes_east[i] == 32){
+							suite_pique_ta++;
+						}
+					}
+
+					// si l'une des trois variables suites == 3 alors Est possède une suite;
+					if(suite_pique_ta == 3 || suite_trefle_ta == 3 || suite_carreau_ta == 3 || suite_coeur_ta == 3){
+						suite_ta = 1;
+						// DEBUG : printf("\nsuite : %d",suite);
+					}
+				}
+
+				if( ordi_east_valet == 3 || suite_ta == 1 ){
+					atout = "TA";
+					printf("\nEst annonce Tout Atout");
+				}
+				else{
+					//////////////////////// Test si SA possible ////////////////////////
+					/*
+						Les As ont pour valeur 8, 16, 24, 32
+					*/
+					/*
+						Les suites 10,V,D,R,As ont pour valeur : 4,5,6,7,8 // 12,13,14,15,16 // 20,21,22,23,24 // 28,29,30,31,32
+					*/
+
+					// On compte les As
+					for(int i = 0; i < 8; i++){
+						if(cartes_east[i] == 8 || cartes_east[i] == 16 || cartes_east[i] == 24 || cartes_east[i] == 32){
+							ordi_east_as++;
+						}
+					}
+					// DEBUG : printf("\nEst As     : %d",ordi_east_as);
+
+					// On vérifie que l'ordi possède la suite (dans tout les cas == elle est nécessaire)
+					int suite_sa = 0;
+					int suite_coeur_sa   = 0;
+					int suite_carreau_sa = 0;
+					int suite_trefle_sa  = 0;
+					int suite_pique_sa   = 0;
+
+					for(int i = 0; i < 8; i++){
+						// test de la suite dans les coeurs
+						if(cartes_east[i] == 4 || cartes_east[i] == 5 || cartes_east[i] == 6 || cartes_east[i] == 7 || cartes_east[i] == 8){
+							suite_coeur_sa++;
+						}
+
+						// test de la suite dans les carreau
+						if(cartes_east[i] == 12 || cartes_east[i] == 13 || cartes_east[i] ==  14 || cartes_east[i] == 15 || cartes_east[i] == 16){
+							suite_carreau_sa++;
+						}
+
+						// test de la suite dans les trèfles
+						if(cartes_east[i] == 20 || cartes_east[i] == 21 || cartes_east[i] == 22 || cartes_east[i] == 23 || cartes_east[i] == 24){
+							suite_trefle_sa++;
+						}
+
+						// test de la suite dans les pique
+						if(cartes_east[i] == 28 || cartes_east[i] == 29 || cartes_east[i] == 30 || cartes_east[i] == 31 || cartes_east[i] == 32){
+							suite_pique_sa++;
+						}
+					}
+
+					// si l'une des trois variables suites == 5 alors Est possède une suite;
+					if(suite_pique_sa == 5 || suite_trefle_sa == 5 || suite_carreau_sa == 5 || suite_coeur_sa == 5){
+						suite_sa = 1;
+						// DEBUG : printf("\nsuite : %d",suite);
+					}
+
+					if( ordi_east_as >= 2 && suite_sa == 1 ){
+						atout = "SA";
+						printf("\nEst annonce Sans Atout");
+					}
+					else{
+						atout = "Couleur Unique";
+						printf("Est annonce Couleur Unique");
+					}
+				}
+			}
 			break;
 
 		default:
