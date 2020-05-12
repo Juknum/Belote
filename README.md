@@ -10,7 +10,7 @@ L’objectif du projet est de réaliser le programme permettant de jouer à ce j
 
 #### Vous devrez notamment réaliser :
 - [x] Un menu principal permettant de démarrer une nouvelle partie, d’afficher les meilleurs scores ou de quitter. Le joueur sera invité à entrer son nom avant le début de la partie.
-- [ ] Un affichage permettant d’afficher les cartes que le joueur a en main
+- [x] Un affichage permettant d’afficher les cartes que le joueur a en main
 - [ ] Un affichage permettant d’afficher les cartes du pli en cours
 - [ ] Un menu permettant d'annoncer un contrat ou de passer pendant le tour d’enchère
 - [ ] Un menu permettant de jouer une carte parmi les cartes en main, tout en respectant les règles
