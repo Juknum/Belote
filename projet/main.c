@@ -14,6 +14,14 @@
 #include <math.h>
 #include <time.h>
 
+/* 
+	Permet le changement la table des caractères de la console 
+	si le programme est utilisé sous Windows
+*/
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 //////////////////// VARIABLES GLOBALBES ////////////////////
 
 // Joueur :
@@ -402,7 +410,7 @@ void menu(void){
 	printf("3 | Quitter\n\n");
 
 	int choix = 1;
-	//scanf("%d",&choix); // A ACTIVER
+	scanf("%d",&choix); // A ACTIVER
 
 	switch(choix){
 		case 1:
@@ -425,6 +433,11 @@ void menu(void){
 
 // Main
 int main(void){
+
+	// Change la table des caractères de la console si le programme est utilisé sous Windows
+	#ifdef _WIN32
+	    SetConsoleOutputCP(65001);
+	#endif
 
 	srand(time(NULL));
 
