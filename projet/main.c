@@ -25,7 +25,7 @@
 //////////////////// VARIABLES GLOBALBES ////////////////////
 
 // Joueur :
-char* nom_joueur = "name_undefined";
+char * nom_joueur = "name_undefined";
 
 // Scores max:
 int score_max_1;
@@ -44,15 +44,12 @@ int cartes_north[8]  = {0};
 int cartes_west[8]   = {0};
 
 // Enchères
-char* atout = "atout_undefined";
-int choix_couleur = 0;
-int tour_enrichisseur = 0;
-
-int passer = 0; // personne qui passe lors de l'enchère
+char * atout = "undefined"; // choix de l'atout pour la partie
+int points = 0; // Points a atteindre pour remporter le contrat annoncé
 
 ////////////////////     FONCTIONS     ////////////////////
 
-// Fonction pour vider l'écran
+// Fonction pour vider l'écran et ajouter le titre
 void espace_vide(int titre){
 
 	for(int i = 0; i < 1; i++){
@@ -185,6 +182,123 @@ char* dictionnaire(int tableau){
 	return result;
 }
 
+// Dictionnaire pour la traduction d'un int en valeur d'atout
+int dictionnaire_atout(int tableau){
+	int result = -1;
+
+	switch(tableau){
+		case 1 :
+		result = 0;
+		break;
+		case 2 :
+		result = 0;
+		break;
+		case 3 :
+		result = 14;
+		break;
+		case 4 :
+		result = 10;
+		break;
+		case 5 :
+		result = 20;
+		break;
+		case 6 :
+		result = 3;
+		break;
+		case 7 :
+		result = 4;
+		break;
+		case 8 :
+		result = 11;
+		break;
+
+		case 9 :
+		result = 0;
+		break;
+		case 10 :
+		result = 0;
+		break;
+		case 11 :
+		result = 14;
+		break;
+		case 12 :
+		result = 10;
+		break;
+		case 13 :
+		result = 20;
+		break;
+		case 14 :
+		result = 3;
+		break;
+		case 15 :
+		result = 4;
+		break;
+		case 16 :
+		result = 11;
+		break;
+
+		case 17 :
+		result = 0;
+		break;
+		case 18 :
+		result = 0;
+		break;
+		case 19 :
+		result = 14;
+		break;
+		case 20 :
+		result = 10;
+		break;
+		case 21 :
+		result = 20;
+		break;
+		case 22 :
+		result = 3;
+		break;
+		case 23 :
+		result = 4;
+		break;
+		case 24 :
+		result = 11;
+		break;
+
+		case 25 :
+		result = 0;
+		break;
+		case 26 :
+		result = 0;
+		break;
+		case 27 :
+		result = 14;
+		break;
+		case 28 :
+		result = 10;
+		break;
+		case 29 :
+		result = 20;
+		break;
+		case 30 :
+		result = 3;
+		break;
+		case 31 :
+		result = 4;
+		break;
+		case 32 :
+		result = 11;
+		break;
+
+		default :
+		result = -2;
+		break;
+	}
+
+	// DEBUG :
+	//printf("cartes num : %d\n",tableau);
+	//printf("traduction : %s\n",result);
+
+	return result;
+}
+
 // Mélange des cartes
 void melanger(int* tableau, int taille){
 	int alea_1, alea_2;
@@ -219,13 +333,13 @@ void melanger(int* tableau, int taille){
 
 // Distribution des cartes
 void distribuer(void){
-	char* distributeur_char;
+	char * distributeur_char;
 
 	int alea = rand()% 4 + 1;
 	switch(alea){
 		case 1:
 			distributeur = 1; // Joueur
-			distributeur_char = "Joueur";
+			distributeur_char = nom_joueur;
 			break;
 		case 2:
 			distributeur = 2; // Ouest
@@ -287,567 +401,479 @@ void tableau_tri(int *tableau){
 
 }
 
-// Plis en cours (phase de jeu)
+// Plis
 void plis(int num_plis){
-	espace_vide(1);
-	printf("Plis : %d/8\n",num_plis);
-	printf("Atout: %s\n",atout);
+	printf("undefined");
 }
 
 // Phase d'Enchère - CONTIENT DES VARIABLES A ACTIVER
-void enchere(int encherisseur){
+int enchere(int encherisseur, int tour, int passe){
+	/*
+		Encherisseur 	: celui qui annonce en l'état actuel
+		Tour 			: permet de savoir si le joueur est le 1er a annoncer ou non
+		Passe 			: transmet le nombre de joueur qui on passer leur tour
+	*/
+
+	// Espace textuel :
 	espace_vide(1);
 
 	printf("Phase d'enchères...\n\n");
 	printf("Vos cartes :");
 
+	//int cartes_west[8] = {1,2,3,4,9,10,11,12};
+
+	// On trie les cartes de tout le monde
 	tableau_tri(cartes_joueur);
+	tableau_tri(cartes_west);
+	tableau_tri(cartes_east);
+	tableau_tri(cartes_north);
 	
+	// On affiche les cartes du joueur 
 	for(int i = 0; i < 8; i++){
 		printf(" %s",dictionnaire(cartes_joueur[i]));
 	}
 	printf("\n\n");
 
-	tableau_tri(cartes_west);
-	tableau_tri(cartes_east);
-	tableau_tri(cartes_north);
-
-	// DEBUG : Affiches les cartes des autres ordis
-	
-	printf("Cartes Ouest:\n");
+	// DEBUG : Affiches les cartes de Ouest
+	printf("     Ouest :");
 	for(int i = 0; i < 8; i++){
 		printf(" %s",dictionnaire(cartes_west[i]));
 	}
-	printf("\nCartes Est:\n");
-	for(int i = 0; i < 8; i++){
-		printf(" %s",dictionnaire(cartes_east[i]));
-	}
-	printf("\nCartes Nord:\n");
-	for(int i = 0; i < 8; i++){
-		printf(" %s",dictionnaire(cartes_north[i]));
-	}
 	printf("\n\n");
-	
 
-	encherisseur = 1; // A DESACTIVER
+	// Si Est distribue alors encherisseur == 5 == 1
+	if(encherisseur == 5){encherisseur = 1;}
 
-	int type_enchere;
-	int choix;
-	int bot = 1;
-	char* couleur;
+	// DEBUG : permet de forcer l'encherisseur et d'éviter la surboucle voir fin de enchere()
+	encherisseur = 2;
+	passe = -2; // sur -2 par sécurité
+
+	// On vérifie que c'est la première enchère avant de proposer d'annoncer:
+
+	////// enrichisseur CASE 1 / Joueur //////
+	// tout mettre sur 0
+	int choix         = 2; 
+	int choix_atout   = 0; 
+	int choix_couleur = 0; 
+	int choix_points  = 0;
+
+	////// enrichisseur CASE 2+ / Bots //////
+	////// COULEUR //////
+	int total_carreau = 0;
+	int total_coeur   = 0;
+	int total_pique   = 0;
+	int total_trefle  = 0;
+
+	int total = 0; // Permet de différencier quelle couleur est la + forte
+	int result = 0; // Sert à choisir entre 2...4 valeurs identiques (si 2/3/4 couleurs ont le même nbr de pts)
+
+	int joue = 0; // 1 si le bot joue la couleur la + forte
+	int score_estimation = 32; // mini 80 pts : 80 / 2.5 = 32 // Score minimum de la couleur pour que le bot décide de jouer
+
+	/////// TA ///////
+
+	// Variables TA
+	int ordi_west_valet  = 0; // Valets présent dans la main du bot
+	int ordi_north_valet = 0;
+	int ordi_east_valet  = 0;
+
+	int suite_ta         = 0; // 1 si Le bot possède une suite pour TA
+	int suite_coeur_ta   = 0;
+	int suite_carreau_ta = 0;
+	int suite_trefle_ta  = 0;
+	int suite_pique_ta   = 0;
+
+	/////// SA ///////
+
+	// Variables SA
+	int	ordi_west_as     = 0; // As présent dans la main du bot
+	int ordi_north_as    = 0;
+	int ordi_east_as     = 0;
 	
-	//passer = 2; // A DESACTIVER
-	tour_enrichisseur++;
+	int suite_sa         = 0; // 1 si le bot possède la suite pour SA
+	int suite_coeur_sa   = 0;
+	int suite_carreau_sa = 0;
+	int suite_trefle_sa  = 0;
+	int suite_pique_sa   = 0;
+
+	if(tour == 0 || atout == "undefined"){
+		switch(encherisseur){
+			/////// Joueur ///////
+			case 1:
+				printf("%s examine son jeu...\n\n",nom_joueur);
+				do{
+					printf("Souhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
+					scanf("%d",&choix); // A ACTIVER
+				}while(choix < 1 || choix > 2);
+			
+				switch(choix){
+					case 1:
+						do{
+							printf("\n\nQuel contrat souhaitez-vous?\n1 | Couleur\n2 | Tout Atout (TA)\n3 | Sans Atout (SA)\n");
+							scanf("%d",&choix_atout); // A ACTIVER
+						}while(choix_atout < 1 || choix_atout > 3);
+
+						switch(choix_atout){
+							case 1:
+								do{
+									printf("\nQuelles couleur?\n1 | Carreau\n2 | Coeur\n3 | Pique\n4 | Trèfle\n");
+									scanf("%d",choix_couleur); // A ACTIVER
+								}while(choix_couleur < 1 || choix_couleur > 4);
+
+								switch(choix_couleur){
+									case 1:
+										atout = "Carreau";
+										break;
+									case 2:
+										atout = "Coeur";
+										break;
+									case 3:
+										atout = "Pique";
+										break;
+									case 4:
+										atout = "Trèfle";
+									default:
+										printf("Erreur switch couleur");
+										break;
+								}
+
+								printf("\nChoix enregistré, annoncez vos points!");
+
+								// Annonce des points: 
+								
+								printf("\n\nAnnoncez vos points:\nN | Classique - Entre 80 et 160 pts, par tranche de 10!\n1 | Capôt     - 250 pts -> gagner tout les plis\n2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
+								scanf("%d",choix_points); // A ACTIVER
+
+								switch(choix_points){
+									case 1 :
+										printf("\n%s annonce Capôt avec une couleur de %s",nom_joueur,atout);
+										points = 250;
+										break;
+									case 2 :
+										printf("\n%s annonce Générale avec une couleur de %s",nom_joueur,atout);
+										points = 500;
+										break;
+									case 80 ... 160 : 
+										printf("\n%s annonce une couleur de %s avec %d pts",nom_joueur,atout,choix_points);
+										points = choix_points;
+										break;
+								}
+								break;
+							case 2:
+								atout = "TA";
+								printf("\n%s annonce un Tout Atout!",nom_joueur);
+								break;
+							case 3:
+								atout = "SA";
+								printf("\n%s annonce un Sans Atout!",nom_joueur);
+								break;
+							default: 
+								printf("Erreur switch couleur/ta/sa");
+								break;
+						}
+
+						break;
+					case 2:
+						printf("\n%s a choisit de passer son tours!",nom_joueur);
+						passe++;
+						break;
+					default:
+						printf("Erreur switch annonce/passer");
+						break;
+				}
+
+				break;
+			///////  Ouest ///////
+			case 2:
+				printf("Ouest examine son jeu...");
+
+				// On regarde la valeur totale des cartes par couleur (en atout) et on garde la meilleure couleur
+				for(int i = 0; i < 8; i++){
+					switch(cartes_west[i]){
+						case 0 ... 8 :
+							total_pique += dictionnaire_atout(cartes_west[i]);
+							break;
+						case 9 ... 16 :
+							total_carreau += dictionnaire_atout(cartes_west[i]);
+							break;
+						case 17 ... 24 :
+							total_coeur += dictionnaire_atout(cartes_west[i]);
+							break;
+						case 25 ... 32 :
+							total_trefle += dictionnaire_atout(cartes_west[i]);
+							break;
+					}
+				}
+
+				// DEBUG : Affiche les valeurs d'atout par couleur
+				//printf("\nValeur en Atout : %d♠ / %d♦ / %d♥ / %d♣",total_pique,total_carreau,total_coeur,total_trefle);
+				
+				if(total_pique>=total_carreau && total_pique>=total_coeur && total_pique>=total_trefle){
+					total += 1;
+				}
+				if(total_carreau>=total_pique && total_carreau>=total_coeur && total_carreau>=total_trefle){
+					total += 10;
+				}
+				if(total_coeur>=total_pique && total_coeur>=total_carreau && total_coeur>=total_trefle){
+					total += 100;
+				}
+				if(total_trefle>=total_pique && total_trefle>=total_carreau && total_trefle>=total_coeur){
+					total += 1000;
+				}
+
+				/*
+					Possibilitées : Permet d'avoir une solution en cas d'égalité de pts (en atout)
+						   1 :                            PIQUE -------
+						  10 :                  CARREAU 		-------
+						  11 :                  CARREAU + PIQUE
+						 100 :          COEUR 					-------
+						 101 :          COEUR           + PIQUE
+						 110 :          COEUR + CARREAU
+						 111 :          COEUR + CARREAU + PIQUE
+						1000 : TREFLE                           -------
+						1001 : TREFLE                   + PIQUE
+						1010 : TREFLE         + CARREAU
+						1011 : TREFLE         + CARREAU + PIQUE
+						1100 : TREFLE + COEUR
+						1101 : TREFLE + COEUR           + PIQUE
+						1110 : TREFLE + COEUR + CARREAU
+						1111 : TREFLE + COEUR + CARREAU + PIQUE
+				*/
+				
+				switch(total){
+					case 1:
+						atout = "Pique";
+						break;
+					case 10:
+						atout = "Carreau";
+						break;
+					case 11: // entre carreau et pique
+						result = rand()%2 + 1;
+						if(result == 1){atout = "Carreau";}else{atout = "Pique";}
+						break;
+					case 100:
+						atout = "Coeur";
+						break;
+					case 101: // entre coeur et pique
+						result = rand()%2 + 1;
+						if(result == 1){atout = "Coeur";}else{atout = "Pique";}
+						break;
+					case 110: // entre coeur et carreau
+						result = rand()%2 + 1;
+						if(result == 1){atout = "Coeur";}else{atout = "Carreau";}
+						break;
+					case 111: // entre coeur, carreau et pique
+						result = rand()%3 + 1;
+						if(result == 1){atout = "Coeur";}else{if(result == 2){atout = "Carreau";}else{atout = "Pique";}}
+						break;
+					case 1000:
+						atout = "Trèfle";
+						break;
+					case 1001: // entre trefle et pique
+						result = rand()%2 + 1;
+						if(result == 1){atout = "Trèfle";}else{atout = "Pique";}
+						break;
+					case 1010: // entre trefle et carreau
+						result = rand()%2 + 1;
+						if(result == 1){atout = "Trèfle";}else{atout = "Carreau";}
+						break;
+					case 1011: // trefle carreau pique
+						result = rand()%3 + 1;
+						if(result == 1){atout = "Trèfle";}else{if(result == 2){atout = "Carreau";}else{atout = "Pique";}}
+						break;
+					case 1100: // trefle coeur
+						result = rand()%2 + 1;
+						if(result == 1){atout = "Trèfle";}else{atout = "Coeur";}
+						break;
+					case 1101: // trefle coeur pique
+						result = rand()%3 + 1;
+						if(result == 1){atout = "Trèfle";}else{if(result == 2){atout = "Coeur";}else{atout = "Pique";}}
+						break;
+					case 1110: // trefle coeur carreau
+						result = rand()%3 + 1;
+						if(result == 1){atout = "Trèfle";}else{if(result == 2){atout = "Coeur";}else{atout = "Carreau";}}
+						break;
+					case 1111: // trefle coeur carreau pique
+						result = rand()%4 + 1;
+						if(result == 1){atout = "Trèfle";}else{if(result == 2){atout = "Coeur";}else{if(result == 3){atout = "Carreau";}else{atout = "Pique";}}}
+					break;
+				}
+
+				/*
+					On regarde le score de la couleur la plus représentée et on estime si ça vaut le coup de jouer couleur
+					ou de prendre TA ou SA.
+				*/
+
+				// Si le bot a un score supérireur à score_estimation et bien il annonce ces points et joue couleur;
+				if(atout == "Carreau"){
+					if(total_carreau > score_estimation){
+						joue = 1;
+						points = total_carreau * 2.5;
+					}
+				}
+				if(atout == "Coeur"){
+					if(total_coeur > score_estimation){
+						joue = 1;
+						points = total_coeur * 2.5;
+					}
+				}
+				if(atout == "Pique"){
+					if(total_pique > score_estimation){
+						joue = 1;
+						points = total_pique * 2.5;
+					}
+				}
+				if(atout == "Trèfle"){
+					if(total_trefle > score_estimation){
+						joue = 1;
+						points = total_trefle * 2.5;
+					}
+				}
+
+				/*
+					Le bot décide de ne pas jouer la couleur possédant le plus haut score,
+					il regarde alors s'il peut faire SA ou TA;
+				*/
+
+				if(joue == 0){
+
+					// On compte les valets possédé par le bot
+					for(int i = 0; i < 8; i++){
+						if(cartes_west[i] == 5 || cartes_west[i] == 13 || cartes_west[i] == 21 || cartes_west[i] == 29){
+							ordi_west_valet++;
+						}
+					}
+
+					// Si le bot n'a pas suffisament de valet, on regarde s'il possède une suite
+					if( ordi_west_valet < 3){
+						for(int i = 0; i < 8; i++){
+							// test de la suite dans les coeurs
+							if(cartes_west[i] == 3 || cartes_west[i] == 5 || cartes_west[i] == 8){
+								suite_coeur_ta++;								
+							}
+
+							// test de la suite dans les carreau
+							if(cartes_west[i] == 11 || cartes_west[i] == 13 || cartes_west[i] == 16){
+								suite_carreau_ta++;
+							}
+
+							// test de la suite dans les trèfles
+							if(cartes_west[i] == 19 || cartes_west[i] == 21 || cartes_west[i] == 24){
+								suite_trefle_ta++;
+							}
+
+							// test de la suite dans les pique
+							if(cartes_west[i] == 27 || cartes_west[i] == 29 || cartes_west[i] == 32){
+								suite_pique_ta++;
+							}
+						}
+
+						// si l'une des trois variables suites == 3 alors le bot possède une suite;
+						if(suite_pique_ta == 3 || suite_trefle_ta == 3 || suite_carreau_ta == 3 || suite_coeur_ta == 3){
+							suite_ta = 1;
+							// DEBUG : printf("\nsuite : %d",suite);
+						}
+					}
+
+					// Décision sur le choix du bot à "prendre" TA:
+					if( ordi_west_valet == 3 || suite_ta == 1 ){
+						atout = "TA";
+						points = -1;
+						printf("\nOuest annonce Tout Atout ");
+					}else{
+						
+
+						// On compte les As possédé par le bot
+						for(int i = 0; i < 8; i++){
+							if(cartes_west[i] == 8 || cartes_west[i] == 16 || cartes_west[i] == 24 || cartes_west[i] == 32){
+								ordi_west_as++;
+							}
+						}
+
+						// On vérifie que l'ordi possède la suite (dans tout les cas == elle est nécessaire)
+						for(int i = 0; i < 8; i++){
+							// test de la suite dans les coeurs
+							if(cartes_west[i] == 4 || cartes_west[i] == 5 || cartes_west[i] == 6 || cartes_west[i] == 7 || cartes_west[i] == 8){
+								suite_coeur_sa++;
+							}
+
+							// test de la suite dans les carreau
+							if(cartes_west[i] == 12 || cartes_west[i] == 13 || cartes_west[i] ==  14 || cartes_west[i] == 15 || cartes_west[i] == 16){
+								suite_carreau_sa++;
+							}
+
+							// test de la suite dans les trèfles
+							if(cartes_west[i] == 20 || cartes_west[i] == 21 || cartes_west[i] == 22 || cartes_west[i] == 23 || cartes_west[i] == 24){
+								suite_trefle_sa++;
+							}
+
+							// test de la suite dans les pique
+							if(cartes_west[i] == 28 || cartes_west[i] == 29 || cartes_west[i] == 30 || cartes_west[i] == 31 || cartes_west[i] == 32){
+								suite_pique_sa++;
+							}
+						}
+
+						// si l'une des trois variables suites == 5 alors le bot possède une suite;
+						if(suite_pique_sa == 5 || suite_trefle_sa == 5 || suite_carreau_sa == 5 || suite_coeur_sa == 5){
+							suite_sa = 1;
+						}
+
+						if( ordi_west_as >= 2 && suite_sa == 1 ){
+							atout = "SA";
+							points = -1;
+							printf("\nOuest annonce Sans Atout ");
+						}else{
+							/////// Passe ///////
+							printf("\nOuest a choisit de passer son tours!");
+							atout = "undefined"; // On reset l'atout choisi
+							passe++;
+						}
+					}
+				}else{ // joue == 1
+					points = (points / 10) * 10; // On décide de ne pas garder l'unité
+					printf("\nOuest annonce une couleur de %s avec %d pts",atout,points);
+				}
+				
+				break;
+			///////  Nord  ///////
+			case 3:
+				printf("Nord");
+				break;
+			///////   Est  ///////
+			case 4:
+				printf("Est");
+				break;
+			default:
+				printf("Erreur dans le switch encherisseur");
+				break;
+		}
+
+	}
+
+	if(tour > 1 && atout != "undefined"){
+		// Lorsqu'il y a juste besoin de faire les pts
+	}
 
 	/*
-		Lorsque Est distribue, l'enrichisseur est le joueur
-		il faut donc remettre à 1 l'enrichisseur
+		Ici on décide de la continuité ou non des enchères
+		> Combien de joueur on passé
+		> Qui est le prochain a enchérir?
 	*/
-	if(encherisseur == 5){
-		encherisseur = 1;
+
+	if(passe > 2){
+		printf("\n---------------------------------");
+		printf("\nFin des enchères... début du jeu!");
+		printf("\n---------------------------------");
+
+		plis(0);
+
+		return 0; // On quitte la fonction
+	}
+	if(passe > -1){ // DEBUG : ne relance pas l'execution si passe <= 0
+		enchere(encherisseur+1,tour++,passe);
+		return 0;
 	}
 
-	switch(encherisseur){
-		case 1: //////////////////////// Joueur ////////////////////////
-			printf("%s examine son jeu!\n\n",nom_joueur);
-
-			printf("Souhaitez-vous passer ou annoncer?\n1 | Annoncer\n2 | Passer\n");
-			//scanf("%d",&choix); // A ACTIVER
-			choix = 2; // A DESACTIVER
-
-			if(choix == 1){
-				// l'encherisseur choisit la couleur de l'atout
-				printf("Choisissez la couleur de l'atout:\n");
-				printf("1 | Couleur Unique\n");
-				printf("2 | Tout Atout (TA)\n");
-				printf("3 | Sans Atout (SA)\n");
-
-				scanf("%d",&type_enchere); // A ACTIVER
-				//type_enchere = 3; // A DESACTIVER
-
-				switch(type_enchere){
-			    	case 1: //une seule couleur est choisit comme Atout
-						do{
-							printf("\nVeuillez choisir une des couleurs en marquant le nombre qui lui est attribué\n");
-							printf("1 | Trèfle\n2 | Pique\n3 | Carreau\n4 | Coeur\n");
-							
-							scanf("%d",&choix_couleur); // A ACTIVER
-							//choix_couleur = 1; // A DESACTIVER
-
-			            }while(choix_couleur < 1 || choix_couleur > 4);
-
-			            atout = "Couleur";
-			           	
-			            switch(choix_couleur){
-			            	case 1:
-			            		couleur = "Trèfle";
-			            		break;
-			            	case 2:
-			            		couleur = "Pique";
-			            		break;
-			            	case 3:
-			            		couleur = "Carreau";
-			            		break;
-			            	case 4:
-			            		couleur = "Coeur";
-			            		break;
-			            	default:
-			            		couleur = "couleur_undefined";
-			            		break;
-			            }
-			            printf("\n%s annonce une couleur de %s!\n",nom_joueur,couleur);
-			            break;
-
-			        case 2: //toute les couleurs sont atout
-			            atout = "TA";
-			            printf("\n%s annonce un Tout Atout!\n",nom_joueur);
-			            break;
-
-			        case 3: //toute les couleurs sont sans atout
-			            atout = "SA";
-			            printf("\n%s annonce un Sans Atout!\n",nom_joueur);
-			            break;
-			        default :
-			            printf("Erreur dans les enchères");
-			    }
-			}
-			else{ // choix == 2;
-				printf("\n%s passe!",nom_joueur);
-				passer++;
-				if(passer == 3){
-					printf("\nLes enchères sont terminées, la partie démarre!\n"); // On lance la partie si 3 personnes consécutives décident de passer
-					plis(1);
-				} 
-				else{
-					enchere(encherisseur+1); // On passe au joueur suivant
-				}
-			}
-			break;
-
-		//////////////////////// IA des ordis ////////////////////////
-
-		/*
-			Le bot doit prendre en compte l'annonce du joueur/bot précédent et de son coéquipier:
-			> Peut-il faire mieux? Oui: annonce mieux; Non: passe
-			> Qu'a fait le partenaire? Peut-il aider?
-		*/
-
-		/*
-			Le bot choisit Tout Atout (TA) si:
-			> il possède 3 valet 
-			> OU 1 ou 2 suite de cartes d'atout (Valet, 9, As)
-				> de la même couleur donc
-			> A priviliéger si le bot annonce en premier
-		*/
-
-		/*
-			Le bot choisit Sans Atout (SA) si:
-			> il possède 3 ou 2 As ET possède une suite (As, 10, Roi, Dame, Valet)
-			> A priviligier si le bot annonce en premier
-		*/
-		
-		/*
-			Par défaut:
-			> Le bot choisi une couleur unique: celle qu'il possède le plus
-			> Calcul des points : annonce 20pts par plis remportable + 
-		*/
-
-		//////////////////////// Ouest ////////////////////////
-		case 2: 
-			printf("Ouest examine son jeu!\n");
-
-			if(tour_enrichisseur == 1){
-
-				int	ordi_west_as    = 0;
-				int ordi_west_valet = 0;
-
-				//////////////////////// Test si TA possible ////////////////////////
-				/*
-					Les Valets ont pour valeur : 5, 13, 21, 29
-				*/
-				/*
-					Les suites ont pour valeur : 3, 5, 8 // 11, 13, 16 // 19, 21, 24 // 27, 29, 32
-				*/
-
-				// On compte les valets
-				for(int i = 0; i < 8; i++){
-					if(cartes_west[i] == 5 || cartes_west[i] == 13 || cartes_west[i] == 21 || cartes_west[i] == 29){
-						ordi_west_valet++;
-					}
-				}
-				// DEBUG : printf("\nOuest Valets : %d",ordi_west_valet);
-
-				// On vérifie que Ouest possède une suite si il a moins de 3 valets
-				int suite_ta = 0;
-				if( ordi_west_valet < 3){
-					int suite_coeur_ta   = 0;
-					int suite_carreau_ta = 0;
-					int suite_trefle_ta  = 0;
-					int suite_pique_ta   = 0;
-
-					for(int i = 0; i < 8; i++){
-						// test de la suite dans les coeurs
-						if(cartes_west[i] == 3 || cartes_west[i] == 5 || cartes_west[i] == 8){
-							suite_coeur_ta++;
-						}
-
-						// test de la suite dans les carreau
-						if(cartes_west[i] == 11 || cartes_west[i] == 13 || cartes_west[i] == 16){
-							suite_carreau_ta++;
-						}
-
-						// test de la suite dans les trèfles
-						if(cartes_west[i] == 19 || cartes_west[i] == 21 || cartes_west[i] == 24){
-							suite_trefle_ta++;
-						}
-
-						// test de la suite dans les pique
-						if(cartes_west[i] == 27 || cartes_west[i] == 29 || cartes_west[i] == 32){
-							suite_pique_ta++;
-						}
-					}
-
-					// si l'une des trois variables suites == 3 alors Ouest possède une suite;
-					if(suite_pique_ta == 3 || suite_trefle_ta == 3 || suite_carreau_ta == 3 || suite_coeur_ta == 3){
-						suite_ta = 1;
-						// DEBUG : printf("\nsuite : %d",suite);
-					}
-				}
-
-				if( ordi_west_valet == 3 || suite_ta == 1 ){
-					atout = "TA";
-					printf("\nOuest annonce Tout Atout");
-				}
-				else{
-					//////////////////////// Test si SA possible ////////////////////////
-					/*
-						Les As ont pour valeur 8, 16, 24, 32
-					*/
-					/*
-						Les suites 10,V,D,R,As ont pour valeur : 4,5,6,7,8 // 12,13,14,15,16 // 20,21,22,23,24 // 28,29,30,31,32
-					*/
-
-					// On compte les As
-					for(int i = 0; i < 8; i++){
-						if(cartes_west[i] == 8 || cartes_west[i] == 16 || cartes_west[i] == 24 || cartes_west[i] == 32){
-							ordi_west_as++;
-						}
-					}
-					// DEBUG : printf("\nOuest As     : %d",ordi_west_as);
-
-					// On vérifie que l'ordi possède la suite (dans tout les cas == elle est nécessaire)
-					int suite_sa = 0;
-					int suite_coeur_sa   = 0;
-					int suite_carreau_sa = 0;
-					int suite_trefle_sa  = 0;
-					int suite_pique_sa   = 0;
-
-					for(int i = 0; i < 8; i++){
-						// test de la suite dans les coeurs
-						if(cartes_west[i] == 4 || cartes_west[i] == 5 || cartes_west[i] == 6 || cartes_west[i] == 7 || cartes_west[i] == 8){
-							suite_coeur_sa++;
-						}
-
-						// test de la suite dans les carreau
-						if(cartes_west[i] == 12 || cartes_west[i] == 13 || cartes_west[i] ==  14 || cartes_west[i] == 15 || cartes_west[i] == 16){
-							suite_carreau_sa++;
-						}
-
-						// test de la suite dans les trèfles
-						if(cartes_west[i] == 20 || cartes_west[i] == 21 || cartes_west[i] == 22 || cartes_west[i] == 23 || cartes_west[i] == 24){
-							suite_trefle_sa++;
-						}
-
-						// test de la suite dans les pique
-						if(cartes_west[i] == 28 || cartes_west[i] == 29 || cartes_west[i] == 30 || cartes_west[i] == 31 || cartes_west[i] == 32){
-							suite_pique_sa++;
-						}
-					}
-
-					// si l'une des trois variables suites == 5 alors Ouest possède une suite;
-					if(suite_pique_sa == 5 || suite_trefle_sa == 5 || suite_carreau_sa == 5 || suite_coeur_sa == 5){
-						suite_sa = 1;
-						// DEBUG : printf("\nsuite : %d",suite);
-					}
-
-					if( ordi_west_as >= 2 && suite_sa == 1 ){
-						atout = "SA";
-						printf("\nOuest annonce Sans Atout");
-					}
-					else{
-						atout = "Couleur Unique";
-						printf("Ouest annonce Couleur Unique");
-					} 
-				}
-			}
-
-			// compte chaque cartes par couleur
-			// regarde le nombre de cartes hautes dans la couleur la plus représentée et annonce les pts
-
-			break;
-
-		//////////////////////// Nord ////////////////////////
-		case 3:
-			printf("Nord examine son jeu!\n");
-			if(tour_enrichisseur == 1){
-
-				int	ordi_north_as    = 0;
-				int ordi_north_valet = 0;
-
-				//////////////////////// Test si TA possible ////////////////////////
-				/*
-					Les Valets ont pour valeur : 5, 13, 21, 29
-				*/
-				/*
-					Les suites ont pour valeur : 3, 5, 8 // 11, 13, 16 // 19, 21, 24 // 27, 29, 32
-				*/
-
-				// On compte les valets
-				for(int i = 0; i < 8; i++){
-					if(cartes_north[i] == 5 || cartes_north[i] == 13 || cartes_north[i] == 21 || cartes_north[i] == 29){
-						ordi_north_valet++;
-					}
-				}
-				// DEBUG : printf("\nOuest Valets : %d",ordi_north_valet);
-
-				// On vérifie que Nord possède une suite si il a moins de 3 valets
-				int suite_ta = 0;
-				if( ordi_north_valet < 3){
-					int suite_coeur_ta   = 0;
-					int suite_carreau_ta = 0;
-					int suite_trefle_ta  = 0;
-					int suite_pique_ta   = 0;
-
-					for(int i = 0; i < 8; i++){
-						// test de la suite dans les coeurs
-						if(cartes_north[i] == 3 || cartes_north[i] == 5 || cartes_north[i] == 8){
-							suite_coeur_ta++;
-						}
-
-						// test de la suite dans les carreau
-						if(cartes_north[i] == 11 || cartes_north[i] == 13 || cartes_north[i] == 16){
-							suite_carreau_ta++;
-						}
-
-						// test de la suite dans les trèfles
-						if(cartes_north[i] == 19 || cartes_north[i] == 21 || cartes_north[i] == 24){
-							suite_trefle_ta++;
-						}
-
-						// test de la suite dans les pique
-						if(cartes_north[i] == 27 || cartes_north[i] == 29 || cartes_north[i] == 32){
-							suite_pique_ta++;
-						}
-					}
-
-					// si l'une des trois variables suites == 3 alors Nord possède une suite;
-					if(suite_pique_ta == 3 || suite_trefle_ta == 3 || suite_carreau_ta == 3 || suite_coeur_ta == 3){
-						suite_ta = 1;
-						// DEBUG : printf("\nsuite : %d",suite);
-					}
-				}
-
-				if( ordi_north_valet == 3 || suite_ta == 1 ){
-					atout = "TA";
-					printf("\nNord annonce Tout Atout");
-				}
-				else{
-					//////////////////////// Test si SA possible ////////////////////////
-					/*
-						Les As ont pour valeur 8, 16, 24, 32
-					*/
-					/*
-						Les suites 10,V,D,R,As ont pour valeur : 4,5,6,7,8 // 12,13,14,15,16 // 20,21,22,23,24 // 28,29,30,31,32
-					*/
-
-					// On compte les As
-					for(int i = 0; i < 8; i++){
-						if(cartes_north[i] == 8 || cartes_north[i] == 16 || cartes_north[i] == 24 || cartes_north[i] == 32){
-							ordi_north_as++;
-						}
-					}
-					// DEBUG : printf("\nNord As     : %d",ordi_north_as);
-
-					// On vérifie que l'ordi possède la suite (dans tout les cas == elle est nécessaire)
-					int suite_sa = 0;
-					int suite_coeur_sa   = 0;
-					int suite_carreau_sa = 0;
-					int suite_trefle_sa  = 0;
-					int suite_pique_sa   = 0;
-
-					for(int i = 0; i < 8; i++){
-						// test de la suite dans les coeurs
-						if(cartes_north[i] == 4 || cartes_north[i] == 5 || cartes_north[i] == 6 || cartes_north[i] == 7 || cartes_north[i] == 8){
-							suite_coeur_sa++;
-						}
-
-						// test de la suite dans les carreau
-						if(cartes_north[i] == 12 || cartes_north[i] == 13 || cartes_north[i] ==  14 || cartes_north[i] == 15 || cartes_north[i] == 16){
-							suite_carreau_sa++;
-						}
-
-						// test de la suite dans les trèfles
-						if(cartes_north[i] == 20 || cartes_north[i] == 21 || cartes_north[i] == 22 || cartes_north[i] == 23 || cartes_north[i] == 24){
-							suite_trefle_sa++;
-						}
-
-						// test de la suite dans les pique
-						if(cartes_north[i] == 28 || cartes_north[i] == 29 || cartes_north[i] == 30 || cartes_north[i] == 31 || cartes_north[i] == 32){
-							suite_pique_sa++;
-						}
-					}
-
-					// si l'une des trois variables suites == 5 alors Nord possède une suite;
-					if(suite_pique_sa == 5 || suite_trefle_sa == 5 || suite_carreau_sa == 5 || suite_coeur_sa == 5){
-						suite_sa = 1;
-						// DEBUG : printf("\nsuite : %d",suite);
-					}
-
-					if( ordi_north_as >= 2 && suite_sa == 1 ){
-						atout = "SA";
-						printf("\nNord annonce Sans Atout");
-					}
-					else{
-						atout = "Couleur Unique";
-						printf("Nord annonce Couleur Unique");
-					}
-				}
-			}
-			break;
-
-		//////////////////////// Est ////////////////////////
-		case 4:
-			printf("Est examine son jeu!\n");
-		  if(tour_enrichisseur == 1){
-
-				int	ordi_east_as    = 0;
-				int ordi_east_valet = 0;
-
-				//////////////////////// Test si TA possible ////////////////////////
-				/*
-					Les Valets ont pour valeur : 5, 13, 21, 29
-				*/
-				/*
-					Les suites ont pour valeur : 3, 5, 8 // 11, 13, 16 // 19, 21, 24 // 27, 29, 32
-				*/
-
-				// On compte les valets
-				for(int i = 0; i < 8; i++){
-					if(cartes_east[i] == 5 || cartes_east[i] == 13 || cartes_east[i] == 21 || cartes_east[i] == 29){
-						ordi_east_valet++;
-					}
-				}
-				// DEBUG : printf("\nOuest Valets : %d",ordi_east_valet);
-
-				// On vérifie que Est possède une suite si il a moins de 3 valets
-				int suite_ta = 0;
-				if( ordi_east_valet < 3){
-					int suite_coeur_ta   = 0;
-					int suite_carreau_ta = 0;
-					int suite_trefle_ta  = 0;
-					int suite_pique_ta   = 0;
-
-					for(int i = 0; i < 8; i++){
-						// test de la suite dans les coeurs
-						if(cartes_east[i] == 3 || cartes_east[i] == 5 || cartes_east[i] == 8){
-							suite_coeur_ta++;
-						}
-
-						// test de la suite dans les carreau
-						if(cartes_east[i] == 11 || cartes_east[i] == 13 || cartes_east[i] == 16){
-							suite_carreau_ta++;
-						}
-
-						// test de la suite dans les trèfles
-						if(cartes_east[i] == 19 || cartes_east[i] == 21 || cartes_east[i] == 24){
-							suite_trefle_ta++;
-						}
-
-						// test de la suite dans les pique
-						if(cartes_east[i] == 27 || cartes_east[i] == 29 || cartes_east[i] == 32){
-							suite_pique_ta++;
-						}
-					}
-
-					// si l'une des trois variables suites == 3 alors Est possède une suite;
-					if(suite_pique_ta == 3 || suite_trefle_ta == 3 || suite_carreau_ta == 3 || suite_coeur_ta == 3){
-						suite_ta = 1;
-						// DEBUG : printf("\nsuite : %d",suite);
-					}
-				}
-
-				if( ordi_east_valet == 3 || suite_ta == 1 ){
-					atout = "TA";
-					printf("\nEst annonce Tout Atout");
-				}
-				else{
-					//////////////////////// Test si SA possible ////////////////////////
-					/*
-						Les As ont pour valeur 8, 16, 24, 32
-					*/
-					/*
-						Les suites 10,V,D,R,As ont pour valeur : 4,5,6,7,8 // 12,13,14,15,16 // 20,21,22,23,24 // 28,29,30,31,32
-					*/
-
-					// On compte les As
-					for(int i = 0; i < 8; i++){
-						if(cartes_east[i] == 8 || cartes_east[i] == 16 || cartes_east[i] == 24 || cartes_east[i] == 32){
-							ordi_east_as++;
-						}
-					}
-					// DEBUG : printf("\nEst As     : %d",ordi_east_as);
-
-					// On vérifie que l'ordi possède la suite (dans tout les cas == elle est nécessaire)
-					int suite_sa = 0;
-					int suite_coeur_sa   = 0;
-					int suite_carreau_sa = 0;
-					int suite_trefle_sa  = 0;
-					int suite_pique_sa   = 0;
-
-					for(int i = 0; i < 8; i++){
-						// test de la suite dans les coeurs
-						if(cartes_east[i] == 4 || cartes_east[i] == 5 || cartes_east[i] == 6 || cartes_east[i] == 7 || cartes_east[i] == 8){
-							suite_coeur_sa++;
-						}
-
-						// test de la suite dans les carreau
-						if(cartes_east[i] == 12 || cartes_east[i] == 13 || cartes_east[i] ==  14 || cartes_east[i] == 15 || cartes_east[i] == 16){
-							suite_carreau_sa++;
-						}
-
-						// test de la suite dans les trèfles
-						if(cartes_east[i] == 20 || cartes_east[i] == 21 || cartes_east[i] == 22 || cartes_east[i] == 23 || cartes_east[i] == 24){
-							suite_trefle_sa++;
-						}
-
-						// test de la suite dans les pique
-						if(cartes_east[i] == 28 || cartes_east[i] == 29 || cartes_east[i] == 30 || cartes_east[i] == 31 || cartes_east[i] == 32){
-							suite_pique_sa++;
-						}
-					}
-
-					// si l'une des trois variables suites == 5 alors Est possède une suite;
-					if(suite_pique_sa == 5 || suite_trefle_sa == 5 || suite_carreau_sa == 5 || suite_coeur_sa == 5){
-						suite_sa = 1;
-						// DEBUG : printf("\nsuite : %d",suite);
-					}
-
-					if( ordi_east_as >= 2 && suite_sa == 1 ){
-						atout = "SA";
-						printf("\nEst annonce Sans Atout");
-					}
-					else{
-						atout = "Couleur Unique";
-						printf("Est annonce Couleur Unique");
-					}
-				}
-			}
-			break;
-
-		default:
-			printf("Erreur dans switch(encherisseur)");
-			break;
-	}
 }
 
 // Lancement de la partie: - CONTIENT DES VARIABLES A ACTIVER
@@ -861,14 +887,15 @@ void nouvelle_partie(){
 
 	// Mélange des cartes
 	printf("Mélange des cartes... ");
-	melanger(cartes, taille_cartes);
+	melanger(cartes, taille_cartes); // melanger(tableau, taille tableau)
 
 	printf("Distribution des cartes... ");
 	distribuer();
 
 	printf("\n");
 
-	enchere(distributeur+1);
+	enchere(distributeur+1,0,0); // enchere(encherisseur, tour, passe) (encherisseur -> clockwise)
+
 }
 
 // Fonction pour afficher les meilleurs scores enregistrés
@@ -927,6 +954,8 @@ int main(void){
 	srand(time(NULL));
 
 	menu();
+
+	printf("\n\nFin de main()\n atout  : %s\n points : %d\n\n",atout,points);
 	
 return 0;
 }
