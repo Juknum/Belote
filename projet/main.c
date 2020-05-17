@@ -36,7 +36,7 @@ int score_max_3;
 int cartes[32] = {1,2,3,4,5,6,7,8, 9,10,11,12,13,14,15,16, 17,18,19,20,21,22,23,24, 25,26,27,28,29,30,31,32};
 int taille_cartes = (sizeof(cartes)/sizeof(int));
 
-unsigned int distributeur;
+int distributeur;
 
 int cartes_joueur[8] = {0};
 int cartes_east[8]   = {0};
@@ -333,57 +333,177 @@ void melanger(int * tableau, int taille){
 }
 
 // Distribution des cartes
-void distribuer(void){
-	char * distributeur_char;
+void distribuer(int distrib){
+	printf("Distribution des cartes... ");
+	
+	if(distrib == 5){distrib = 1;} // Si le distributeur précédent était Est alors 4 + 1 = 5 sauf que Joueur == 1;
 
-	int alea = rand()% 4 + 1;
-	switch(alea){
+	switch(distrib){
 		case 1:
 			distributeur = 1; // Joueur
-			distributeur_char = nom_joueur;
+			printf("%s distribue...",nom_joueur);
+
+			// Joueur distribue en 1er a Ouest -> Nord -> Est -> Joueur
+			// Distribue 3 cartes par personne
+			for(int i = 0; i < 3; i++){
+				cartes_west[i]   = cartes[i];
+				cartes_north[i]  = cartes[i+3];
+				cartes_east[i]   = cartes[i+6];
+				cartes_joueur[i] = cartes[i+9];
+			}
+			// Distribue 2 cartes par personne
+			for(int i = 3; i < 5; i++){
+				cartes_west[i]   = cartes[i+9];
+				cartes_north[i]  = cartes[i+11];
+				cartes_east[i]   = cartes[i+13];
+				cartes_joueur[i] = cartes[i+15];
+			}
+			// Distribue 3 cartes par personne
+			for(int i = 5; i < 8; i++){
+				cartes_west[i]   = cartes[i+15];
+				cartes_north[i]  = cartes[i+18];
+				cartes_east[i]   = cartes[i+21];
+				cartes_joueur[i] = cartes[i+24];		
+			}
+
 			break;
 		case 2:
 			distributeur = 2; // Ouest
-			distributeur_char = "Ouest";
+			printf("Ouest distribue...");
+
+			// Ouest distribue en 1er a Nord -> Est -> Joueur -> Ouest
+			// Distribue 3 cartes par personne
+			for(int i = 0; i < 3; i++){
+				cartes_north[i]  = cartes[i];
+				cartes_east[i]   = cartes[i+3];
+				cartes_joueur[i] = cartes[i+6];
+				cartes_west[i]   = cartes[i+9];
+			}
+			// Distribue 2 cartes par personne
+			for(int i = 3; i < 5; i++){
+				cartes_north[i]  = cartes[i+9];
+				cartes_east[i]   = cartes[i+11];
+				cartes_joueur[i] = cartes[i+13];
+				cartes_west[i]   = cartes[i+15];
+			}
+			// Distribue 3 cartes par personne
+			for(int i = 5; i < 8; i++){
+				cartes_north[i]  = cartes[i+15];
+				cartes_east[i]   = cartes[i+18];
+				cartes_joueur[i] = cartes[i+21];
+				cartes_west[i]   = cartes[i+24];		
+			}
+
 			break;
 		case 3:
 			distributeur = 3; // Nord
-			distributeur_char = "Nord";
+			printf("Nord distribue...");
+
+			// Nord distribue en 1er a Est -> Joueur -> Ouest -> Nord 
+			// Distribue 3 cartes par personne
+			for(int i = 0; i < 3; i++){
+				cartes_east[i]   = cartes[i];
+				cartes_joueur[i] = cartes[i+3];
+				cartes_west[i]   = cartes[i+6];
+				cartes_north[i]  = cartes[i+9];
+			}
+			// Distribue 2 cartes par personne
+			for(int i = 3; i < 5; i++){
+				cartes_east[i]   = cartes[i+9];
+				cartes_joueur[i] = cartes[i+11];
+				cartes_west[i]   = cartes[i+13];
+				cartes_north[i]  = cartes[i+15];
+			}
+			// Distribue 3 cartes par personne
+			for(int i = 5; i < 8; i++){
+				cartes_east[i]   = cartes[i+15];
+				cartes_joueur[i] = cartes[i+18];
+				cartes_west[i]   = cartes[i+21];
+				cartes_north[i]  = cartes[i+24];		
+			}
+
 			break;
 		case 4:
 			distributeur = 4; // Est
-			distributeur_char = "Est";
+			printf("Est distribue...");
+
+			// Est distribue en 1er a Joueur -> Ouest -> Nord -> Est 
+			// Distribue 3 cartes par personne
+			for(int i = 0; i < 3; i++){
+				cartes_joueur[i] = cartes[i];
+				cartes_west[i]   = cartes[i+3];
+				cartes_north[i]  = cartes[i+6];
+				cartes_east[i]   = cartes[i+9];
+			}
+			// Distribue 2 cartes par personne
+			for(int i = 3; i < 5; i++){
+				cartes_joueur[i] = cartes[i+9];
+				cartes_west[i]   = cartes[i+11];
+				cartes_north[i]  = cartes[i+13];
+				cartes_east[i]   = cartes[i+15];
+			}
+			// Distribue 3 cartes par personne
+			for(int i = 5; i < 8; i++){
+				cartes_joueur[i] = cartes[i+15];
+				cartes_west[i]   = cartes[i+18];
+				cartes_north[i]  = cartes[i+21];
+				cartes_east[i]   = cartes[i+24];		
+			}
+
 			break;
 		default:
-			printf("Erreur pendant le choix du distributeur");
+			printf("Erreur switch distribuer(%d)",distrib);
 			break;
 	}
 
-	printf("%s distribue... ",distributeur_char);
-
-	// Distribue 3 cartes par personne
-	for(int i = 0; i < 3; i++){
-		cartes_joueur[i] = cartes[i];
-		cartes_east[i]   = cartes[i+3];
-		cartes_north[i]  = cartes[i+6];
-		cartes_west[i]   = cartes[i+9];
-	}
-	// Distribue 2 cartes par personne
-	for(int i = 3; i < 5; i++){
-		cartes_joueur[i] = cartes[i+9];
-		cartes_east[i]   = cartes[i+11];
-		cartes_north[i]  = cartes[i+13];
-		cartes_west[i]   = cartes[i+15];		
-	}
-	// Distribue 3 cartes par personne
-	for(int i = 5; i < 8; i++){
-		cartes_joueur[i] = cartes[i+15];
-		cartes_east[i]   = cartes[i+18];
-		cartes_north[i]  = cartes[i+21];
-		cartes_west[i]   = cartes[i+24];		
+	// On supprime les cartes présentes dans le deck (il est vide)
+	for(int i = 0; i < 32; i++){
+		cartes[i] = 0;
 	}
 
 	printf("Fait!\n");
+}
+
+// Permet de recuperer les cartes suite a un plis ou suite a 3 passe après l'enchère
+void ramasser(int distributeur){
+
+	switch(distributeur){
+		case 1: // Joueur a distribué -> on ramasse en premier Ouest -> Nord -> Est -> Joueur
+			for(int i = 0; i < 8; i++){cartes[i]    = cartes_west[i];   }
+			for(int i = 0; i < 8; i++){cartes[i+8]  = cartes_north[i];  }
+			for(int i = 0; i < 8; i++){cartes[i+16] = cartes_east[i];   }
+			for(int i = 0; i < 8; i++){cartes[i+24] = cartes_joueur[i]; }
+			break;
+		case 2: // Ouest a distribué -> on ramasse en premier Nord -> Est -> Joueur -> Ouest
+			for(int i = 0; i < 8; i++){cartes[i]    = cartes_north[i];  }
+			for(int i = 0; i < 8; i++){cartes[i+8]  = cartes_east[i];   }
+			for(int i = 0; i < 8; i++){cartes[i+16] = cartes_joueur[i]; }
+			for(int i = 0; i < 8; i++){cartes[i+24] = cartes_west[i];   }
+			break; 
+		case 3: // Nord a distribué -> on ramasse en premier Est -> Joueur -> Ouest -> Nord
+			for(int i = 0; i < 8; i++){cartes[i]    = cartes_east[i];   }
+			for(int i = 0; i < 8; i++){cartes[i+8]  = cartes_joueur[i]; }
+			for(int i = 0; i < 8; i++){cartes[i+16] = cartes_west[i];   }
+			for(int i = 0; i < 8; i++){cartes[i+24] = cartes_north[i];  }
+			break;
+		case 4: // Est a distribué -> on ramasse en premier Joueur -> Ouest -> Nord -> Est
+			for(int i = 0; i < 8; i++){cartes[i]    = cartes_joueur[i]; }
+			for(int i = 0; i < 8; i++){cartes[i+8]  = cartes_west[i];   }
+			for(int i = 0; i < 8; i++){cartes[i+16] = cartes_north[i];  }
+			for(int i = 0; i < 8; i++){cartes[i+24] = cartes_east[i];   }
+			break;
+		default:
+			printf("Erreur switch ramasser(%d)",distributeur);
+			break;
+	}
+	
+	// Les mains sont vides donc on vides chaque joueur (on met à 0)
+	for(int i = 0; i < 8; i++){
+		cartes_joueur[i] = 0;
+		cartes_west[i]   = 0;
+		cartes_north[i]  = 0;
+		cartes_east[i]   = 0;
+	}
 }
 
 // Permet de trier nos cartes (tri a bulle)
@@ -442,13 +562,15 @@ int enchere_bot(int * cartes_bot, char * bot, int score_estimation){
 	int suite_trefle_sa  = 0;
 	int suite_pique_sa   = 0;
 
-	printf("\n%s examine son jeu...",bot);
+	printf("\n§ %s examine son jeu...",bot);
 
 	// DEBUG : Affiches les cartes du bot
+	/*
 	printf("\n%s :",bot);
 	for(int i = 0; i < 8; i++){
 		printf(" %s",dictionnaire(cartes_bot[i]));
 	}
+	*/
 	
 	// On regarde la valeur totale des cartes par couleur (en atout) et on garde la meilleure couleur
 	for(int i = 0; i < 8; i++){
@@ -657,7 +779,7 @@ int enchere_bot(int * cartes_bot, char * bot, int score_estimation){
 			}
 			else{
 				/////// Passe ///////
-				printf("\n%s a choisit de passer son tours!",bot);
+				printf(" et a choisit de passer son tours!");
 				atout = "undefined"; // car il ne choisit pas d'atout
 				passe++;
 			}
@@ -665,7 +787,7 @@ int enchere_bot(int * cartes_bot, char * bot, int score_estimation){
 	}
 	else{ // joue == 1
 		points = (points / 10) * 10; // On décide de ne pas garder l'unité
-		printf("\n%s annonce une couleur de %s avec %d pts",bot,atout,points);
+		printf(" et annonce une couleur de %s avec %d pts",atout,points);
 	}
 }
 
@@ -691,8 +813,10 @@ int enchere(int encherisseur){
 	int choix_points  = 0;
 
 	////// Score bot minimum //////
-	// mini 80 pts : 80 / 2.5 = 32 // Score minimum de la couleur pour que le bot décide de jouer
-	// 2.5 -> il pense remporter 2,5 plis
+	/*
+		mini 80 pts : 80 / 2.5 = 32 // Score minimum de la couleur pour que le bot décide de jouer
+		2.5 -> il pense remporter 2,5 plis
+	*/
 	int score_estimation = 32; 
 
 	// Lorsqu'il faut annonce un contrat + points
@@ -702,28 +826,44 @@ int enchere(int encherisseur){
 		// Si Est distribue alors encherisseur == 5 == 1
 		if(encherisseur == 5){encherisseur = 1;}
 
-		printf("\npasse = %d",passe);
+		// DEBUG : affiche le nombre de personne qui ont passé leur tour
+		//printf("\npasse = %d",passe);
+
+		if(passe > 3){ // Si personne n'annonce de contrat (alors passe > 3) on reprend et on redonne les cartes 
+			passe = 0;
+
+			printf("\n\n");
+			printf("--------------------------------------------------------------\n");
+			printf("Personne n'a prit on rammase les cartes et on redistribue...\n");
+			ramasser(distributeur);
+			distribuer(distributeur+1);
+			printf("--------------------------------------------------------------\n");
+		}
+
 		switch(encherisseur){
 			/////// Joueur ///////
 			case 1:
-				printf("\n%s examine son jeu...\n\n",nom_joueur);
+				printf("\n§ %s examine son jeu...\n\n",nom_joueur);
 				do{
 					printf("Souhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
-					scanf("%d",&choix_annonce); // A ACTIVER*
+					//scanf("%d",&choix_annonce); // A ACTIVER
+					choix_annonce = 2; // A DESACTIVER
 				}while(choix_annonce < 1 || choix_annonce > 2);
 			
 				switch(choix_annonce){
 					case 1:
 						do{
-							printf("\n\nQuel contrat souhaitez-vous?\n1 | Couleur\n2 | Tout Atout (TA)\n3 | Sans Atout (SA)\n");
+							printf("\nQuel contrat souhaitez-vous?\n1 | Couleur\n2 | Tout Atout (TA)\n3 | Sans Atout (SA)\n");
 							scanf("%d",&choix_atout); // A ACTIVER
+							//choix_atout = 1; // A DESACTIVER
 						}while(choix_atout < 1 || choix_atout > 3);
 
 						switch(choix_atout){
 							case 1:
 								do{
 									printf("\nQuelles couleur?\n1 | Carreau\n2 | Coeur\n3 | Pique\n4 | Trèfle\n");
-									scanf("%d",choix_couleur); // A ACTIVER
+									scanf("%d",&choix_couleur); // A ACTIVER
+									//choix_couleur = 4; // A DESACTIVER
 								}while(choix_couleur < 1 || choix_couleur > 4);
 
 								switch(choix_couleur){
@@ -738,6 +878,7 @@ int enchere(int encherisseur){
 										break;
 									case 4:
 										atout = "Trèfle";
+										break;
 									default:
 										printf("Erreur switch couleur");
 										break;
@@ -748,7 +889,7 @@ int enchere(int encherisseur){
 								// Annonce des points: 
 								
 								printf("\n\nAnnoncez vos points:\nN | Classique - Entre 80 et 160 pts, par tranche de 10!\n1 | Capôt     - 250 pts -> gagner tout les plis\n2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
-								scanf("%d",choix_points); // A ACTIVER
+								scanf("%d",&choix_points); // A ACTIVER
 
 								switch(choix_points){
 									case 1 :
@@ -782,56 +923,26 @@ int enchere(int encherisseur){
 
 						break;
 					case 2:
-						printf("\n%s a choisit de passer son tours!",nom_joueur);
+						printf("\n§ %s a choisit de passer son tours!",nom_joueur);
 						passe++;
 						break;
 					default:
-						printf("Erreur switch annonce/passer");
+						printf("Erreur switch annonce/passer joueur choix_annonce=%d",choix_annonce);
 						break;
 				}
 
 				break;
 			///////  Ouest ///////
 			case 2:
-				if(passe > 3){ // L'estimation minimal du bot diminu si personne ne choisit d'atout au 1er tour
-					passe = 0;
-					score_estimation = score_estimation - 12;
-					printf("\nestim = %d",score_estimation);
-
-					enchere_bot(cartes_west, "Ouest",score_estimation);
-				}else{
-					printf("\nestim = %d",score_estimation);
-					enchere_bot(cartes_west, "Ouest", score_estimation);
-				}
-
+				enchere_bot(cartes_west, "Ouest", score_estimation);
 				break;
 			///////  Nord  ///////
 			case 3:
-				if(passe > 3){
-					passe = 0;
-					score_estimation = score_estimation - 12;
-					printf("\nestim = %d",score_estimation);
-
-					enchere_bot(cartes_north, "Nord",score_estimation);
-				}else{
-					printf("\nestim = %d",score_estimation);
-					enchere_bot(cartes_north, "Nord", score_estimation);
-				}
-
+				enchere_bot(cartes_north, "Nord", score_estimation);
 				break;
 			///////   Est  ///////
 			case 4:
-				if(passe > 3){
-					passe = 0;
-					score_estimation = score_estimation - 12;
-					printf("\nestim = %d",score_estimation);
-
-					enchere_bot(cartes_east, "Est",score_estimation);
-				}else{
-					printf("\nestim = %d",score_estimation);
-					enchere_bot(cartes_east, "Est", score_estimation);
-				}
-
+				enchere_bot(cartes_east, "Est", score_estimation);
 				break;
 			default:
 				printf("Erreur dans le switch encherisseur");
@@ -880,6 +991,12 @@ int enchere(int encherisseur){
 		printf("\nFin des enchères... début du jeu!");
 		printf("\n---------------------------------");
 
+		// On trie les cartes de tout le monde
+		tableau_tri(cartes_joueur);
+		tableau_tri(cartes_west);
+		tableau_tri(cartes_east);
+		tableau_tri(cartes_north);
+
 		plis(0);
 
 		return 0; // On quitte la fonction
@@ -901,16 +1018,10 @@ void nouvelle_partie(){
 	printf("Mélange des cartes... ");
 	melanger(cartes, taille_cartes); // melanger(tableau, taille tableau)
 
-	printf("Distribution des cartes... ");
-	distribuer();
+	int distrib_alea = rand()% 4 + 1; // on prend un joueur pour distribuer au hasard
+	distribuer(distrib_alea);
 
 	printf("\n");
-
-	// On trie les cartes de tout le monde
-	tableau_tri(cartes_joueur);
-	tableau_tri(cartes_west);
-	tableau_tri(cartes_east);
-	tableau_tri(cartes_north);
 
 	enchere(distributeur); // enchere(encherisseur) (encherisseur -> clockwise)
 
