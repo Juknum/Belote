@@ -6,6 +6,8 @@
 
 */
 
+#include "./fonctions/fonctions.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -52,259 +54,43 @@ int passe  = 0; 						// Nombre de fois qu'un joueur passe
 ////////////////////     FONCTIONS     ////////////////////
 
 // Fonction pour vider l'écran et ajouter le titre
-void espace_vide(int titre){
+void espace_vide(int option, char * titre){
 
-	for(int i = 0; i < 1; i++){
-		printf("\n");
+	if(option == 1){
+		if(titre == "titre"){
+			printf("O-------------------------------------------------- - --------------------------------------------------O\n");
+			printf("§                                     o------------ - ------------o\n");
+			printf("§ ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠  !      Belote Coinchée      !  ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠ \n");
+			printf("§                                     o---------------------------o\n");
+			printf("§\n§\n§\n§\n");
+			printf("O-------------------------------------------------- - --------------------------------------------------O\n");
+		}
+		if(titre == "nouvelle"){
+			printf("O-------------------------------------------------- - --------------------------------------------------O\n");
+			printf("§                                     o------------ - ------------o\n");
+			printf("§                                     !      Nouvelle Partie      !\n");
+			printf("§                                     o---------------------------o\n");
+			printf("§\n§\n§\n§\n");
+			printf("O-------------------------------------------------- - --------------------------------------------------O\n");
+		}
+		if(titre == "enchere"){
+			printf("O-------------------------------------------------- - --------------------------------------------------O\n");
+			printf("§                                     o------------ - ------------o\n");
+			printf("§                                     !      Phase d'Enchère      !\n");
+			printf("§                                     o---------------------------o\n");
+			printf("§\n§\n§\n§\n");
+			printf("O-------------------------------------------------- - --------------------------------------------------O\n");
+		}
 	}
 
-	if(titre == 1){
-		printf("**************************\n");
-		printf("*                        *\n");
-		printf("*     Belote Coinchée    *\n");
-		printf("*                        *\n");
-		printf("**************************\n");
-	}
-}
-
-// Dictionnaire pour la traduction d'un int en carte
-char * dictionnaire(int tableau){
-	char* result = "undefined";
-
-	switch(tableau){
-		case 1 :
-		result = " 7♠";
-		break;
-		case 2 :
-		result = " 8♠";
-		break;
-		case 3 :
-		result = " 9♠";
-		break;
-		case 4 :
-		result = "10♠";
-		break;
-		case 5 :
-		result = " V♠";
-		break;
-		case 6 :
-		result = " D♠";
-		break;
-		case 7 :
-		result = " R♠";
-		break;
-		case 8 :
-		result = "AS♠";
-		break;
-
-		case 9 :
-		result = " 7♦";
-		break;
-		case 10 :
-		result = " 8♦";
-		break;
-		case 11 :
-		result = " 9♦";
-		break;
-		case 12 :
-		result = "10♦";
-		break;
-		case 13 :
-		result = " V♦";
-		break;
-		case 14 :
-		result = " D♦";
-		break;
-		case 15 :
-		result = " R♦";
-		break;
-		case 16 :
-		result = "AS♦";
-		break;
-
-		case 17 :
-		result = " 7♥";
-		break;
-		case 18 :
-		result = " 8♥";
-		break;
-		case 19 :
-		result = " 9♥";
-		break;
-		case 20 :
-		result = "10♥";
-		break;
-		case 21 :
-		result = " V♥";
-		break;
-		case 22 :
-		result = " D♥";
-		break;
-		case 23 :
-		result = " R♥";
-		break;
-		case 24 :
-		result = "AS♥";
-		break;
-
-		case 25 :
-		result = " 7♣";
-		break;
-		case 26 :
-		result = " 8♣";
-		break;
-		case 27 :
-		result = " 9♣";
-		break;
-		case 28 :
-		result = "10♣";
-		break;
-		case 29 :
-		result = " V♣";
-		break;
-		case 30 :
-		result = " D♣";
-		break;
-		case 31 :
-		result = " R♣";
-		break;
-		case 32 :
-		result = "AS♣";
-		break;
-
-		default :
-		result = "error carte non définie";
-		break;
-	}
-
-	// DEBUG :
-	//printf("cartes num : %d\n",tableau);
-	//printf("traduction : %s\n",result);
-
-	return result;
-}
-
-// Dictionnaire pour la traduction d'un int en valeur d'atout
-int dictionnaire_atout(int tableau){
-	int result = -1;
-
-	switch(tableau){
-		case 1 :
-		result = 0;
-		break;
-		case 2 :
-		result = 0;
-		break;
-		case 3 :
-		result = 14;
-		break;
-		case 4 :
-		result = 10;
-		break;
-		case 5 :
-		result = 20;
-		break;
-		case 6 :
-		result = 3;
-		break;
-		case 7 :
-		result = 4;
-		break;
-		case 8 :
-		result = 11;
-		break;
-
-		case 9 :
-		result = 0;
-		break;
-		case 10 :
-		result = 0;
-		break;
-		case 11 :
-		result = 14;
-		break;
-		case 12 :
-		result = 10;
-		break;
-		case 13 :
-		result = 20;
-		break;
-		case 14 :
-		result = 3;
-		break;
-		case 15 :
-		result = 4;
-		break;
-		case 16 :
-		result = 11;
-		break;
-
-		case 17 :
-		result = 0;
-		break;
-		case 18 :
-		result = 0;
-		break;
-		case 19 :
-		result = 14;
-		break;
-		case 20 :
-		result = 10;
-		break;
-		case 21 :
-		result = 20;
-		break;
-		case 22 :
-		result = 3;
-		break;
-		case 23 :
-		result = 4;
-		break;
-		case 24 :
-		result = 11;
-		break;
-
-		case 25 :
-		result = 0;
-		break;
-		case 26 :
-		result = 0;
-		break;
-		case 27 :
-		result = 14;
-		break;
-		case 28 :
-		result = 10;
-		break;
-		case 29 :
-		result = 20;
-		break;
-		case 30 :
-		result = 3;
-		break;
-		case 31 :
-		result = 4;
-		break;
-		case 32 :
-		result = 11;
-		break;
-
-		default :
-		result = -2;
-		break;
-	}
-
-	// DEBUG :
-	//printf("cartes num : %d\n",tableau);
-	//printf("traduction : %d\n",result);
-
-	return result;
 }
 
 // Mélange des cartes
 void melanger(int * tableau, int taille){
 	int alea_1, alea_2;
 	int temp[1];
+
+	printf("§ INFO : Mélange des cartes... ");
 
 	/*
 	Melange d'un tableau:
@@ -335,7 +121,7 @@ void melanger(int * tableau, int taille){
 
 // Distribution des cartes
 void distribuer(int distrib){
-	printf("Distribution des cartes... ");
+	printf("§ INFO : Distribution des cartes... ");
 	
 	if(distrib == 5){distrib = 1;} // Si le distributeur précédent était Est alors 4 + 1 = 5 sauf que Joueur == 1;
 
@@ -734,11 +520,9 @@ void bot_enchere(int * cartes_bot, char * bot){
 	}
 
 	if(atout == atout_pre && points == points_pre){ // Si vrai : le bot n'a pas changer l'atout et les pts -> il passe son tours
-		printf("\n§ %s a choisit de passer son tours!");
+		printf("et a choisit de passer son tours!");
 		passe++;
 	}
-
-
 }
 
 // Phase d'Enchère - CONTIENT DES VARIABLES A ACTIVER
@@ -749,24 +533,24 @@ int enchere(int encherisseur){
 	int choix_couleur = 0; 
 	int choix_points  = 0;
 
-	espace_vide(1);
-	printf("Phase d'enchères...\n");
+	espace_vide(1, "enchere");
 
 	while(atout == "undefined"){
 		encherisseur++;
 
 		if(encherisseur == 5){encherisseur = 1;}		// On remet a 1 car après Est (=4), c'est joueur et joueur = 1;
 
-		/*
+		/**/
+		// DEBUG : Affiche les paramètres suivants : encherisseur & passe
 		printf("\nencherisseur: %d",encherisseur);
 		printf("\npasse       : %d",passe);
 		printf("\n");
-		*/
+		
 
 		switch(encherisseur){
 			case 1:		// Joueur
 
-				printf("\n§ %s examine son jeu...\n\n",nom_joueur);
+				//printf("\n§ %s examine son jeu...\n\n",nom_joueur);
 
 				// On affiche les cartes du joueur 
 				printf("Vos cartes :");
@@ -777,8 +561,8 @@ int enchere(int encherisseur){
 				// Demande entre annoncer un contrat ou passer
 				do{
 					printf("\n\nSouhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
-					//scanf("%d",&choix_annonce); // A ACTIVER
-					choix_annonce = 2; // A DESACTIVER
+					scanf("%d",&choix_annonce); // A ACTIVER
+					//choix_annonce = 2; // A DESACTIVER
 				}while(choix_annonce < 1 || choix_annonce > 2);
 			
 				switch(choix_annonce){
@@ -865,29 +649,50 @@ int enchere(int encherisseur){
 			printf("--------------------------------------------------------------\n");
 		}
 
+	if(atout != "undefined"){passe = 0; printf("\n§---------§");}
+
+	while(passe < 3 && atout != "undefined"){
+		encherisseur++;
+		switch(encherisseur){
+			case 1:
+				printf("\n§ %s examine son jeu...",nom_joueur );
+				passe++;
+				break;
+			case 2:
+				printf("\n§ Ouest examine son jeu...");
+				passe++;
+				break;
+			case 3:
+				printf("\n§ Nord examine son jeu...");
+				passe++;
+				break;
+			case 4:
+				printf("\n§ Est examine son jeu...");
+				passe++;
+				break;
+		}
+	}
+
 	}
 
 }
 
 // Lancement de la partie: - CONTIENT DES VARIABLES A ACTIVER
 void nouvelle_partie(){
-	espace_vide(1);
+	espace_vide(1, "nouvelle");
 
 	// Demande du nom du joueur
-	printf("Entrez votre nom : ");
-	//scanf("%s",&nom_joueur); // A ACTIVER
-	printf("\n\n");
+	printf("§ Entrez votre nom : ");
+	scanf("%s",&nom_joueur); // A ACTIVER
+	printf("\n§\n");
 	
 
 	// Mélange des cartes
-	printf("Mélange des cartes... ");
 	melanger(cartes, taille_cartes); // melanger(tableau, taille tableau)
 	
 
-	int distrib_alea = rand()% 4 + 1; // on prend un joueur pour distribuer au hasard
+	int distrib_alea = rand()% 4 + 1; // on prend un joueur au hasard pour distribuer 
 	distribuer(distrib_alea);
-	
-	printf("\n");
 
 	enchere(distributeur); // enchere(encherisseur) (encherisseur -> clockwise)
 
@@ -900,20 +705,16 @@ void meilleurs_score(){
 
 // Menu - CONTIENT DES VARIABLES A ACTIVER
 void menu(void){
-	printf("**************************\n");
-	printf("*                        *\n");
-	printf("*     Belote Coinchée    *\n");
-	printf("*                        *\n");
-	printf("**************************\n");
+	espace_vide(1, "titre");
 
 	int choix = 0;
 
 	do{
-		printf("Que voulez-vous faire?\n\n");
+		printf("§ Que voulez-vous faire?\n§\n");
 
-		printf("1 | Nouvelle Partie\n");
-		printf("2 | Meilleurs Scores\n");
-		printf("3 | Quitter\n\n");
+		printf("§ 1 | Nouvelle Partie\n");
+		printf("§ 2 | Meilleurs Scores\n");
+		printf("§ 3 | Quitter\n\n");
 
 		//scanf("%d",&choix); // A ACTIVER
 		choix = 1;
@@ -931,7 +732,7 @@ void menu(void){
 			break;
 		default:
 			printf("Erreur dans switch(choix = %d)",choix);
-			espace_vide(0);
+			espace_vide(0, "N/A");
 			menu();
 			break;
 	}
