@@ -31,15 +31,15 @@ void menu(void){
 		printf("§\n§\n§\n§\n");
 		printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
 
-		printf("§ Que voulez-vous faire?\n§\n");
-		printf("§ 1 | Nouvelle Partie\n");
-		printf("§ 2 | Meilleurs Scores\n");
-		printf("§ 3 | Quitter\n");
+		printf("§ "YEL"Que voulez-vous faire?\n"WHT"§\n");
+		printf("§ "YEL"1 | Nouvelle Partie\n"WHT);
+		printf("§ "YEL"2 | Meilleurs Scores\n"WHT);
+		printf("§ "YEL"3 | Quitter\n"WHT);
 
-		printf("§ Votre choix : ");
+		printf("§ "YEL"Votre choix : ");
 		//scanf("%d", &choix); // A ACTIVER
 		choix = 1; // A DESACTIVER
-		printf("\n§\n");
+		printf(WHT"\n§\n");
 	}while(choix < 1 || choix > 3);
 
 	switch(choix){
@@ -53,7 +53,7 @@ void menu(void){
 			exit(0);
 			break;
 		default:
-			printf("ERREUR : switch(%d) dans menu(void)",choix);
+			printf(RED"ERREUR :"WHT" switch(%d) dans menu(void)",choix);
 			break;
 	}
 }

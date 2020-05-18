@@ -17,6 +17,9 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 
+#define BOLD  "\x1b[1m"
+#define NBOLD ""RESET""WHT""
+
 // Phase d'Enchère - CONTIENT DES VARIABLES A ACTIVER
 void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes_west, int *cartes_north, int *cartes_east){
 
@@ -37,7 +40,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	printf("§ ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  !      "YEL"Phase d'Enchère"WHT"      !  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"\n");
 	printf("§                                     o-------------=-------------o\n");
 	printf("§\n§\n§\n§\n");
-	printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
+	printf("O--------------------------------------------------=-=--------------------------------------------------O");
 
 	strcpy(atout, "undefined\0");
 
@@ -56,7 +59,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		switch(encherisseur){
 			case 1:		// Joueur
 
-				printf("\n§ %s examine son jeu...\n\n",nom_joueur);
+				printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...\n\n",nom_joueur);
 
 				// On affiche les cartes du joueur 
 				printf(YEL"Vos cartes :"WHT);
@@ -105,15 +108,15 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(WHT);
 						switch(choix_points){
 							case 1 :
-								printf("\n%s annonce Capôt avec une couleur de %s",nom_joueur,atout);
+								printf("\n%s annonce "BOLD"Capôt"NBOLD" avec une couleur de "BOLD"%s"NBOLD,nom_joueur,atout);
 								points = 250;
 								break;
 							case 2 :
-								printf("\n%s annonce Générale avec une couleur de %s",nom_joueur,atout);
+								printf("\n%s annonce "BOLD"Générale"NBOLD" avec une couleur de "BOLD"%s"NBOLD,nom_joueur,atout);
 								points = 500;
 								break;
 							case 80 ... 160 : 
-								printf("\n%s annonce une couleur de %s avec %d pts",nom_joueur,atout,choix_points);
+								printf("\n%s annonce une couleur de "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts",nom_joueur,atout,choix_points);
 								points = choix_points;
 
 								strcpy(contrat, nom_joueur);
@@ -158,7 +161,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		}
 	}
 
-	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf("\n§---------§");}
+	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf("\n§");}
 
 	while(passe < 3 && strcmp(atout,"undefined\0") != 0){
 		encherisseur++;
@@ -167,7 +170,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 		switch(encherisseur){
 			case 1:
-				printf("\n§ %s examine son jeu...",nom_joueur );
+				printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...",nom_joueur );
 				passe++;
 				break;
 			case 2:

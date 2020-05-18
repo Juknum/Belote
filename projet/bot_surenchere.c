@@ -8,9 +8,21 @@
 
 #include "./header/fonctions.h"
 
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
+#define BOLD  "\x1B[1m"
+#define NBOLD ""RESET""WHT""
+
 //bot_enchere(cartes_west, "Ouest", atout, &points, &passe);
 void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points_prev, int *passe){
-	printf("\n§ %s examine son jeu...",bot);
+	printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...",bot);
 
 	int points_pre = *points_prev;
 
@@ -169,7 +181,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 
 	// Points supérieur a ceux actuels
 	if(points > points_pre){
-		printf("\n§ %s annonce %s avec %d pts",bot,atout,points);
+		printf("\n§ "CYN"JEU :"WHT" %s annonce "BOLD"%s"" avec "BOLD"%d"" pts",bot,atout,points);
 
 		*points_prev = points;
 		strcpy(atout_pre, atout);
