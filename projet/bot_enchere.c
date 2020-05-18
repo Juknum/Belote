@@ -9,7 +9,7 @@
 #include "./header/fonctions.h"
 
 // Phase d'Enchère - BOTs
-int bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *passe){
+void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *passe){
 	/*
 		Au moment des enchères : 
 		si une IA possède 3 cartes fortes d’une couleur donnée, 
@@ -98,6 +98,7 @@ int bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *pa
 	// Affiche le nombre de cartes fortes par couleur
 	//printf("\n%d/%d/%d/%d",pique_fort,carreau_fort,coeur_fort,trefle_fort);
 
+	// On détermine combien de couleur on le + grand nombre de carte haute
 	if(pique_fort   >= carreau_fort && pique_fort   >= coeur_fort   && pique_fort   >= trefle_fort){choix_couleur += 1   ;}
 	if(carreau_fort >= pique_fort   && carreau_fort >= coeur_fort   && carreau_fort >= trefle_fort){choix_couleur += 10  ;}
 	if(coeur_fort   >= pique_fort   && coeur_fort   >= carreau_fort && coeur_fort   >= trefle_fort){choix_couleur += 100 ;}

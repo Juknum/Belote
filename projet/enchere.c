@@ -58,8 +58,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				// Demande entre annoncer un contrat ou passer
 				do{
 					printf("\n\nSouhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
-					scanf("%d",&choix_annonce); // A ACTIVER
-					//choix_annonce = 2; // A DESACTIVER
+					//scanf("%d",&choix_annonce); // A ACTIVER
+					choix_annonce = 2; // A DESACTIVER
 				}while(choix_annonce < 1 || choix_annonce > 2);
 			
 				switch(choix_annonce){
@@ -159,16 +159,16 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				passe++;
 				break;
 			case 2:
-				printf("\n§ Ouest examine son jeu...");
-				passe++;
+				bot_surenchere(cartes_west, "Ouest", atout, &points, &passe);
+				
 				break;
 			case 3:
-				printf("\n§ Nord examine son jeu...");
-				passe++;
+				bot_surenchere(cartes_north, "Nord", atout, &points, &passe);
+				
 				break;
 			case 4:
-				printf("\n§ Est examine son jeu...");
-				passe++;
+				bot_surenchere(cartes_east, "Est", atout, &points, &passe);
+				
 				break;
 			default:
 				printf("\n Erreur switch(%d) dans while(%d) < 3 && %s",encherisseur,passe,atout);
