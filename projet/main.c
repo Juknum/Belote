@@ -24,6 +24,15 @@
 #include <windows.h>
 #endif
 
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
 // Main
 int main(void){
 	/* 
@@ -31,12 +40,16 @@ int main(void){
 		> si le programme est utilisé sous Windows
 	*/
 	#ifdef _WIN32
-	    SetConsoleOutputCP(65001);
+	    system("chcp 65001");
 	#endif
 
 	srand(time(NULL));
 
+	printf(WHT); // On met le texte en blanc pendant l'execution
+
 	menu();
+
+	printf(RESET); // On remet la couleur de base de la console (si l'executeur a changer la couleur de base)
 	
 return 0;
 }

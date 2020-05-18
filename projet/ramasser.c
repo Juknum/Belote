@@ -8,8 +8,17 @@
 
 #include "./header/fonctions.h"
 
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
 void ramasser(int redistribue, int distributeur, char *nom_joueur, int * cartes_west, int * cartes_north, int * cartes_east, int * cartes_joueur){
-	printf("Ramassage des cartes... ");
+	printf("§ "GRN"INFO :"WHT" Ramassage des cartes... ");
 
 	int cartes[32] = {0};
 
@@ -55,9 +64,10 @@ void ramasser(int redistribue, int distributeur, char *nom_joueur, int * cartes_
 		cartes_east[i]   = 0;
 	}
 
+	printf("Fait!\n");
+
 	if(redistribue == 1){
 		distribuer(distributeur+1, cartes, nom_joueur, cartes_west, cartes_north, cartes_east, cartes_joueur);
 	}
 
-	printf("Fait!\n");
 }

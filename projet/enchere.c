@@ -8,6 +8,15 @@
 
 #include "./header/fonctions.h"
 
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
 // Phase d'Enchère - CONTIENT DES VARIABLES A ACTIVER
 void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes_west, int *cartes_north, int *cartes_east){
 
@@ -25,7 +34,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 	printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
 	printf("§                                     o------------=-=------------o\n");
-	printf("§ ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠  !      Phase d'Enchère      !  ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠  ♣  ♦  ♠  ♠ \n");
+	printf("§ ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  !      "YEL"Phase d'Enchère"WHT"      !  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"\n");
 	printf("§                                     o-------------=-------------o\n");
 	printf("§\n§\n§\n§\n");
 	printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
@@ -50,14 +59,14 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				printf("\n§ %s examine son jeu...\n\n",nom_joueur);
 
 				// On affiche les cartes du joueur 
-				printf("Vos cartes :");
+				printf(YEL"Vos cartes :"WHT);
 				for(int i = 0; i < 8; i++){
 					printf(" %s",dictionnaire(cartes_joueur[i]));
 				}
 				
 				// Demande entre annoncer un contrat ou passer
 				do{
-					printf("\n\nSouhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
+					printf(YEL"\n\nSouhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
 					//scanf("%d",&choix_annonce); // A ACTIVER
 					choix_annonce = 2; // A DESACTIVER
 				}while(choix_annonce < 1 || choix_annonce > 2);
@@ -83,7 +92,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								strcpy(atout,"Trèfle\0");
 								break;
 							default:
-								printf("Erreur switch couleur");
+								printf(RED"Erreur switch couleur"WHT);
 								break;
 							}
 
@@ -93,7 +102,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								
 						printf("\n\nAnnoncez vos points:\nN | Classique - Entre 80 et 160 pts, par tranche de 10!\n1 | Capôt     - 250 pts -> gagner tout les plis\n2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
 						scanf("%d",&choix_points); // A ACTIVER
-
+						printf(WHT);
 						switch(choix_points){
 							case 1 :
 								printf("\n%s annonce Capôt avec une couleur de %s",nom_joueur,atout);
@@ -113,14 +122,15 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 						break;
 					case 2:
+						printf(WHT);
 						printf("\n§ %s a choisit de passer son tours!",nom_joueur);
 						passe++;
 						break;
 					default:
-						printf("Erreur switch annonce/passer joueur choix_annonce=%d",choix_annonce);
+						printf(RED"Erreur switch annonce/passer joueur choix_annonce=%d"WHT,choix_annonce);
 						break;
 				}
-
+				
 				break;
 			case 2:		// Ouest
 				bot_enchere(cartes_west, "Ouest", atout, &points, &passe);
@@ -131,18 +141,20 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			case 4:		// Est
 				bot_enchere(cartes_east, "Est", atout, &points, &passe);
 				break;
+			default:
+				printf(RED"Erreur switch(%d) dans while(atout=%s)"WHT,encherisseur,atout);
 		}
 
 		if(passe > 3){
 			passe = 0;
 			printf("\n\n");
-			printf("--------------------------------------------------------------\n");
-			printf("Personne n'a fait de contrat, on redistribue les cartes\n");
+			printf("§--------------------------------------------------------------\n");
+			printf("§ "RED"Personne n'a fait de contrat, on redistribue les cartes\n"WHT);
 			
 			ramasser(1,distributeur, nom_joueur, cartes_west, cartes_north, cartes_east, cartes_joueur);
 
 			encherisseur = distributeur;
-			printf("--------------------------------------------------------------\n");
+			printf("§--------------------------------------------------------------\n");
 		}
 	}
 

@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define RED   "\x1B[31m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
 char * dictionnaire(int carte){
 	char* result = "undefined";
 
@@ -36,53 +40,53 @@ char * dictionnaire(int carte){
 		break;
 
 		case 9 :
-		result = " 7♦";
+		result = " 7"RED"♦"WHT"";
 		break;
 		case 10 :
-		result = " 8♦";
+		result = " 8"RED"♦"WHT"";
 		break;
 		case 11 :
-		result = " 9♦";
+		result = " 9"RED"♦"WHT"";
 		break;
 		case 12 :
-		result = "10♦";
+		result = "10"RED"♦"WHT"";
 		break;
 		case 13 :
-		result = " V♦";
+		result = " V"RED"♦"WHT"";
 		break;
 		case 14 :
-		result = " D♦";
+		result = " D"RED"♦"WHT"";
 		break;
 		case 15 :
-		result = " R♦";
+		result = " R"RED"♦"WHT"";
 		break;
 		case 16 :
-		result = "AS♦";
+		result = "AS"RED"♦"WHT"";
 		break;
 
 		case 17 :
-		result = " 7♥";
+		result = " 7"RED"♥"WHT"";
 		break;
 		case 18 :
-		result = " 8♥";
+		result = " 8"RED"♥"WHT"";
 		break;
 		case 19 :
-		result = " 9♥";
+		result = " 9"RED"♥"WHT"";
 		break;
 		case 20 :
-		result = "10♥";
+		result = "10"RED"♥"WHT"";
 		break;
 		case 21 :
-		result = " V♥";
+		result = " V"RED"♥"WHT"";
 		break;
 		case 22 :
-		result = " D♥";
+		result = " D"RED"♥"WHT"";
 		break;
 		case 23 :
-		result = " R♥";
+		result = " R"RED"♥"WHT"";
 		break;
 		case 24 :
-		result = "AS♥";
+		result = "AS"RED"♥"WHT"";
 		break;
 
 		case 25 :
