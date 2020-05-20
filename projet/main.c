@@ -2,6 +2,7 @@
 
 		BELOTE COINCHEE EN C : Groupe F
 		- Julien Constant
+		- Ewen Bourdon
 		- Théo Silva
 
 */
