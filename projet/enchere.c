@@ -70,8 +70,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				// Demande entre annoncer un contrat ou passer
 				do{
 					printf(YEL"\n\nSouhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
-					//scanf("%d",&choix_annonce); // A ACTIVER
-					choix_annonce = 2; // A DESACTIVER
+					scanf("%d",&choix_annonce); // A ACTIVER
+					//choix_annonce = 2; // A DESACTIVER
 				}while(choix_annonce < 1 || choix_annonce > 2);
 			
 				switch(choix_annonce){
@@ -110,10 +110,12 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 							case 1 :
 								printf("\n%s annonce "BOLD"Capôt"NBOLD" avec une couleur de "BOLD"%s"NBOLD,nom_joueur,atout);
 								points = 250;
+								strcpy(contrat, nom_joueur);
 								break;
 							case 2 :
 								printf("\n%s annonce "BOLD"Générale"NBOLD" avec une couleur de "BOLD"%s"NBOLD,nom_joueur,atout);
 								points = 500;
+								strcpy(contrat, nom_joueur);
 								break;
 							case 80 ... 160 : 
 								printf("\n%s annonce une couleur de "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts",nom_joueur,atout,choix_points);

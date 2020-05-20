@@ -18,7 +18,7 @@
 #define RESET "\x1B[0m"
 
 #define BOLD  "\x1b[1m"
-#define NBOLD ""RESET""WHT""
+#define NBOLD RESET""WHT
 
 // Phase d'Enchère - BOTs
 void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *passe){
