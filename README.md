@@ -1,5 +1,5 @@
 # [SUJET] Jeu de Belote - Projet IFB - TC P20
-L'objectif du projet est de créer un programme en mode console permettant à un joueur de jouer à la belote, et plus précisément à la Coinche, dont les règles sont mentionnées ci-après.
+L'objectif du projet est de créer un programme en mode console permettant à un joueur de jouer à la belote, et plus précisément à la Coinche, dont les règles sont mentionnées ci-après..
 
 ## Règles du jeu
 Belote classique : https://www.belote.com/regles-et-variantes/les-regles-de-la-belote-classique/  
