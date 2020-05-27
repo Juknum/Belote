@@ -33,6 +33,12 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	int choix_couleur = 0; 
 	int choix_points  = 0;
 
+	int choix_surenchere = 0;
+	int choix_couleur_surenchere = 0;
+	int choix_points_surenchere = 0;
+
+	int valid = 0;							// permet de savoir si la surenchere du joueur respecte les regles
+
 	int distributeur = encherisseur;
 
 	printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
@@ -103,7 +109,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 						// Annonce des points: 
 								
-						printf("\n\nAnnoncez vos points:\nN | Classique - Entre 80 et 160 pts, par tranche de 10!\n1 | Capôt     - 250 pts -> gagner tout les plis\n2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
+						printf(WHT"§\n\n§ "YEL"Annoncez vos points:\nN | Classique - Entre 80 et 160 pts, par tranche de 10!\n1 | Capôt     - 250 pts -> gagner tout les plis\n2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
 						scanf("%d",&choix_points); // A ACTIVER
 						printf(WHT);
 						switch(choix_points){
@@ -127,8 +133,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 						break;
 					case 2:
-						printf(WHT);
-						printf("\n§ %s a choisit de passer son tours!",nom_joueur);
+						printf(WHT"\n§ "CYN"JEU :"WHT" %s a choisit de passer son tours!",nom_joueur);
 						passe++;
 						break;
 					default:
@@ -163,7 +168,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		}
 	}
 
-	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf("\n§");}
+	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf("\n§ "CYN"JEU :"MAG" Phase de sur-enchère!"WHT);}
 
 	while(passe < 3 && strcmp(atout,"undefined\0") != 0){
 		encherisseur++;
@@ -173,7 +178,92 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		switch(encherisseur){
 			case 1:
 				printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...",nom_joueur );
-				passe++;
+
+				do{
+					printf("\n§\n§ "YEL"Souhaitez-vous sur-encherir ou passer?\n"WHT"§"YEL" 1 | Sur-enchère\n"WHT"§"YEL" 2 | Passer\n");
+					printf(WHT"\n§"YEL" Votre choix :");
+					scanf("%d",&choix_surenchere); // A ACTIVER
+					//choix_surenchere = 2; // A DESACTIVER
+				}while(choix_surenchere < 1 || choix_surenchere > 2);
+
+				switch(choix_surenchere){
+					case 1:
+
+						// Annonce des points: 
+								
+						printf(WHT"\n§\n§"YEL" Annoncez vos points:\n"WHT"§"YEL" N | Classique - Entre 80 et 160 pts, par tranche de 10!\n"WHT"§"YEL" 1 | Capôt     - 250 pts -> gagner tout les plis\n"WHT"§"YEL" 2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
+						printf(WHT"\n§"YEL" Votre choix :");
+						scanf("%d",&choix_points_surenchere); // A ACTIVER
+						
+						switch(choix_points_surenchere){
+							case 1:
+								if(points >= 250){
+									// Le joueur ne respecte pas la regle de surenchere
+									printf(WHT"§"YEL" Vous devez annoncer plus que l'enchère précédente"WHT);
+									valid = 0;
+								}else{ valid = 1; points = 250;}
+
+								break;
+							case 2:
+								if(points >= 500){
+									// le joueur ne respecte pas les regles
+									printf(WHT"§"YEL" Vous devez annoncer plus que l'enchère précédente"WHT);
+									valid = 0;
+									
+								}else{ valid = 1; points = 500;}
+								
+								break;
+							case 80 ... 160:
+								if(points >= choix_points_surenchere){
+									printf(WHT"§"YEL" Vous devez annoncer plus que l'enchère précédente"WHT);
+									valid = 0;
+
+								}else{ valid = 1; points = choix_points_surenchere;}
+
+								break;
+							default :
+								printf(WHT"\n §"RED" Erreur"WHT": switch(%d) choix_points_surenchere",choix_points_surenchere);
+								break;
+						}
+
+						if(valid == 1){
+							do{
+								printf("\n"WHT"§"YEL" Quelles couleur?\n"WHT"§"YEL" 1 | Carreau\n"WHT"§"YEL" 2 | Coeur\n"WHT"§"YEL" 3 | Pique\n"WHT"§"YEL" 4 | Trèfle\n");
+								printf(WHT"\n§"YEL" Votre choix :");
+								scanf("%d",&choix_couleur); // A ACTIVER
+							}while(choix_couleur < 1 || choix_couleur > 4);
+
+							switch(choix_couleur){
+								case 1:
+									strcpy(atout,"Carreau\0");
+									break;
+								case 2:
+									strcpy(atout,"Coeur\0");
+									break;
+								case 3:
+									strcpy(atout,"Pique\0");
+									break;
+								case 4:
+									strcpy(atout,"Trèfle\0");
+									break;
+								default:
+									printf(RED"Erreur switch couleur surenchere"WHT);
+									break;
+							}
+
+							printf(WHT"\n§ "CYN"JEU :"WHT" %s sur-encherit avec une Couleur de "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts!",nom_joueur,atout,points);
+						}
+
+						break;
+					case 2:
+						passe++;
+						printf(WHT"\n§ "CYN"JEU :"WHT" %s a choisit de passer son tours!",nom_joueur);
+						break;
+					default:
+						printf("\n§"RED"Erreur :"WHT" while(passe < 3 && atout == undefined) switch(%d)",choix_surenchere);
+						break;
+				}
+
 				break;
 			case 2:
 				bot_surenchere(cartes_west, "Ouest", atout, &points, &passe);
