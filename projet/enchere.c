@@ -65,17 +65,18 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		switch(encherisseur){
 			case 1:		// Joueur
 
-				printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...\n\n",nom_joueur);
+				printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...\n",nom_joueur);
 
 				// On affiche les cartes du joueur 
-				printf(YEL"Vos cartes :"WHT);
+				printf("§ "YEL"Vos cartes :"WHT);
 				for(int i = 0; i < 8; i++){
 					printf(" %s",dictionnaire(cartes_joueur[i]));
 				}
 				
 				// Demande entre annoncer un contrat ou passer
 				do{
-					printf(YEL"\n\nSouhaitez-vous annoncer un contrat ou passer?\n1 | Contrat\n2 | Passer\n");
+					printf("\n§\n§ "YEL"Souhaitez-vous annoncer un contrat ou passer?\n"WHT"§"YEL" 1 | Annoncer\n"WHT"§"YEL" 2 | Passer\n"WHT"§");
+					printf("\n§"YEL" Votre choix : "); 
 					scanf("%d",&choix_annonce); // A ACTIVER
 					//choix_annonce = 2; // A DESACTIVER
 				}while(choix_annonce < 1 || choix_annonce > 2);
@@ -83,7 +84,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				switch(choix_annonce){
 					case 1:
 						do{
-							printf("\nQuelles couleur?\n1 | Carreau\n2 | Coeur\n3 | Pique\n4 | Trèfle\n");
+							printf(WHT"\n§"YEL" Quelle couleur?\n"WHT"§"YEL" 1 | Carreau\n"WHT"§"YEL" 2 | Coeur\n"WHT"§"YEL" 3 | Pique\n"WHT"§"YEL" 4 | Trèfle\n"WHT"§");
+							printf(WHT"\n§"YEL" Votre choix : "); 
 							scanf("%d",&choix_couleur); // A ACTIVER
 						}while(choix_couleur < 1 || choix_couleur > 4);
 
@@ -105,11 +107,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								break;
 							}
 
-						printf("\nChoix enregistré, annoncez vos points!");
-
 						// Annonce des points: 
 								
-						printf(WHT"§\n\n§ "YEL"Annoncez vos points:\nN | Classique - Entre 80 et 160 pts, par tranche de 10!\n1 | Capôt     - 250 pts -> gagner tout les plis\n2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
+						printf(WHT"\n§"YEL" Annoncez vos points:\n"WHT"§"YEL" N | Classique - Entre "BOLD"80"NBOLD YEL" et "BOLD"160"NBOLD YEL" pts, par tranche de "BOLD"10"NBOLD YEL"!\n"WHT"§"YEL" 1 | Capôt     - "BOLD"250"NBOLD YEL" pts -> remporter tout les plis\n"WHT"§"YEL" 2 | Générale  - "BOLD"500"NBOLD YEL" pts -> remporter tout les plis a vous seul\n");
+						printf(WHT"\n§"YEL" Votre choix : "); 
 						scanf("%d",&choix_points); // A ACTIVER
 						printf(WHT);
 						switch(choix_points){
@@ -179,9 +180,15 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			case 1:
 				printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...",nom_joueur );
 
+				// On affiche les cartes du joueur 
+				printf("\n§ "YEL"Vos cartes :"WHT);
+				for(int i = 0; i < 8; i++){
+					printf(" %s",dictionnaire(cartes_joueur[i]));
+				}
+
 				do{
 					printf("\n§\n§ "YEL"Souhaitez-vous sur-encherir ou passer?\n"WHT"§"YEL" 1 | Sur-enchère\n"WHT"§"YEL" 2 | Passer\n");
-					printf(WHT"\n§"YEL" Votre choix :");
+					printf(WHT"\n§"YEL" Votre choix : ");
 					scanf("%d",&choix_surenchere); // A ACTIVER
 					//choix_surenchere = 2; // A DESACTIVER
 				}while(choix_surenchere < 1 || choix_surenchere > 2);
@@ -192,7 +199,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						// Annonce des points: 
 								
 						printf(WHT"\n§\n§"YEL" Annoncez vos points:\n"WHT"§"YEL" N | Classique - Entre 80 et 160 pts, par tranche de 10!\n"WHT"§"YEL" 1 | Capôt     - 250 pts -> gagner tout les plis\n"WHT"§"YEL" 2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
-						printf(WHT"\n§"YEL" Votre choix :");
+						printf(WHT"\n§"YEL" Votre choix : ");
 						scanf("%d",&choix_points_surenchere); // A ACTIVER
 						
 						switch(choix_points_surenchere){
@@ -228,8 +235,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 						if(valid == 1){
 							do{
-								printf("\n"WHT"§"YEL" Quelles couleur?\n"WHT"§"YEL" 1 | Carreau\n"WHT"§"YEL" 2 | Coeur\n"WHT"§"YEL" 3 | Pique\n"WHT"§"YEL" 4 | Trèfle\n");
-								printf(WHT"\n§"YEL" Votre choix :");
+								printf("\n"WHT"§"YEL" Quelle couleur?\n"WHT"§"YEL" 1 | Carreau\n"WHT"§"YEL" 2 | Coeur\n"WHT"§"YEL" 3 | Pique\n"WHT"§"YEL" 4 | Trèfle\n");
+								printf(WHT"\n§"YEL" Votre choix : ");
 								scanf("%d",&choix_couleur); // A ACTIVER
 							}while(choix_couleur < 1 || choix_couleur > 4);
 
