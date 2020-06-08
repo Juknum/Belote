@@ -15,9 +15,9 @@ belote.exe
 
 Pour ajouter une fonction, il faut l'intégrer au `fonctions.h` présent dans `/header`, mais il faut aussi l'ajouter au makefile qui se consititue ainsi:
 
-**Il n'est pas nécessaire de modifier l'entièreté du fichier, il suffit simplement d'ajouter à `SRC` le nom de votre fichier `.c`**
+- **Il n'est pas nécessaire de modifier l'entièreté du fichier, il suffit simplement d'ajouter à `SRC` le nom de votre fichier `.c`**
 
-__Il est notamment possible de changer de compilateur si l'on s'intéresse à `CC=gcc` voir doc : [ici](https://gl.developpez.com/tutoriel/outil/makefile/)__
+- **Il est notamment possible de changer de compilateur si l'on s'intéresse à `CC=gcc` voir doc : [ici](https://gl.developpez.com/tutoriel/outil/makefile/)**
 
 ```make
 CC=gcc
