@@ -13,7 +13,7 @@ all: $(EXEC)
 belote: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-main.o : header/fonctions.h
+main.o : header/fonctions.h header/syntax.h
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)

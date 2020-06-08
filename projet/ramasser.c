@@ -1,24 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <string.h>
-
-#include <math.h>
-#include <time.h>
-
 #include "./header/fonctions.h"
-
-#define RED   "\x1B[31m"
-#define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
-#define WHT   "\x1B[37m"
-#define RESET "\x1B[0m"
+#include "./header/syntax.h"
 
 void ramasser(int redistribue, int distributeur, char *nom_joueur, int * cartes_west, int * cartes_north, int * cartes_east, int * cartes_joueur){
-	printf("§ "GRN"INFO :"WHT" Ramassage des cartes... ");
+	printf(side_info" Ramassage des cartes... ");
 
 	int cartes[32] = {0};
 
@@ -52,7 +39,7 @@ void ramasser(int redistribue, int distributeur, char *nom_joueur, int * cartes_
 			for(int i = 0; i < 8; i++){cartes[i+24] = cartes_east[i];   }
 			break;
 		default:
-			printf("Erreur switch ramasser(%d)",distributeur);
+			printf(side_error" switch ramasser(%d)",distributeur);
 			break;
 	}
 	

@@ -1,45 +1,51 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	/////// CONTIENT DES SCANF A ACTIVER ///////
+
+	menu.c : 
+	- Impression du titre
+	- Proposition au joueur de choisir entre les options suivantes :
+		- nouvelle_partie()
+		- meilleurs_score()
+		- quitter
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <string.h>
-
-#include <math.h>
-#include <time.h>
-
 #include "./header/fonctions.h"
-
-#define RED   "\x1B[31m"
-#define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
-#define WHT   "\x1B[37m"
-#define RESET "\x1B[0m"
-
-/////// CONTIENT DES SCANF A ACTIVER ///////
+#include "./header/syntax.h"
 
 void menu(void){
 	int choix = 0;
 
 	// On affiche le menu tant que que le joueur n'a pas choisit une option valide
 	do{
-		printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
-		printf("§                                     o------------=-=------------o\n");
-		printf("§ ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  !      "YEL"Belote Coinchée"WHT"      !  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"  ♣  "RED"♦"WHT"  ♠  "RED"♥"WHT"\n");
-		printf("§                                     o-------------=-------------o\n");
-		printf("§\n§\n§\n§\n");
-		printf("O--------------------------------------------------=-=--------------------------------------------------O\n");
+		printf(title_barre);
+		printf(title_barre_top);
+		printf(title_g"Belote Coinchée"title_d);
+		printf(title_barre_top);
+		printf(title_barre);
 
-		printf("§ "YEL"Que voulez-vous faire?\n"WHT"§\n");
-		printf("§ "YEL"1 | Nouvelle Partie\n"WHT);
-		printf("§ "YEL"2 | Meilleurs Scores\n"WHT);
-		printf("§ "YEL"3 | Quitter\n"WHT);
+		printf(side_question" Que voulez-vous faire?\n");
+		printf(side_only);
+		printf(side_question" 1 | Nouvelle Partie\n");
+		printf(side_question" 2 | Meilleurs Scores\n");
+		printf(side_question" 3 | Quitter\n");
+		printf(side_only);
+		printf(side_question" Votre choix :");
 
-		printf("§ "YEL"Votre choix : ");
-		//scanf("%d", &choix); // A ACTIVER
-		choix = 1; // A DESACTIVER
-		printf(WHT"\n§\n");
+		//scanf("%d", &choix); 					// A ACTIVER
+		choix = 1; 								// A DESACTIVER
+
+		printf(side_only"\n");
+
 	}while(choix < 1 || choix > 3);
 
 	switch(choix){
@@ -53,7 +59,7 @@ void menu(void){
 			exit(0);
 			break;
 		default:
-			printf(RED"ERREUR :"WHT" switch(%d) dans menu(void)",choix);
+			printf(side_error" switch(%d) dans menu(void)",choix);
 			break;
 	}
 }
