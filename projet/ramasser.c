@@ -1,3 +1,16 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	ramasser.c :
+		- On reprend les cartes de chaque joueur sans les mélanger 
+		  et on retourne un tableau de 32 int contenant les cartes
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
