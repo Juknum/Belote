@@ -5,3 +5,7 @@
 
 #include "./header/fonctions.h"
 #include "./header/syntax.h"
+
+void bot_plis(void){
+	printf("bot_plis undefined");
+}

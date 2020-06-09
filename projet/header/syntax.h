@@ -17,6 +17,7 @@
 #ifndef SYNTAX_H_INCLUDE
 #define SYNTAX_H_INCLUDE
 
+#define	black   "\x1B[30m"
 #define red     "\x1B[31m"
 #define green   "\x1B[32m"
 #define yellow  "\x1B[33m"
@@ -24,6 +25,16 @@
 #define magenta "\x1B[35m"
 #define cyan    "\x1B[36m"
 #define white   "\x1B[37m"
+
+#define	bblack   "\x1B[40m"
+#define bred     "\x1B[41m"
+#define bgreen   "\x1B[42m"
+#define byellow  "\x1B[43m"
+#define bblue    "\x1B[44m"
+#define bmagenta "\x1B[45m"
+#define bcyan    "\x1B[46m"
+#define bwhite   "\x1B[47m"
+
 #define reset   "\x1B[0m"
 
 #define bold  "\x1b[1m"

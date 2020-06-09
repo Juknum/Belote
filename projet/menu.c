@@ -41,8 +41,8 @@ void menu(void){
 		printf(side_only);
 		printf(side_question" Votre choix :");
 
-		//scanf("%d", &choix); 					// A ACTIVER
-		choix = 1; 								// A DESACTIVER
+		scanf("%d", &choix); 						// A ACTIVER
+		//choix = 1; 								// A DESACTIVER
 
 		printf(side_only"\n");
 

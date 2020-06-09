@@ -19,9 +19,10 @@ void enchere(int, char*, int*, int*, int*, int*);
 void bot_enchere(int*, char*, char*, int*, int*);
 void bot_surenchere(int*, char*, char*, int*, int*);
 void bot_plis(void);
-void plis(void);
+void plis(int ,char*, int*, int*, int*, int*, int*, int);
 
 // Autre :
 void meilleurs_score(void);
+void scores(int, char*);
 
 #endif
