@@ -1,24 +1,32 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	bot_enchere.c :
+		- L'IA examine son jeu et décide si oui ou non elle annonce un contrat
+		* 
+		  Peux de chance de se produire car les règles définie sont peux élaborée pour définir si
+		  oui ou non l'IA possède un jeu fort.
+		  PS : règles définies selon le sujet
+		  PSS : les règles étaient plus élaborée dans le passé, voir dans `/Belote_IFB/old/enchere_old_2.c`
+		  	£
+			  La simplification a été faite car cela s'éloignait beaucoup du sujet et cette ancienne version
+			  amenait de nombreux bugs.
+		  	£
+		*
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <string.h>
 
-#include <math.h>
-#include <time.h>
-
 #include "./header/fonctions.h"
-
-#define RED   "\x1B[31m"
-#define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
-#define WHT   "\x1B[37m"
-#define RESET "\x1B[0m"
-
-#define BOLD  "\x1b[1m"
-#define NBOLD RESET""WHT
+#include "./header/syntax.h"
 
 // Phase d'Enchère - BOTs
 void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *passe){
@@ -32,7 +40,7 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	*/
 
 	// On annonce le bot qui examine son jeu:
-	printf("\n§ "CYN"JEU :"WHT" %s examine son jeu...",bot);
+	printf(side_jeu" %s examine son jeu...",bot);
 
 	//// Estimation par le bot de la couleur possédant le plus de points :
 
@@ -99,7 +107,7 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 		}
 	}
 
-	// Affiche les cartes du bot:
+	// DEBUG : Affiche les cartes du bot:
 	/*
 	printf("\n%s:",bot);
 	for(int i = 0; i < 8; i++){
@@ -107,7 +115,7 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	}
 	*/
 
-	// Affiche le nombre de cartes fortes par couleur
+	// DEBUG : Affiche le nombre de cartes fortes par couleur
 	//printf("\n%d/%d/%d/%d",pique_fort,carreau_fort,coeur_fort,trefle_fort);
 
 	// On détermine combien de couleur on le + grand nombre de carte haute
@@ -200,29 +208,29 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	if(strcmp(atout_bot, "Pique") == 0 && pique_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
-		printf("\n§ "CYN"JEU :"WHT" %s annonce "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts",bot,atout,*points);
+		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
 	}
 
 	if(strcmp(atout_bot, "Carreau") == 0 && carreau_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
-		printf("\n§ "CYN"JEU :"WHT" %s annonce "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts",bot,atout,*points);
+		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
 	}
 
 	if(strcmp(atout_bot, "Coeur") == 0 && coeur_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
-		printf("\n§ "CYN"JEU :"WHT" %s annonce "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts",bot,atout,*points);
+		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
 	}
 
 	if(strcmp(atout_bot, "Trèfle") == 0 && trefle_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
-		printf("\n§ "CYN"JEU :"WHT" %s annonce "BOLD"%s"NBOLD" avec "BOLD"%d"NBOLD" pts",bot,atout,*points);
+		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
 	}
 
 	if(strcmp(atout, atout_pre) == 0 && *points == points_pre){ // Si vrai : le bot n'a pas changer l'atout et les pts -> il passe son tours
-		printf(" et a choisit de passer son tours!");
+		printf(" et a choisit de passer son tours!\n");
 		*passe = *passe +1;
 	}
 }

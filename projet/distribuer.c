@@ -1,26 +1,34 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	/////// CONTIENT DES SCANF A ACTIVER /////// ------ Fait
+
+	nouvelle_partie.c : 
+	- Impression du titre
+	- Création des variables nécessaire pour la suite
+	- Demande au joueur de son nom
+	- Melange des cartes : melanger()
+	- Distribution des cartes : distribuer()
+	- Début des enchères avec : enchere()
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <string.h>
-
-#include <math.h>
-#include <time.h>
-
-#define RED   "\x1B[31m"
-#define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
-#define WHT   "\x1B[37m"
-#define RESET "\x1B[0m"
+#include "./header/syntax.h"
 
 void distribuer(int distrib, int * cartes, char * nom_joueur, int * cartes_west, int * cartes_north, int * cartes_east,  int * cartes_joueur){
-	printf("§ "GRN"INFO :"WHT" Distribution des cartes... ");
+	printf(side_info" Distribution des cartes... ");
 
 	int distributeur = 0;
-	
-	if(distrib == 5){distrib = 1;} // Si le distributeur précédent était Est alors 4 + 1 = 5 sauf que Joueur == 1;
+
+	// Si le distributeur précédent était Est alors 4 + 1 = 5 sauf que Joueur == 1;
+	if(distrib == 5){distrib = 1;} 
 
 	switch(distrib){
 		case 1:
@@ -136,7 +144,7 @@ void distribuer(int distrib, int * cartes, char * nom_joueur, int * cartes_west,
 
 			break;
 		default:
-			printf("Erreur switch distribuer(%d)",distrib);
+			printf(side_error" switch distribuer(%d)",distrib);
 			break;
 	}
 

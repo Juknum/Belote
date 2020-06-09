@@ -1,8 +1,14 @@
 /*
-	Recquiert un entier compris entre 1 et 32 
-	Retourne un int dont la valeur est la valeur d'atout de la carte présentée
-*/
 
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	dictionnaire.c : Sert de traducteur pour passer du numérique à la valeur d'atout de la carte
+		- On donne un int entre 1 et 32 et on retourne un int (0,0,14,10,20,3,4,11)
+
+*/
 int dictionnaire_atout(int carte){
 	int result = -1;
 

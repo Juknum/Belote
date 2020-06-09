@@ -1,121 +1,126 @@
 /*
-	Recquiert un entier compris entre 1 et 32 
-	Retourne un char* a placer dans un printf
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	dictionnaire.c : Sert de traducteur pour passer du numérique à la chaîne de caractère
+		- On donne un int entre 1 et 32 et on retourne un char* (nécessite d'appeler la fonction dans un printf)
+
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RED   "\x1B[31m"
-#define WHT   "\x1B[37m"
-#define RESET "\x1B[0m"
+#include "./header/syntax.h"
 
 char * dictionnaire(int carte){
 	char* result = "undefined";
 
 	switch(carte){
 		case 1 :
-		result = " 7♠";
+		result = " 7"pique;
 		break;
 		case 2 :
-		result = " 8♠";
+		result = " 8"pique;
 		break;
 		case 3 :
-		result = " 9♠";
+		result = " 9"pique;
 		break;
 		case 4 :
-		result = "10♠";
+		result = "10"pique;
 		break;
 		case 5 :
-		result = " V♠";
+		result = " V"pique;
 		break;
 		case 6 :
-		result = " D♠";
+		result = " D"pique;
 		break;
 		case 7 :
-		result = " R♠";
+		result = " R"pique;
 		break;
 		case 8 :
-		result = "AS♠";
+		result = "AS"pique;
 		break;
 
 		case 9 :
-		result = " 7"RED"♦"WHT"";
+		result = " 7"carreau;
 		break;
 		case 10 :
-		result = " 8"RED"♦"WHT"";
+		result = " 8"carreau;
 		break;
 		case 11 :
-		result = " 9"RED"♦"WHT"";
+		result = " 9"carreau;
 		break;
 		case 12 :
-		result = "10"RED"♦"WHT"";
+		result = "10"carreau;
 		break;
 		case 13 :
-		result = " V"RED"♦"WHT"";
+		result = " V"carreau;
 		break;
 		case 14 :
-		result = " D"RED"♦"WHT"";
+		result = " D"carreau;
 		break;
 		case 15 :
-		result = " R"RED"♦"WHT"";
+		result = " R"carreau;
 		break;
 		case 16 :
-		result = "AS"RED"♦"WHT"";
+		result = "AS"carreau;
 		break;
 
 		case 17 :
-		result = " 7"RED"♥"WHT"";
+		result = " 7"coeur;
 		break;
 		case 18 :
-		result = " 8"RED"♥"WHT"";
+		result = " 8"coeur;
 		break;
 		case 19 :
-		result = " 9"RED"♥"WHT"";
+		result = " 9"coeur;
 		break;
 		case 20 :
-		result = "10"RED"♥"WHT"";
+		result = "10"coeur;
 		break;
 		case 21 :
-		result = " V"RED"♥"WHT"";
+		result = " V"coeur;
 		break;
 		case 22 :
-		result = " D"RED"♥"WHT"";
+		result = " D"coeur;
 		break;
 		case 23 :
-		result = " R"RED"♥"WHT"";
+		result = " R"coeur;
 		break;
 		case 24 :
-		result = "AS"RED"♥"WHT"";
+		result = "AS"coeur;
 		break;
 
 		case 25 :
-		result = " 7♣";
+		result = " 7"trefle;
 		break;
 		case 26 :
-		result = " 8♣";
+		result = " 8"trefle;
 		break;
 		case 27 :
-		result = " 9♣";
+		result = " 9"trefle;
 		break;
 		case 28 :
-		result = "10♣";
+		result = "10"trefle;
 		break;
 		case 29 :
-		result = " V♣";
+		result = " V"trefle;
 		break;
 		case 30 :
-		result = " D♣";
+		result = " D"trefle;
 		break;
 		case 31 :
-		result = " R♣";
+		result = " R"trefle;
 		break;
 		case 32 :
-		result = "AS♣";
+		result = "AS"trefle;
 		break;
 
 		default :
-		result = "error carte non définie";
+		result = bold red"N/A"nboldw;
 		break;
 	}
 
