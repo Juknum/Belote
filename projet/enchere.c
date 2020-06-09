@@ -82,7 +82,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			// JOUEUR :
 			case 1:
 
-				printf("\n"side_jeu" %s examine son jeu...\n",nom_joueur);
+				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
 
 				// On affiche les cartes du joueur 
 				printf(side" Vos cartes :");
@@ -213,7 +213,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 		switch(encherisseur){
 			case 1:
-				printf("\n\n"side_jeu" %s examine son jeu...",nom_joueur );
+				printf(side_jeu" %s examine son jeu...",nom_joueur );
 
 				// On affiche les cartes du joueur 
 				printf(side" Vos cartes :");
