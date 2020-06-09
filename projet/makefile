@@ -4,7 +4,7 @@ LDFLAGS=
 EXEC=belote
 
 # Ajouter vos fonctions dans cette ligne :
-SRC= bot_surenchere.c meilleurs_score.c bot_enchere.c enchere.c nouvelle_partie.c menu.c tableau_tri.c ramasser.c distribuer.c melanger.c dictionnaire_atout.c dictionnaire.c main.c
+SRC= dictionnaire_non_atout.c bot_surenchere.c meilleurs_score.c bot_enchere.c enchere.c nouvelle_partie.c menu.c tableau_tri.c ramasser.c distribuer.c melanger.c dictionnaire_atout.c dictionnaire.c main.c
 
 OBJ= $(SRC: .c=.o)
 

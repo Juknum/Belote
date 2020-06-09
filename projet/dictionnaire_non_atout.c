@@ -9,9 +9,8 @@
 		- On donne un int entre 1 et 32 et on retourne un int (0,0,14,10,20,3,4,11)
 
 */
-int dictionnaire_atout(int carte){
+int dictionnaire_non_atout(int carte){
 	int result = -1;
-
 
 	switch(carte){
 		case 1 :

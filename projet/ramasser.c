@@ -17,7 +17,7 @@
 #include "./header/fonctions.h"
 #include "./header/syntax.h"
 
-void ramasser(int redistribue, int distributeur, char *nom_joueur, int * cartes_west, int * cartes_north, int * cartes_east, int * cartes_joueur){
+void ramasser(int redistribue, int distributeur, char * nom_joueur, int * cartes_west, int * cartes_north, int * cartes_east, int * cartes_joueur){
 	printf(side_info" Ramassage des cartes... ");
 
 	int cartes[32] = {0};

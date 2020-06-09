@@ -342,4 +342,11 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		}
 	}
 
+	// On trie les cartes **après** les enchères et on lance les plis
+	tableau_tri(cartes_joueur);
+	tableau_tri(cartes_west);
+	tableau_tri(cartes_north);
+	tableau_tri(cartes_east);
+
+	//plis();
 }
