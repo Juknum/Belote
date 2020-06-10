@@ -25,7 +25,6 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 
 	char* symbole = "x\0";
 
-
 	do{
 
 			// Partie concernant l'entête
@@ -34,6 +33,43 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 		printf(title_g" Phase de Jeu! "title_d);
 		printf(title_barre_top);
 		printf(title_info" - Plis   : %d/8\n",numero_pli);
+
+		if(numero_pli == 1){
+			switch(distributeur){
+				case 1:
+					depositaire = 4;
+					ordre_jeu[0] = 4;
+					ordre_jeu[1] = 1;
+					ordre_jeu[2] = 2;
+					ordre_jeu[3] = 3;
+					printf(title_ninfo" - Est dépose en 1er\n");
+					break;
+				case 2:
+					depositaire = 1;
+					ordre_jeu[0] = 1;
+					ordre_jeu[1] = 2;
+					ordre_jeu[2] = 3;
+					ordre_jeu[3] = 4;
+					printf(title_ninfo" - %s dépose en 1er\n",nom_joueur);
+					break;
+				case 3:
+					depositaire = 2;
+					ordre_jeu[0] = 2;
+					ordre_jeu[1] = 3;
+					ordre_jeu[2] = 4;
+					ordre_jeu[3] = 1;
+					printf(title_ninfo" - Ouest dépose en 1er\n");
+					break;
+				case 4:
+					depositaire = 3;
+					ordre_jeu[0] = 3;
+					ordre_jeu[1] = 4;
+					ordre_jeu[2] = 1;
+					ordre_jeu[3] = 2;
+					printf(title_ninfo" - Nord dépose en 1er\n");
+					break;
+			}
+		}
 
 		if(strcmp(atout, "Pique") == 0){
 			atout_n = 1;
@@ -55,40 +91,7 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 		printf(title_ninfo" - Atout  : %s %s\n",atout,symbole);
 		printf(title_ninfo" - Points : %d\n",points);
 
-		switch(distributeur){
-			case 1:
-				depositaire = 4;
-				ordre_jeu[0] = 4;
-				ordre_jeu[1] = 1;
-				ordre_jeu[2] = 2;
-				ordre_jeu[3] = 3;
-				printf(title_ninfo" - Est dépose en 1er\n");
-				break;
-			case 2:
-				depositaire = 1;
-				ordre_jeu[0] = 1;
-				ordre_jeu[1] = 2;
-				ordre_jeu[2] = 3;
-				ordre_jeu[3] = 4;
-				printf(title_ninfo" - %s dépose en 1er\n",nom_joueur);
-				break;
-			case 3:
-				depositaire = 2;
-				ordre_jeu[0] = 2;
-				ordre_jeu[1] = 3;
-				ordre_jeu[2] = 4;
-				ordre_jeu[3] = 1;
-				printf(title_ninfo" - Ouest dépose en 1er\n");
-				break;
-			case 4:
-				depositaire = 3;
-				ordre_jeu[0] = 3;
-				ordre_jeu[1] = 4;
-				ordre_jeu[2] = 1;
-				ordre_jeu[3] = 2;
-				printf(title_ninfo" - Nord dépose en 1er\n");
-				break;
-		}
+		
 
 		printf(title_barre);
 		printf(side_only);
@@ -120,6 +123,7 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 						for(int i = 0; i < 8; i++){
 							printf(" %s",dictionnaire(cartes_joueur[i]));
 						}
+					printf("\n                1   2   3   4   5   6   7   8");
 					printf("\n"side_only);
 
 					do{
@@ -309,34 +313,34 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 			if(dictionnaire_atout(tableau_atout[2]) > dictionnaire_atout(tableau_atout[0]) && dictionnaire_atout(tableau_atout[2]) > dictionnaire_atout(tableau_atout[1]) && dictionnaire_atout(tableau_atout[2]) > dictionnaire_atout(tableau_atout[3])){
 				depositaire = ordre_jeu[2];
 			}
-			if(dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[0]) && dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[2]) && dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[1])){
+			if(dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[0]) && dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[1]) && dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[2])){
 				depositaire = ordre_jeu[3];
 			}
 		}
 		switch(depositaire){
 			case 1:
-				printf(side_jeu" %s remporte le plis\n",nom_joueur);
+				printf(side_jeu" %s remporte le pli\n",nom_joueur);
 				ordre_jeu[0] = 1;
 				ordre_jeu[1] = 2;
 				ordre_jeu[2] = 3;
 				ordre_jeu[3] = 4;
 				break;
 			case 2:
-				printf(side_jeu" Ouest remporte le plis\n");
+				printf(side_jeu" Ouest remporte le pli\n");
 				ordre_jeu[0] = 2;
 				ordre_jeu[1] = 3;
 				ordre_jeu[2] = 4;
 				ordre_jeu[3] = 1;
 				break;
 			case 3:
-				printf(side_jeu" Nord remporte le plis\n");
+				printf(side_jeu" Nord remporte le pli\n");
 				ordre_jeu[0] = 3;
 				ordre_jeu[1] = 4;
 				ordre_jeu[2] = 1;
 				ordre_jeu[3] = 2;
 				break;
 			case 4:
-				printf(side_jeu" Est remporte le plis\n");
+				printf(side_jeu" Est remporte le pli\n");
 				ordre_jeu[0] = 4;
 				ordre_jeu[1] = 1;
 				ordre_jeu[2] = 2;
@@ -345,6 +349,5 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 		}
 		
 		numero_pli++;
-
 	}while(numero_pli != 9);
 }
