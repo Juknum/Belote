@@ -55,6 +55,8 @@
 
 #define title_barre 	white"O--------------------------------------------------=-=--------------------------------------------------O\n"
 #define title_barre_top	white"$                                     o------------=-=------------o                                     $\n"
+#define title_only		white"$                                                                                                       $\n"
+#define title_info		white"$ "magenta"INFO :"
 #define title_g			white"$ "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  !      "cyan
 #define title_d			white"      !  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau" $\n"
 #define barre_small		white"§--------------------------------------------------------------\n"

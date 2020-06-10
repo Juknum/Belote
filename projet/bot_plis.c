@@ -7,5 +7,5 @@
 #include "./header/syntax.h"
 
 void bot_plis(void){
-	printf("bot_plis undefined");
+	printf(side_error" bot_plis undefined\n");
 }

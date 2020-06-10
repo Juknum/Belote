@@ -57,10 +57,34 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 	int distributeur = encherisseur;
 
+	char info_txt_distrib[20];
+	char info_txt_enchere[20];
+
+	switch(distributeur){
+		case 1:
+			strcpy(info_txt_distrib, nom_joueur);
+			strcpy(info_txt_enchere, "Ouest");
+			break;
+		case 2:
+			strcpy(info_txt_distrib, "Ouest");
+			strcpy(info_txt_enchere, "Nord");
+			break;
+		case 3:
+			strcpy(info_txt_distrib, "Nord");
+			strcpy(info_txt_enchere, "Est");
+			break;
+		case 4:
+			strcpy(info_txt_distrib, "Est");
+			strcpy(info_txt_enchere, nom_joueur);
+			break;
+	}
+
 	printf(title_barre);
 	printf(title_barre_top);
 	printf(title_g"Phase d'Enchère"title_d);
 	printf(title_barre_top);
+	printf(title_only);
+	printf(title_info" Le distributeur est : %s, %s encherit en premier!\n",info_txt_distrib,info_txt_enchere);
 	printf(title_barre);
 
 	strcpy(atout, "undefined\0");
@@ -192,7 +216,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 		if(passe > 3){
 			passe = 0;
-			printf("\n\n");
+			printf(side_only);
 			printf(barre_small);
 
 			printf(side red" Personne n'a fait de contrat, on redistribue les cartes\n"white);
@@ -201,6 +225,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			encherisseur = distributeur;
 
 			printf(barre_small);
+			printf(side_only);
 		}
 	}
 
@@ -213,7 +238,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 		switch(encherisseur){
 			case 1:
-				printf(side_jeu" %s examine son jeu...",nom_joueur );
+				printf(side_jeu" %s examine son jeu...\n",nom_joueur );
 
 				// On affiche les cartes du joueur 
 				printf(side" Vos cartes :");
@@ -348,5 +373,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	tableau_tri(cartes_north);
 	tableau_tri(cartes_east);
 
-	//plis();
+	//clean; // A ACTIVER UNE FOIS DÉBUGUÉ
+	plis(distributeur,atout,cartes_west,cartes_north,cartes_east,cartes_joueur,nom_joueur);
+
 }

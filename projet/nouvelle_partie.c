@@ -24,6 +24,10 @@
 #include "./header/fonctions.h"
 #include "./header/syntax.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 void nouvelle_partie(){
 
 	int cartes[32] = 
@@ -50,8 +54,7 @@ void nouvelle_partie(){
 	printf(title_g"Nouvelle Partie"title_d);
 	printf(title_barre_top);
 	printf(title_barre);
-
-	  																
+										
 	printf(side_question" Entrez votre nom : ");					// Demande du nom du joueur
 	
 	scanf("%s",&nom_joueur); 										// A ACTIVER
@@ -60,7 +63,13 @@ void nouvelle_partie(){
 	printf(side_info" Nom choisi : %s\n",nom_joueur);
 
 	melanger(cartes, taille_cartes);
+
+	pause;
+
 	distribuer(joueur_alea, cartes, nom_joueur, cartes_west, cartes_north, cartes_east, cartes_joueur);	
+	
+	pause;
+	clean;
 
 	enchere(joueur_alea, nom_joueur, cartes_joueur, cartes_west, cartes_north, cartes_east);
 }

@@ -5,7 +5,7 @@
 	- Ewen Bourdon
 	- Théo Silva
 
-	/////// CONTIENT DES SCANF A ACTIVER ///////
+	/////// CONTIENT DES SCANF A ACTIVER /////// ----- Fait
 
 	menu.c : 
 	- Impression du titre
@@ -39,23 +39,25 @@ void menu(void){
 		printf(side_question" 2 | Meilleurs Scores\n");
 		printf(side_question" 3 | Quitter\n");
 		printf(side_only);
-		printf(side_question" Votre choix :");
+		printf(side_question" Votre choix : ");
 
 		scanf("%d", &choix); 						// A ACTIVER
 		//choix = 1; 								// A DESACTIVER
 
-		printf(side_only"\n");
+		printf(side_only);
 
 	}while(choix < 1 || choix > 3);
 
 	switch(choix){
 		case 1:
+			clean;
 			nouvelle_partie();
 			break;
 		case 2:
 			meilleurs_score();
 			break;
 		case 3:
+			clean;
 			exit(0);
 			break;
 		default:

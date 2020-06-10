@@ -13,10 +13,10 @@ void score(int score_gagnant, char * nom_gagnant){
     FILE* score_fichier = NULL;
     char chaine[TAILLE_MAX];
 
-    int score[10] = {0};
-    char nom_1[100] = {0};
-    char nom_2[100] = {0};
-    char nom_3[100] = {0};
+    int score[3] = {0};
+    char nom_1[20] = {0};
+    char nom_2[20] = {0};
+    char nom_3[20] = {0};
     
     // ouverture du fichier en mode lecture
     score_fichier = fopen("./data/score.txt", "r");
