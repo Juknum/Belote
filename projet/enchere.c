@@ -265,11 +265,12 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 					case 1:
 
 						// Annonce des points: 
-								
+						
+						printf(side_only);
 						printf(side_question" Annoncez vos points:\n");
-						printf(side_question" N | Classique - Entre 80 et 160 pts, par tranche de 10!\n");
-						printf(side_question" 1 | Capôt     - 250 pts -> gagner tout les plis\n");
-						printf(side_question" 2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
+						printf(side_question" N | Classique - Entre "bold"80"nboldy" et "bold"160"nboldy" pts, par tranche de 10!\n");
+						printf(side_question" 1 | Capôt     - "bold"250"nboldy" pts -> gagner tout les plis\n");
+						printf(side_question" 2 | Générale  - "bold"500"nboldy" pts -> doit gagner tout les plis a vous seul\n");
 						printf(side_only);
 						printf(side_question" Votre choix : ");
 
