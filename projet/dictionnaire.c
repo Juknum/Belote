@@ -19,8 +19,13 @@ char * dictionnaire(int carte){
 	char* result = "undefined";
 
 	switch(carte){
-		case 0 :
-		result = " X ";
+		case -1 :
+		result = " █ ";
+		break;
+		case  0 :
+		result = " ░ ";
+		break;
+
 		case 1 :
 		result = " 7"pique;
 		break;

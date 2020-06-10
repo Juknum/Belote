@@ -27,6 +27,8 @@
 void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points_prev, int *passe){
 	printf(side_jeu" %s examine son jeu...",bot);
 
+	pause;
+
 	int points_pre = *points_prev;
 
 	char atout[20];

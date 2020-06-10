@@ -18,8 +18,8 @@ void nouvelle_partie(void);
 void enchere(int, char*, int*, int*, int*, int*);
 void bot_enchere(int*, char*, char*, int*, int*);
 void bot_surenchere(int*, char*, char*, int*, int*);
-void bot_plis(void);
-void plis(int ,char*, int*, int*, int*, int*, char*);
+void bot_plis(char*, int*, int, int*);
+void plis(int, int, char*, int*, int*, int*, int*, char*);
 
 // Autre :
 void meilleurs_score(void);

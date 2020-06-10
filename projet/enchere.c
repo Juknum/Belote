@@ -84,7 +84,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	printf(title_g"Phase d'Enchère"title_d);
 	printf(title_barre_top);
 	printf(title_only);
-	printf(title_info" Le distributeur est : %s, %s encherit en premier!\n",info_txt_distrib,info_txt_enchere);
+	printf(title_info" %s distribue, %s encherit en premier!\n",info_txt_distrib,info_txt_enchere);
 	printf(title_barre);
 
 	strcpy(atout, "undefined\0");
@@ -109,6 +109,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
 
 				// On affiche les cartes du joueur 
+				printf(side_only);
 				printf(side" Vos cartes :");
 				for(int i = 0; i < 8; i++){
 					printf(" %s",dictionnaire(cartes_joueur[i]));
@@ -240,7 +241,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			case 1:
 				printf(side_jeu" %s examine son jeu...\n",nom_joueur );
 
-				// On affiche les cartes du joueur 
+				// On affiche les cartes du joueur
+				printf(side_only); 
 				printf(side" Vos cartes :");
 				for(int i = 0; i < 8; i++){
 					printf(" %s",dictionnaire(cartes_joueur[i]));
@@ -251,6 +253,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 					printf(side_question" Souhaitez-vous sur-encherir ou passer?\n");
 					printf(side_question" 1 | Sur-enchère\n");
 					printf(side_question" 2 | Passer\n");
+					printf(side_only);
 					printf(side_question" Votre choix : ");
 
 					scanf("%d",&choix_surenchere); 									// A ACTIVER
@@ -267,6 +270,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(side_question" N | Classique - Entre 80 et 160 pts, par tranche de 10!\n");
 						printf(side_question" 1 | Capôt     - 250 pts -> gagner tout les plis\n");
 						printf(side_question" 2 | Générale  - 500 pts -> doit gagner tout les plis a vous seul\n");
+						printf(side_only);
 						printf(side_question" Votre choix : ");
 
 						scanf("%d",&choix_points_surenchere); 						// A ACTIVER
@@ -309,6 +313,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								printf(side_question" 2 | Coeur\n");
 								printf(side_question" 3 | Pique\n");
 								printf(side_question" 4 | Trèfle\n");
+								printf(side_only);
 								printf(side_question" Votre choix : ");
 
 								scanf("%d",&choix_couleur); 							// A ACTIVER
@@ -374,6 +379,6 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	tableau_tri(cartes_east);
 
 	//clean; // A ACTIVER UNE FOIS DÉBUGUÉ
-	plis(distributeur,atout,cartes_west,cartes_north,cartes_east,cartes_joueur,nom_joueur);
+	plis(points,distributeur,atout,cartes_west,cartes_north,cartes_east,cartes_joueur,nom_joueur);
 
 }

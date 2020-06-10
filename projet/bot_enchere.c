@@ -42,6 +42,8 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	// On annonce le bot qui examine son jeu:
 	printf(side_jeu" %s examine son jeu...",bot);
 
+	pause;
+
 	//// Estimation par le bot de la couleur possédant le plus de points :
 
 	int pique_fort   = 0;							// Nombre de carte fortes par couleur

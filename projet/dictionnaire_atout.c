@@ -13,29 +13,32 @@ int dictionnaire_atout(int carte){
 	int result = -1;
 
 	switch(carte){
-		case 1 :
+		case 0 :
 		result = 0;
+
+		case 1 :
+		result = 0; //7
 		break;
 		case 2 :
-		result = 0;
+		result = 0; //8
 		break;
 		case 3 :
-		result = 14;
+		result = 14; //9
 		break;
 		case 4 :
-		result = 10;
+		result = 10; //10
 		break;
 		case 5 :
-		result = 20;
+		result = 20; //valet
 		break;
 		case 6 :
-		result = 3;
+		result = 3; //dame
 		break;
 		case 7 :
-		result = 4;
+		result = 4; //roi
 		break;
 		case 8 :
-		result = 11;
+		result = 11; //as
 		break;
 
 		case 9 :
