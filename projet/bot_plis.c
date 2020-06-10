@@ -49,6 +49,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 		break;
 	}
 
+	/*
 	printf(side" Cartes :");
 	for(int i = 0; i < 8; i++){
 		if(cartes_bot[i] == 0){
@@ -58,5 +59,6 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 			printf(" %s",dictionnaire(-1));
 		}
 	}
+	*/
 	printf("\n"side_only);
 }
