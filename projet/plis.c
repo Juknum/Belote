@@ -7,15 +7,14 @@
 #include "./header/syntax.h"
 
 
-void plis(int points, int distributeur, char * atout, int * cartes_west, int * cartes_north, int * cartes_east, int * cartes_joueur, char * nom_joueur){
+void plis(char* contrat, int points, int distributeur, char * atout, int * cartes_west, int * cartes_north, int * cartes_east, int * cartes_joueur, char * nom_joueur){
 
 	int numero_pli  = 1;
 	int depositaire = 0;
 
-	int ordre_jeu[4] = {0};
-
 	int choix_joueur = 0;
 
+	int ordre_jeu[4] = {0};
 	int tableau_pli[4]   = {0};
 	int tableau_atout[4] = {0};
 
@@ -23,11 +22,20 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 	int nb_cartes_jouee = 0;
 	int atout_n         = 0;
 
+	int points_north_joueur = 0;
+	int points_west_east    = 0;
+
+	char team_north_joueur[30];
+	char team_east_west[30];
+
 	char* symbole = "x\0";
 
-	do{
+	strcpy(team_north_joueur, "Nord/");
+	strcat(team_north_joueur, nom_joueur);
+	strcpy(team_east_west, "Est/Ouest");
 
-			// Partie concernant l'entête
+	do{
+		// Partie concernant l'entête
 		printf(title_barre);
 		printf(title_barre_top);
 		printf(title_g" Phase de Jeu! "title_d);
@@ -89,10 +97,9 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 		}
 
 		printf(title_ninfo" - Atout  : %s %s\n",atout,symbole);
-		printf(title_ninfo" - Points : %d\n",points);
-
-		
-
+		printf(title_ninfo" - Contrat: %s (%d pts)\n",contrat,points);
+		printf(title_ninfo" - Nord/%s : %d\n",nom_joueur,points_north_joueur);
+		printf(title_ninfo" - Ouest/Est : %d\n",points_west_east);
 		printf(title_barre);
 		printf(side_only);
 
@@ -123,18 +130,16 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 						for(int i = 0; i < 8; i++){
 							printf(" %s",dictionnaire(cartes_joueur[i]));
 						}
-					printf("\n                1   2   3   4   5   6   7   8");
-					printf("\n"side_only);
+					printf("\n"side cyan"               1   2   3   4   5   6   7   8\n");
+					printf(side_only);
 
 					do{
 						printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
 						scanf("%d",&choix_joueur);
-						printf("\n Choix : %d",choix_joueur);
 
-						while(cartes_joueur[choix_joueur-1] == 0){					
-							printf("\nEntrez une carte que vous possédez :");
+						while(cartes_joueur[choix_joueur-1] == -5){					
+							printf(side red" Entrez une carte que vous possédez : "yellow);
 							scanf("%d",&choix_joueur);
-							printf("\n Choix : %d",choix_joueur);
 						}
 
 
@@ -145,39 +150,41 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 					switch(choix_joueur){
 						case 1 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[0];
-							cartes_joueur[0] = 0;
+							cartes_joueur[0] = -5;
 							break;
 						case 2 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[1];
-							cartes_joueur[1] = 0;
+							cartes_joueur[1] = -5;
 							break;
 						case 3 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[2];
-							cartes_joueur[2] = 0;
+							cartes_joueur[2] = -5;
 							break;
 						case 4 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[3];
-							cartes_joueur[3] = 0;
+							cartes_joueur[3] = -5;
 							break;
 						case 5 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[4];
-							cartes_joueur[4] = 0;
+							cartes_joueur[4] = -5;
 							break;
 						case 6 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[5];
-							cartes_joueur[5] = 0;
+							cartes_joueur[5] = -5;
 							break;
 						case 7 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[6];
-							cartes_joueur[6] = 0;
+							cartes_joueur[6] = -5;
 							break;
 						case 8 :
 							tableau_pli[nb_cartes_jouee] = cartes_joueur[7];
-							cartes_joueur[7] = 0;
+							cartes_joueur[7] = -5;
 							break;
 						default:
 							break;
 					}
+					// On vérifie si la carte jouée et un atout
+					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 
 					printf(side" Vos cartes désormais :");
 					for(int i = 0; i < 8; i++){
@@ -190,116 +197,58 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 
 				case 2:
 					bot_plis("Ouest", cartes_west, nb_cartes_jouee, tableau_pli);
+					// On vérifie si la carte jouée et un atout à chaque fois que quelqu'un pose (et non pas juste à la fin)
+					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 				case 3:
 					bot_plis("Nord", cartes_north, nb_cartes_jouee, tableau_pli);
+					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 				case 4:
 					bot_plis("Est", cartes_east, nb_cartes_jouee, tableau_pli);
+					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 			}
-
 			depositaire++;
 
-			// DEBUG : affiche le nombre de carte jouées
-			//printf("nb carte %d\n",nb_cartes_jouee);
-
-			// DEBUG : affiche le tableau des cartes jouées:
-			
-			printf(side" Cartes jouées durant la manche:");
+			// DEBUG : affiche le tableau des cartes jouées étant des atouts:
+			printf(side" Cartes atout durant la manche:");
 			for(int i = 0; i < 4; i++){
-				printf(" %s",dictionnaire(tableau_pli[i]));
+				printf(" %s",dictionnaire(tableau_atout[i]));
 			}
-			
 			printf("\n");
 		}
-
-		// Compte du nombre d'atout
-		switch(atout_n){
-			case 1: // Pique est atout
-				// On regarde les cartes jouées et on compte le nbr d'atouts
-				for(int i = 0; i < 4; i++){
-					switch(tableau_pli[i]){
-						case 1 ... 8 :
-							nb_atout++;
-							tableau_atout[i] = tableau_pli[i];
-							break;
-						default:
-							break;
-					}
-				}
-				break;
-			case 2: // Carreau est atout
-				// On regarde les cartes jouées et on compte le nbr d'atouts
-				for(int i = 0; i < 4; i++){
-					switch(tableau_pli[i]){
-						case 9 ... 16 :
-							nb_atout++;
-							tableau_atout[i] = tableau_pli[i];
-							break;
-						default:
-							break;
-					}
-				}
-				break;
-			case 3: // Coeur est atout
-				// On regarde les cartes jouées et on compte le nbr d'atouts
-				for(int i = 0; i < 4; i++){
-					switch(tableau_pli[i]){
-						case 17 ... 24 :
-							nb_atout++;
-							tableau_atout[i] = tableau_pli[i];
-							break;
-						default:
-							break;
-					}
-				}
-				break;
-			case 4: // Trefle est atout
-				// On regarde les cartes jouées et on compte le nbr d'atouts
-				for(int i = 0; i < 4; i++){
-					switch(tableau_pli[i]){
-						case 25 ... 32 :
-							nb_atout++;
-							tableau_atout[i] = tableau_pli[i];
-							break;
-						default:
-							break;
-					}
-				}
-				break;
-			default:
-				printf(side_error" switch(%d) atout_n",atout_n);
-				break;
-		}
-
-		// DEBUG : affiche le tableau des cartes jouées étant des atouts:
-		printf(side" Cartes atout durant la manche:");
+		// DEBUG : affiche le tableau des cartes jouées:
+		printf(side" Cartes jouées durant la manche:");
 		for(int i = 0; i < 4; i++){
-			printf(" %s",dictionnaire(tableau_atout[i]));
+			printf(" %s",dictionnaire(tableau_pli[i]));
 		}
 		printf("\n");
 
-		// Si personne n'a joué atout -> la carte la plus haute l'emporte
-		// Problème éventuel si 2 carte de meme valeur mais de couleurs différente
-			// Ne gene pas le programme, juste un problème d'équité
-				//  celui qui a posé la carte en premier qui remporte (l'autre joueur a aucune raison de jouer une carte similaire 
-				//  si ca lui permet pas de remporter le pli sauf si c'est sa dernière carte ou alors qu'il veut se défausser de cette carte)
+		// Si personne n'a joué atout -> la 1ere carte la plus haute l'emporte
 		if(nb_atout == 0){
-			if(tableau_pli[0] > tableau_pli[1] && tableau_pli[0] > tableau_pli[2] && tableau_pli[0] > tableau_pli[3]){
+			// si la 1ere est plus grande ou identique à celles d'après
+			if(dictionnaire_non_atout(tableau_pli[0]) >= dictionnaire_non_atout(tableau_pli[1]) && dictionnaire_non_atout(tableau_pli[0]) >= dictionnaire_non_atout(tableau_pli[2]) && dictionnaire_non_atout(tableau_pli[0]) >= dictionnaire_non_atout(tableau_pli[3])){
 				depositaire = ordre_jeu[0];
 			}
-			if(tableau_pli[1] > tableau_pli[0] && tableau_pli[1] > tableau_pli[2] && tableau_pli[1] > tableau_pli[3]){
-				depositaire = ordre_jeu[1];
-			}
-			if(tableau_pli[2] > tableau_pli[1] && tableau_pli[2] > tableau_pli[0] && tableau_pli[2] > tableau_pli[3]){
-				depositaire = ordre_jeu[2];
-			}
-			if(tableau_pli[3] > tableau_pli[1] && tableau_pli[3] > tableau_pli[2] && tableau_pli[3] > tableau_pli[0]){
-				depositaire = ordre_jeu[3];
+			else{
+				// sinon si la 2e est plus grande ou identique à celles d'après
+				if(dictionnaire_non_atout(tableau_pli[1]) >= dictionnaire_non_atout(tableau_pli[2]) && dictionnaire_non_atout(tableau_pli[1]) >= dictionnaire_non_atout(tableau_pli[3])){
+					depositaire = ordre_jeu[1];
+				}
+				else{
+					// sinon si la 3e est plus grande ou identique à celle d'après
+					if(dictionnaire_non_atout(tableau_pli[2]) >= dictionnaire_non_atout(tableau_pli[3])){
+						depositaire = ordre_jeu[2];
+					}
+					// sinon la 3e est plus grande
+					else{
+						depositaire = ordre_jeu[3];
+					}
+				}
 			}
 		}
 		else{
@@ -324,6 +273,14 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 				ordre_jeu[1] = 2;
 				ordre_jeu[2] = 3;
 				ordre_jeu[3] = 4;
+				for(int i = 0; i < 4; i++){
+					if(tableau_atout[i] == 0){
+						points_north_joueur += dictionnaire_non_atout(tableau_pli[i]);
+					}
+					else{
+						points_north_joueur += dictionnaire_atout(tableau_pli[i]); 
+					}
+				}
 				break;
 			case 2:
 				printf(side_jeu" Ouest remporte le pli\n");
@@ -331,6 +288,14 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 				ordre_jeu[1] = 3;
 				ordre_jeu[2] = 4;
 				ordre_jeu[3] = 1;
+				for(int i = 0; i < 4; i++){
+					if(tableau_atout[i] == 0){
+						points_west_east += dictionnaire_non_atout(tableau_pli[i]);
+					}
+					else{
+						points_west_east += dictionnaire_atout(tableau_pli[i]); 
+					}
+				}
 				break;
 			case 3:
 				printf(side_jeu" Nord remporte le pli\n");
@@ -338,6 +303,14 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 				ordre_jeu[1] = 4;
 				ordre_jeu[2] = 1;
 				ordre_jeu[3] = 2;
+				for(int i = 0; i < 4; i++){
+					if(tableau_atout[i] == 0){
+						points_north_joueur += dictionnaire_non_atout(tableau_pli[i]);
+					}
+					else{
+						points_north_joueur += dictionnaire_atout(tableau_pli[i]); 
+					}
+				}
 				break;
 			case 4:
 				printf(side_jeu" Est remporte le pli\n");
@@ -345,9 +318,53 @@ void plis(int points, int distributeur, char * atout, int * cartes_west, int * c
 				ordre_jeu[1] = 1;
 				ordre_jeu[2] = 2;
 				ordre_jeu[3] = 3;
+				for(int i = 0; i < 4; i++){
+					if(tableau_atout[i] == 0){
+						points_west_east += dictionnaire_non_atout(tableau_pli[i]);
+					}
+					else{
+						points_west_east += dictionnaire_atout(tableau_pli[i]); 
+					}
+				}
 				break;
 		}
 		
 		numero_pli++;
+
+		// barre de chargement avant l'affichage du prochain pli
+		printf("£ Load... £\n");
+		for(int i = 0; i < 210; i++){
+			if(i%2 == 0){
+				printf("=");
+			}
+			pause_load; // 10ms
+		}
+		printf("\n");
+		for(int i = 0; i < 210; i++){
+			if(i%2 == 0){
+				printf("=");
+			}
+			pause_load; // 10ms
+		}
+		printf("\n");
+
+		clean;
+
 	}while(numero_pli != 9);
+
+	// Si le contrat est prit par Nord/Sud(joueur) et qu'il a atteint le nombre de pts annoncée, la partie est gagnée
+	// sinon c'est est/ouest qui gagne
+	if(strcmp(contrat, team_north_joueur) == 0 && points_north_joueur >= points){
+		printf("bravo vous avez gagné!");
+	}
+	else{
+		printf("Hélas vous avez perdu :'(");
+	}
+	
+	if(strcmp(contrat, team_east_west) == 0 && points_west_east >= points){
+		printf("Hélas vous avez perdu :'(");
+	}
+	else{
+		printf("Bravo vous avez gagné!");
+	}
 }

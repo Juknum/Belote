@@ -7,9 +7,23 @@
 #include "./header/syntax.h"
 
 void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_pli){
-	printf(side_jeu" %s Examine son jeu...\n",nom_bot);
+	printf(side_jeu" %s Examine son jeu...",nom_bot);
 
-	int carte_choisie = rand()%8 + 1; // A CHANGER
+	int carte_choisie = 0; 
+
+	// DEBUG : Affiche les cartes du bot avant son choix
+	/*
+	printf(side" bot:");
+	for(int i = 0; i < 8; i++){
+		printf(" %s",dictionnaire(cartes_bot[i]));
+	}
+	printf("\n");
+	*/
+
+	// Evite de au bot de prendre une carte déjà posée au tour précédent
+	do{
+		carte_choisie = rand()%8 + 1; // A CHANGER
+	}while(cartes_bot[carte_choisie-1] == 0);
 
 	switch(carte_choisie){
 		case 1 :
@@ -49,6 +63,18 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 		break;
 	}
 
+	printf(" et pose %s !\n",dictionnaire(tableau_pli[nb_cartes_jouee]));
+
+	// DEBUG : Affiche les cartes du bot après son choix
+	/*
+	printf(side" bot:");
+	for(int i = 0; i < 8; i++){
+		printf(" %s",dictionnaire(cartes_bot[i]));
+	}
+	printf("\n");
+	*/
+
+	// DEBUG : Affiche les cartes face cachée du bot après son choix
 	/*
 	printf(side" Cartes :");
 	for(int i = 0; i < 8; i++){
@@ -60,7 +86,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 		}
 	}
 	*/
-	printf("\n"side_only);
+	printf(side_only);
 
 	/*
 	#include <stdio.h>

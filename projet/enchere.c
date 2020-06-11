@@ -40,7 +40,8 @@
 void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes_west, int *cartes_north, int *cartes_east){
 
 	char atout[20];							// Choix de l'atout pour la partie
-	char contrat[20];				 		// Personne qui annonce le contrat
+	char contrat[30];				 		// Equipe qui annonce le contrat
+	char team_north_south[30];
 	int points = 0; 						// Points a atteindre pour remporter le contrat annoncé
 	int passe  = 0; 						// Nombre de fois qu'un joueur passe
 
@@ -89,6 +90,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 	strcpy(atout, "undefined\0");
 
+	// On assemble les deux chaines pour former le nom d'équipe du contrat
+	strcpy(team_north_south, "Nord/");
+	strcat(team_north_south, nom_joueur);
+
 	while( strcmp(atout,"undefined\0") == 0){
 		encherisseur++;
 		
@@ -133,10 +138,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						do{
 							printf(side_only);
 							printf(side_question" Quelle couleur?\n");
-							printf(side_question" 1 | Carreau\n");
-							printf(side_question" 2 | Coeur\n");
-							printf(side_question" 3 | Pique\n");
-							printf(side_question" 4 | Trèfle\n");
+							printf(side_question" 1 | "carreau yellow" Carreau\n");
+							printf(side_question" 2 | "coeur yellow" Coeur\n");
+							printf(side_question" 3 | "pique yellow" Pique\n");
+							printf(side_question" 4 | "trefle yellow" Trèfle\n");
 							printf(side_only);
 							printf(side_question" Votre choix : "); 
 
@@ -176,18 +181,17 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 							case 1 :
 								printf(side_jeu" %s annonce "bold"Capôt"nboldw" avec une couleur de "bold"%s\n"nboldw,nom_joueur,atout);
 								points = 250;
-								strcpy(contrat, nom_joueur);
+								strcpy(contrat, team_north_south);
 								break;
 							case 2 :
 								printf(side_jeu" %s annonce "bold"Générale"nboldw" avec une couleur de "bold"%s\n"nboldw,nom_joueur,atout);
 								points = 500;
-								strcpy(contrat, nom_joueur);
+								strcpy(contrat, team_north_south);
 								break;
 							case 80 ... 160 : 
 								printf(side_jeu" %s annonce une couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",nom_joueur,atout,choix_points);
-								points = choix_points;
-
-								strcpy(contrat, nom_joueur);
+								points = (choix_points/10) * 10;
+								strcpy(contrat, team_north_south);
 							break;
 						}
 
@@ -203,13 +207,13 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				
 				break;
 			case 2:		// Ouest
-				bot_enchere(cartes_west, "Ouest", atout, &points, &passe);
+				bot_enchere(cartes_west, "Ouest", atout, &points, &passe, contrat, team_north_south);
 				break;
 			case 3:		// Nord
-				bot_enchere(cartes_north, "Nord", atout, &points, &passe);
+				bot_enchere(cartes_north, "Nord", atout, &points, &passe, contrat, team_north_south);
 				break;
 			case 4:		// Est
-				bot_enchere(cartes_east, "Est", atout, &points, &passe);
+				bot_enchere(cartes_east, "Est", atout, &points, &passe, contrat, team_north_south);
 				break;
 			default:
 				printf(side_error" switch(%d) dans while(atout=%s)",encherisseur,atout);
@@ -274,13 +278,13 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(side_only);
 						printf(side_question" Votre choix : ");
 
-						scanf("%d",&choix_points_surenchere); 						// A ACTIVER
+						scanf("%d",&choix_points_surenchere); // A ACTIVER
 						
 						switch(choix_points_surenchere){
 							case 1:
 								if(points >= 250){
 									// Le joueur ne respecte pas la regle de surenchere
-									printf(side_question" Vous devez annoncer plus que l'enchère précédente");
+									printf(side_question" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
 								}else{ valid = 1; points = 250;}
 
@@ -288,7 +292,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 							case 2:
 								if(points >= 500){
 									// le joueur ne respecte pas les regles
-									printf(side_question" Vous devez annoncer plus que l'enchère précédente");
+									printf(side_question" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
 									
 								}else{ valid = 1; points = 500;}
@@ -296,7 +300,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								break;
 							case 80 ... 160:
 								if(points >= choix_points_surenchere){
-									printf(side_question" Vous devez annoncer plus que l'enchère précédente");
+									printf(side_question" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
 
 								}else{ valid = 1; points = choix_points_surenchere;}
@@ -310,10 +314,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						if(valid == 1){
 							do{
 								printf(side_question" Quelle couleur?\n");
-								printf(side_question" 1 | Carreau\n");
-								printf(side_question" 2 | Coeur\n");
-								printf(side_question" 3 | Pique\n");
-								printf(side_question" 4 | Trèfle\n");
+								printf(side_question" 1 | "carreau yellow" Carreau\n");
+								printf(side_question" 2 | "coeur yellow" Coeur\n");
+								printf(side_question" 3 | "pique yellow" Pique\n");
+								printf(side_question" 4 | "trefle yellow" Trèfle\n");
 								printf(side_only);
 								printf(side_question" Votre choix : ");
 
@@ -339,7 +343,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 									break;
 							}
 
-							printf(side_jeu" %s sur-encherit avec une Couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts!",nom_joueur,atout,points);
+							printf(side_jeu" %s sur-encherit avec une Couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts!\n",nom_joueur,atout,points);
+							strcpy(contrat, team_north_south);
 							passe = 0;
 						}
 
@@ -355,15 +360,15 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 				break;
 			case 2:
-				bot_surenchere(cartes_west, "Ouest", atout, &points, &passe);
+				bot_surenchere(cartes_west, "Ouest", atout, &points, &passe, contrat, team_north_south);
 				
 				break;
 			case 3:
-				bot_surenchere(cartes_north, "Nord", atout, &points, &passe);
+				bot_surenchere(cartes_north, "Nord", atout, &points, &passe, contrat, team_north_south);
 				
 				break;
 			case 4:
-				bot_surenchere(cartes_east, "Est", atout, &points, &passe);
+				bot_surenchere(cartes_east, "Est", atout, &points, &passe, contrat, team_north_south);
 				
 				break;
 			default:
@@ -379,7 +384,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	tableau_tri(cartes_north);
 	tableau_tri(cartes_east);
 
-	//clean; // A ACTIVER UNE FOIS DÉBUGUÉ
-	plis(points,distributeur,atout,cartes_west,cartes_north,cartes_east,cartes_joueur,nom_joueur);
+	pause;
+	pause;
+
+	clean;
+	plis(contrat,points,distributeur,atout,cartes_west,cartes_north,cartes_east,cartes_joueur,nom_joueur);
 
 }

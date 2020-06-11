@@ -13,8 +13,8 @@ int dictionnaire_atout(int carte){
 	int result = -1;
 
 	switch(carte){
-		case 0 :
-		result = 0;
+		case -5 :
+		result = -5; // Si la carte est déjà jouée
 
 		case 1 :
 		result = 0; //7

@@ -29,7 +29,7 @@
 #include "./header/syntax.h"
 
 // Phase d'Enchère - BOTs
-void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *passe){
+void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *passe, char *contrat, char * team_north_south){
 	/*
 		Au moment des enchères : 
 		si une IA possède 3 cartes fortes d’une couleur donnée, 
@@ -211,24 +211,48 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
 		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
+
+		if(strcmp(bot, "Ouest") == 0 || strcmp(bot, "Est") == 0){
+			strcpy(contrat, "Est/Ouest");
+		}else{
+			strcpy(contrat, team_north_south);
+		}
 	}
 
 	if(strcmp(atout_bot, "Carreau") == 0 && carreau_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
 		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
+
+		if(strcmp(bot, "Ouest") == 0 || strcmp(bot, "Est") == 0){
+			strcpy(contrat, "Est/Ouest");
+		}else{
+			strcpy(contrat, team_north_south);
+		}
 	}
 
 	if(strcmp(atout_bot, "Coeur") == 0 && coeur_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
 		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
+
+		if(strcmp(bot, "Ouest") == 0 || strcmp(bot, "Est") == 0){
+			strcpy(contrat, "Est/Ouest");
+		}else{
+			strcpy(contrat, team_north_south);
+		}
 	}
 
 	if(strcmp(atout_bot, "Trèfle") == 0 && trefle_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
 		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,*points);
+
+		if(strcmp(bot, "Ouest") == 0 || strcmp(bot, "Est") == 0){
+			strcpy(contrat, "Est/Ouest");
+		}else{
+			strcpy(contrat, team_north_south);
+		}
 	}
 
 	if(strcmp(atout, atout_pre) == 0 && *points == points_pre){ // Si vrai : le bot n'a pas changer l'atout et les pts -> il passe son tours

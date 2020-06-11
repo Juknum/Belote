@@ -24,7 +24,7 @@
 #include "./header/syntax.h"
 
 //bot_enchere(cartes_west, "Ouest", atout, &points, &passe);
-void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points_prev, int *passe){
+void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points_prev, int *passe, char *contrat, char * team_north_south){
 	printf(side_jeu" %s examine son jeu...",bot);
 
 	pause;
@@ -190,6 +190,12 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 		*passe = 0;
 		*points_prev = points;
 		strcpy(atout_pre, atout);
+
+		if(strcmp(bot, "Ouest") == 0 || strcmp(bot, "Est") == 0){
+			strcpy(contrat, "Est/Ouest");
+		}else{
+			strcpy(contrat, team_north_south);
+		}
 		
 	}else{
 		printf(" et a choisit de passer son tours!\n");

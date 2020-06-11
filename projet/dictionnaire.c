@@ -19,11 +19,11 @@ char * dictionnaire(int carte){
 	char* result = "undefined";
 
 	switch(carte){
-		case -1 :
-		result = " █ ";
+		case -5 :
+		result = " ░ "; // Si la carte est déjà jouée
 		break;
-		case  0 :
-		result = " ░ ";
+		case -1 :
+		result = " █ ";// Si la carte est face cachée
 		break;
 
 		case 1 :
