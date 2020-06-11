@@ -23,7 +23,7 @@ int main(void){
 
 	table_ascii;
 	printf(reset);
-	bbcolor;
+	
 	printf(white);
 
 	clean;

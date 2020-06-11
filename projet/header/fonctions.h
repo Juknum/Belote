@@ -3,6 +3,8 @@
 
 // Traduction des cartes:
 char* dictionnaire(int);
+char* symbole(int);
+void afficher_carte(int*);
 int dictionnaire_atout(int);
 int dictionnaire_non_atout(int);
 
@@ -33,7 +35,6 @@ void score_add(int, char*);
 	#define pause_load 			Sleep(10)
 	#define clean 				system("cls")
 	#define table_ascii 		system("chcp 65001")
-	#define bbcolor				system("color 2F")
 #endif
 
 #ifdef linux

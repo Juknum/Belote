@@ -114,13 +114,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			case 1:
 
 				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
-
-				// On affiche les cartes du joueur 
-				printf(side_only);
-				printf(side" Vos cartes :");
-				for(int i = 0; i < 8; i++){
-					printf(" %s",dictionnaire(cartes_joueur[i]));
-				}
+				afficher_carte(cartes_joueur);
 				
 				// Demande entre annoncer un contrat ou passer
 				do{
@@ -140,10 +134,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						do{
 							printf(side_only);
 							printf(side_question" Quelle couleur?\n");
-							printf(side_question" 1 | "carreau black" Carreau\n");
-							printf(side_question" 2 | "coeur black" Coeur\n");
-							printf(side_question" 3 | "pique black" Pique\n");
-							printf(side_question" 4 | "trefle black" Trèfle\n");
+							printf(side_question" 1 | "carreau yellow" Carreau\n");
+							printf(side_question" 2 | "coeur yellow" Coeur\n");
+							printf(side_question" 3 | "pique yellow" Pique\n");
+							printf(side_question" 4 | "trefle yellow" Trèfle\n");
 							printf(side_only);
 							printf(side_question" Votre choix : "); 
 
@@ -249,14 +243,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 		switch(encherisseur){
 			case 1:
-				printf(side_jeu" %s examine son jeu...\n",nom_joueur );
-
-				// On affiche les cartes du joueur
-				printf(side_only); 
-				printf(side" Vos cartes :");
-				for(int i = 0; i < 8; i++){
-					printf(" %s",dictionnaire(cartes_joueur[i]));
-				}
+				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
+				afficher_carte(cartes_joueur);
 
 				do{
 					printf("\n"side_only);
@@ -322,10 +310,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						if(valid == 1){
 							do{
 								printf(side_question" Quelle couleur?\n");
-								printf(side_question" 1 | "carreau black" Carreau\n");
-								printf(side_question" 2 | "coeur black" Coeur\n");
-								printf(side_question" 3 | "pique black" Pique\n");
-								printf(side_question" 4 | "trefle black" Trèfle\n");
+								printf(side_question" 1 | "carreau yellow" Carreau\n");
+								printf(side_question" 2 | "coeur yellow" Coeur\n");
+								printf(side_question" 3 | "pique yellow" Pique\n");
+								printf(side_question" 4 | "trefle yellow" Trèfle\n");
 								printf(side_only);
 								printf(side_question" Votre choix : ");
 

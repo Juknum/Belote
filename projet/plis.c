@@ -129,12 +129,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			switch(depositaire){
 				case 1:
 					printf(side_jeu" %s examine son jeu...\n",nom_joueur);
-					printf(side_only side" Vos cartes :");
-						for(int i = 0; i < 8; i++){
-							printf(" %s",dictionnaire(cartes_joueur[i]));
-						}
-					printf("\n"side cyan"               1   2   3   4   5   6   7   8\n");
-					printf(side_only);
+					afficher_carte(cartes_joueur);
 
 					do{
 						printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
@@ -144,7 +139,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 							printf(side red" Entrez une carte que vous possédez : "yellow);
 							scanf("%d",&choix_joueur);
 						}
-
 
 					}while(choix_joueur < 1 || choix_joueur > 8);
 

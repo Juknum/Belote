@@ -27,107 +27,107 @@ char * dictionnaire(int carte){
 		break;
 
 		case 1 :
-		result = " 7"pique;
+		result = " 7 ";
 		break;
 		case 2 :
-		result = " 8"pique;
+		result = " 8 ";
 		break;
 		case 3 :
-		result = " 9"pique;
+		result = " 9 ";
 		break;
 		case 4 :
-		result = "10"pique;
+		result = "1 0";
 		break;
 		case 5 :
-		result = " V"pique;
+		result = " V ";
 		break;
 		case 6 :
-		result = " D"pique;
+		result = " D ";
 		break;
 		case 7 :
-		result = " R"pique;
+		result = " R ";
 		break;
 		case 8 :
-		result = "AS"pique;
+		result = " A ";
 		break;
 
 		case 9 :
-		result = " 7"carreau;
+		result = " 7 ";
 		break;
 		case 10 :
-		result = " 8"carreau;
+		result = " 8 ";
 		break;
 		case 11 :
-		result = " 9"carreau;
+		result = " 9 ";
 		break;
 		case 12 :
-		result = "10"carreau;
+		result = "1 0";
 		break;
 		case 13 :
-		result = " V"carreau;
+		result = " V ";
 		break;
 		case 14 :
-		result = " D"carreau;
+		result = " D ";
 		break;
 		case 15 :
-		result = " R"carreau;
+		result = " R ";
 		break;
 		case 16 :
-		result = "AS"carreau;
+		result = " A ";
 		break;
 
 		case 17 :
-		result = " 7"coeur;
+		result = " 7 ";
 		break;
 		case 18 :
-		result = " 8"coeur;
+		result = " 8 ";
 		break;
 		case 19 :
-		result = " 9"coeur;
+		result = " 9 ";
 		break;
 		case 20 :
-		result = "10"coeur;
+		result = "1 0";
 		break;
 		case 21 :
-		result = " V"coeur;
+		result = " V ";
 		break;
 		case 22 :
-		result = " D"coeur;
+		result = " D ";
 		break;
 		case 23 :
-		result = " R"coeur;
+		result = " R ";
 		break;
 		case 24 :
-		result = "AS"coeur;
+		result = " A ";
 		break;
 
 		case 25 :
-		result = " 7"trefle;
+		result = " 7 ";
 		break;
 		case 26 :
-		result = " 8"trefle;
+		result = " 8 ";
 		break;
 		case 27 :
-		result = " 9"trefle;
+		result = " 9 ";
 		break;
 		case 28 :
-		result = "10"trefle;
+		result = "1 0";
 		break;
 		case 29 :
-		result = " V"trefle;
+		result = " V ";
 		break;
 		case 30 :
-		result = " D"trefle;
+		result = " D ";
 		break;
 		case 31 :
-		result = " R"trefle;
+		result = " R ";
 		break;
 		case 32 :
-		result = "AS"trefle;
+		result = " A ";
 		break;
 
 		default :
-		result = bold red"N/A"nboldw;
+		result = "N/A";
 		break;
 	}
 
