@@ -50,7 +50,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 			case 0 ... 8 : // PIQUE
 				
 				switch( dictionnaire_atout(cartes_bot[i]) ){
-					case 10 ... 20 :
+					case 3 ... 20 :
 						pique_fort++;
 						break;
 				}
@@ -60,7 +60,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 			case 9 ... 16 : // CARREAU
 
 				switch( dictionnaire_atout(cartes_bot[i]) ){
-					case 10 ... 20 :
+					case 3 ... 20 :
 						carreau_fort++;
 						break;
 				}
@@ -70,7 +70,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 			case 17 ... 24 : // COEUR
 
 				switch( dictionnaire_atout(cartes_bot[i]) ){
-					case 10 ... 20 :
+					case 3 ... 20 :
 						coeur_fort++;
 						break;
 				}
@@ -80,7 +80,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 			case 25 ... 32 : // TREFLE
 
 				switch( dictionnaire_atout(cartes_bot[i]) ){
-					case 10 ... 20 :
+					case 3 ... 20 :
 						trefle_fort++;
 						break;
 				}

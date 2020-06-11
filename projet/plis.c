@@ -27,58 +27,21 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	int points_west_east    = 0;
 
 	char team_north_joueur[30];
-	char team_east_west[30];
+	char team_west_east[30];
 
 	char* symbole = "x\0";
 
 	strcpy(team_north_joueur, "Nord/");
 	strcat(team_north_joueur, nom_joueur);
-	strcpy(team_east_west, "Est/Ouest");
+	strcpy(team_west_east, "Est/Ouest");
 
 	do{
 		// Partie concernant l'entête
-		printf(title_barre);
-		printf(title_barre_top);
+		printf(title_barre1);
+		printf(title_barre_top1);
 		printf(title_g" Phase de Jeu! "title_d);
-		printf(title_barre_top);
-		printf(title_info" - Plis   : %d/8\n",numero_pli);
-
-		if(numero_pli == 1){
-			switch(distributeur){
-				case 1:
-					depositaire = 4;
-					ordre_jeu[0] = 4;
-					ordre_jeu[1] = 1;
-					ordre_jeu[2] = 2;
-					ordre_jeu[3] = 3;
-					printf(title_ninfo" - Est dépose en 1er\n");
-					break;
-				case 2:
-					depositaire = 1;
-					ordre_jeu[0] = 1;
-					ordre_jeu[1] = 2;
-					ordre_jeu[2] = 3;
-					ordre_jeu[3] = 4;
-					printf(title_ninfo" - %s dépose en 1er\n",nom_joueur);
-					break;
-				case 3:
-					depositaire = 2;
-					ordre_jeu[0] = 2;
-					ordre_jeu[1] = 3;
-					ordre_jeu[2] = 4;
-					ordre_jeu[3] = 1;
-					printf(title_ninfo" - Ouest dépose en 1er\n");
-					break;
-				case 4:
-					depositaire = 3;
-					ordre_jeu[0] = 3;
-					ordre_jeu[1] = 4;
-					ordre_jeu[2] = 1;
-					ordre_jeu[3] = 2;
-					printf(title_ninfo" - Nord dépose en 1er\n");
-					break;
-			}
-		}
+		printf(title_pli_left"%d",numero_pli);
+		printf(title_pli_right);
 
 		if(strcmp(atout, "Pique") == 0){
 			atout_n = 1;
@@ -97,12 +60,49 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			symbole = trefle;
 		}
 
-		printf(title_ninfo" - Atout  : %s %s\n",atout,symbole);
+		printf(title_info" - Atout  : %s %s\n",atout,symbole);
 		printf(title_ninfo" - Contrat: %s (%d pts)\n",contrat,points);
 		printf(title_ninfo" - Nord/%s : %d\n",nom_joueur,points_north_joueur);
 		printf(title_ninfo" - Ouest/Est : %d\n",points_west_east);
-		printf(title_barre);
+		printf(title_barre2);
 		printf(side_only);
+
+		if(numero_pli == 1){
+			switch(distributeur){
+				case 1:
+					depositaire = 4;
+					ordre_jeu[0] = 4;
+					ordre_jeu[1] = 1;
+					ordre_jeu[2] = 2;
+					ordre_jeu[3] = 3;
+					printf(side_info" Est joue en 1er\n");
+					break;
+				case 2:
+					depositaire = 1;
+					ordre_jeu[0] = 1;
+					ordre_jeu[1] = 2;
+					ordre_jeu[2] = 3;
+					ordre_jeu[3] = 4;
+					printf(side_info" %s joue en 1er\n",nom_joueur);
+					break;
+				case 3:
+					depositaire = 2;
+					ordre_jeu[0] = 2;
+					ordre_jeu[1] = 3;
+					ordre_jeu[2] = 4;
+					ordre_jeu[3] = 1;
+					printf(side_info" Ouest joue en 1er\n");
+					break;
+				case 4:
+					depositaire = 3;
+					ordre_jeu[0] = 3;
+					ordre_jeu[1] = 4;
+					ordre_jeu[2] = 1;
+					ordre_jeu[3] = 2;
+					printf(side_info" Nord joue en 1er\n");
+					break;
+			}
+		}
 
 		// On réinitialise les variables entre chaque plis
 		nb_atout = 0;
@@ -113,11 +113,13 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		}
 
 		// DEBUG : on affichege l'ordre de jeu
+		/*
 		printf(side" Ordre: ");
 		for (int i = 0; i < 4; i++){
 			printf("%d ",ordre_jeu[i]);
 		}
 		printf("\n");
+		*/
 
 		// Partie correspondant au plis
 		while(nb_cartes_jouee != 4){
@@ -126,7 +128,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 
 			switch(depositaire){
 				case 1:
-					printf(side_jeu" %s examine son jeu ...\n",nom_joueur);
+					printf(side_jeu" %s examine son jeu...\n",nom_joueur);
 					printf(side_only side" Vos cartes :");
 						for(int i = 0; i < 8; i++){
 							printf(" %s",dictionnaire(cartes_joueur[i]));
@@ -216,11 +218,13 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			depositaire++;
 
 			// DEBUG : affiche le tableau des cartes jouées étant des atouts:
+			/*
 			printf(side" Cartes atout durant la manche:");
 			for(int i = 0; i < 4; i++){
 				printf(" %s",dictionnaire(tableau_atout[i]));
 			}
 			printf("\n");
+			*/
 		}
 		// DEBUG : affiche le tableau des cartes jouées:
 		printf(side" Cartes jouées durant la manche:");
@@ -282,6 +286,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 						points_north_joueur += dictionnaire_atout(tableau_pli[i]); 
 					}
 				}
+				if(numero_pli == 8){ points_north_joueur += 10;}
 				break;
 			case 2:
 				printf(side_jeu" Ouest remporte le pli\n");
@@ -297,6 +302,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 						points_west_east += dictionnaire_atout(tableau_pli[i]); 
 					}
 				}
+				if(numero_pli == 8){ points_west_east += 10;}
 				break;
 			case 3:
 				printf(side_jeu" Nord remporte le pli\n");
@@ -312,6 +318,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 						points_north_joueur += dictionnaire_atout(tableau_pli[i]); 
 					}
 				}
+				if(numero_pli == 8){ points_north_joueur += 10;}
 				break;
 			case 4:
 				printf(side_jeu" Est remporte le pli\n");
@@ -327,6 +334,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 						points_west_east += dictionnaire_atout(tableau_pli[i]); 
 					}
 				}
+				if(numero_pli == 8){ points_west_east += 10;}
 				break;
 		}
 		
@@ -341,33 +349,35 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			pause_load; // 10ms
 		}
 		printf("\n");
-		for(int i = 0; i < 10; i++){ // A mettre sur 210
-			if(i%2 == 0){
-				printf("=");
-			}
-			pause_load; // 10ms
-		}
-		printf("\n");
 
-		clean;
+		//clean;
 
 	}while(numero_pli != 9);
 
-	printf(title_barre);
-	printf(title_barre_top);
+	printf(title_barre1);
+	printf(title_barre_top1);
 	printf(title_g"Fin de partie !"title_d);
-	printf(title_barre_top);
+	printf(title_barre_top2);
 	printf(title_only);
 
 	// Si le contrat est prit par Nord/Sud(joueur) et qu'il a atteint le nombre de pts annoncée, la partie est gagnée
 	// sinon c'est est/ouest qui gagne
-	if((strcmp(contrat, team_east_west) == 0 && points_north_joueur < points) || (strcmp(contrat, team_north_joueur) == 0 && points_north_joueur >= points)){
+	if((strcmp(contrat, team_west_east) == 0 && points_west_east < points) || (strcmp(contrat, team_north_joueur) == 0 && points_north_joueur >= points)){
 		printf(end_gagne1);
 		printf(end_gagne2);
 		printf(end_gagne3);
 		printf(end_gagne4);
 		printf(end_gagne5);
 		printf(end_gagne6);
+
+		// si team west/east non pas rempli leur contrat
+		if(strcmp(contrat, team_west_east) == 0){
+			points_north_joueur = 162 + points;
+		}
+		// si on rempli notre contrat
+		else{
+			points_north_joueur += points;
+		}
 	}
 	else{
 		printf(end_perdu1);
@@ -376,12 +386,26 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		printf(end_perdu4);
 		printf(end_perdu5);
 		printf(end_perdu6);
+
+		if(strcmp(contrat, team_north_joueur) == 0){
+			points_west_east = 162 + points;
+		}
+		else{
+			points_west_east += points;
+		}
 	}
 
 	printf(title_only);
-	printf(title_barre);
+	printf(title_barre2);
 
+	// Enregistrement des scores dans score.txt
+	score_add(points_north_joueur, nom_joueur);
+
+	printf(side_info" Scores Finaux: \n");
+	printf(side"        %d - Est/Ouest\n",points_west_east);
+	printf(side"        %d - %s\n",points_north_joueur,team_north_joueur);
 	printf(side_only);
+
 	printf(side_question" Que voulez-vous faire?\n");
 	printf(side_question" 1 | Rejouer\n");
 	printf(side_question" 2 | Menu\n");
@@ -401,6 +425,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			clean;
 			menu();
 		case 3:
+			printf(reset);
 			clean;
 			exit(0);
 	}

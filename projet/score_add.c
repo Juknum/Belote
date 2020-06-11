@@ -8,7 +8,7 @@
 
 #define TAILLE_MAX 1000
 
-void score(int score_gagnant, char * nom_gagnant){
+void score_add(int score_gagnant, char * nom_gagnant){
 
     FILE* score_fichier = NULL;
     char chaine[TAILLE_MAX];

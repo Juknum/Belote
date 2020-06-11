@@ -3,10 +3,6 @@
 
 #include <string.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 #include "./header/fonctions.h"
 #include "./header/syntax.h"
 

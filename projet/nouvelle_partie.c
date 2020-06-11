@@ -49,11 +49,11 @@ void nouvelle_partie(){
 
 	int joueur_alea = rand()% 4 + 1; 								// on prend un joueur au hasard pour distribuer 
 
-	printf(title_barre);
-	printf(title_barre_top);
+	printf(title_barre1);
+	printf(title_barre_top1);
 	printf(title_g"Nouvelle Partie"title_d);
-	printf(title_barre_top);
-	printf(title_barre);
+	printf(title_barre_top2);
+	printf(title_barre2);
 										
 	printf(side_question" Entrez votre nom : ");					// Demande du nom du joueur
 	

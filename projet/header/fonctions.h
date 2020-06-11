@@ -24,7 +24,7 @@ void atout_add(int, int, int*, int*, int*);
 
 // Autre :
 void meilleurs_score(void);
-void scores(int, char*);
+void score_add(int, char*);
 
 // Compatibilité Windows / Linux :
 #ifdef _WIN32
@@ -33,6 +33,7 @@ void scores(int, char*);
 	#define pause_load 			Sleep(10)
 	#define clean 				system("cls")
 	#define table_ascii 		system("chcp 65001")
+	#define bbcolor				system("color 2F")
 #endif
 
 #ifdef linux

@@ -8,7 +8,7 @@
 	syntax.h : Contient l'ensemble des diverses syntaxe, couleur du programme
 	- Couleurs
 	- Mise en page (gras...)
-	- Sides (§)
+	- Sides (║)
 	- Couleurs des cartes
 	- Titre
 	- Titre de fin
@@ -39,42 +39,47 @@
 #define reset   "\x1B[0m"
 
 #define bold  "\x1b[1m"
-#define nboldw reset white
-#define nboldy reset yellow
+#define nboldw reset white bgreen
+#define nboldy reset black bgreen
 
-#define side_question	white"§"yellow
-#define side_only		white"§\n"
-#define side 			white"§"
-#define side_error		white"§"red" Erreur "white":"
-#define side_info		white"§"green" Info "white":"
-#define side_jeu		white"§"cyan" Jeu "white":"
+#define side_question	bgreen bold white"║"black nboldy
+#define side_only		bgreen bold white"║\n"nboldw
+#define side 			bgreen bold white"║"nboldw
+#define side_error		bgreen bold white"║"nboldw red" Erreur "white":"
+#define side_info		bgreen bold white"║"nboldw green" Info "white":"
+#define side_jeu		bgreen bold white"║"nboldw blue" Jeu "white":"
 
 #define carreau 	red"♦"white
 #define coeur		red"♥"white
-#define trefle		white"♣"
-#define pique		white"♠"
+#define trefle		black"♣"white
+#define pique		black"♠"white
 
-#define title_barre 	white"O--------------------------------------------------=-=--------------------------------------------------O\n"
-#define title_barre_top	white"$                                     o------------=-=------------o                                     $\n"
-#define title_only		white"$                                                                                                       $\n"
-#define title_info		white"$ "magenta"INFO "white":"
-#define title_ninfo		white"$       "
-#define title_g			white"$ "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  !      "cyan
-#define title_d			white"      !  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau" $\n"
-#define barre_small		white"§--------------------------------------------------------------\n"
-									  
-#define end_perdu1		side bold cyan"                              ██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗                        $\n"nboldw
-#define end_perdu2		side bold cyan"                              ██╔══██╗██╔════╝██╔══██╗██╔══██╗██║   ██║                        $\n"nboldw
-#define end_perdu3		side bold cyan"                              ██████╔╝█████╗  ██████╔╝██║  ██║██║   ██║                        $\n"nboldw
-#define end_perdu4		side bold cyan"                              ██╔═══╝ ██╔══╝  ██╔══██╗██║  ██║██║   ██║                        $\n"nboldw
-#define end_perdu5		side bold cyan"                              ██║     ███████╗██║  ██║██████╔╝╚██████╔╝                        $\n"nboldw
-#define end_perdu6		side bold cyan"                              ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝                         $\n"nboldw
+// Char: ═ ╦ ╠ ╣ ╡ └ ─ ◌
+#define title_barre1 	 bgreen bold white"╔══════════════════════════════════════════════════○O○══════════════════════════════════════════════════╗\n"nboldw
+#define title_barre2	 bgreen bold white"╠══════════════════════════════════════════════════○O○══════════════════════════════════════════════════╝\n"nboldw
+#define title_barre_top1 bgreen bold white"║                                     ╔════════════○O○════════════╗                                     ║\n"nboldw
+#define title_barre_top2 bgreen bold white"║                                     ╚════════════○O○════════════╝                                     ║\n"nboldw
+#define title_pli_left   bgreen bold white"║                                     ╚════════════"
+#define title_pli_right            "/8════════════╝                                     ║\n"nboldw
+#define title_only		 bgreen bold white"║                                                                                                       ║\n"nboldw
+#define title_info		 bgreen bold white"║ "magenta"INFO "white":"
+#define title_ninfo		 bgreen bold white"║       "
+#define title_g			 bgreen bold white"║ "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  ║      "cyan
+#define title_d			 bgreen bold white"      ║  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau" ║\n"nboldw
+#define barre_small		 bgreen white"╠══════════════════════════════════════════════════════════════\n"
 
-#define end_gagne1		side bold green"                            ██████╗  █████╗  ██████╗ ███╗   ██╗███████╗██╗                     $\n"nboldw
-#define end_gagne2		side bold green"                           ██╔════╝ ██╔══██╗██╔════╝ ████╗  ██║██╔════╝██║                     $\n"nboldw
-#define end_gagne3		side bold green"                           ██║  ███╗███████║██║  ███╗██╔██╗ ██║█████╗  ██║                     $\n"nboldw
-#define end_gagne4		side bold green"                           ██║   ██║██╔══██║██║   ██║██║╚██╗██║██╔══╝  ╚═╝                     $\n"nboldw
-#define end_gagne5		side bold green"                           ╚██████╔╝██║  ██║╚██████╔╝██║ ╚████║███████╗██╗                     $\n"nboldw
-#define end_gagne6		side bold green"                            ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═╝                     $\n"nboldw
- 
+#define end_perdu1	bgreen bold "║"red"◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌"white"║\n"nboldw
+#define end_perdu2	bgreen bold "║"red" ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ██╔══██╗██╔════╝██╔══██╗██╔══██╗██║   ██║ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ "white"║\n"nboldw
+#define end_perdu3	bgreen bold "║"red"◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌██████╔╝█████╗  ██████╔╝██║  ██║██║   ██║◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌"white"║\n"nboldw
+#define end_perdu4	bgreen bold "║"red" ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ██╔═══╝ ██╔══╝  ██╔══██╗██║  ██║██║   ██║ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ "white"║\n"nboldw
+#define end_perdu5	bgreen bold "║"red"◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌██║     ███████╗██║  ██║██████╔╝╚██████╔╝◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌"white"║\n"nboldw
+#define end_perdu6	bgreen bold "║"red" ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ ◌ "white"║\n"nboldw
+
+#define end_gagne1	bgreen bold "║"green"                             ██████╗  █████╗  ██████╗ ███╗   ██╗███████╗██╗                            "white"║\n"nboldw
+#define end_gagne2	bgreen bold "║"green"                            ██╔════╝ ██╔══██╗██╔════╝ ████╗  ██║██╔════╝██║                            "white"║\n"nboldw
+#define end_gagne3	bgreen bold "║"green"                            ██║  ███╗███████║██║  ███╗██╔██╗ ██║█████╗  ██║                            "white"║\n"nboldw
+#define end_gagne4	bgreen bold "║"green"                            ██║   ██║██╔══██║██║   ██║██║╚██╗██║██╔══╝  ╚═╝                            "white"║\n"nboldw
+#define end_gagne5	bgreen bold "║"green"                            ╚██████╔╝██║  ██║╚██████╔╝██║ ╚████║███████╗██╗                            "white"║\n"nboldw
+#define end_gagne6	bgreen bold "║"green"                             ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═╝                            "white"║\n"nboldw
+
 #endif

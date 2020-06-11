@@ -6,6 +6,7 @@
 	- Théo Silva
 
 	/////// CONTIENT DES SCANF A ACTIVER ///////
+	/////// CONTIENT DES GOTO ligne 199 & 317 ///////
 
 	enchere.c :
 	- Création des variables nécessaire pour la suite
@@ -49,6 +50,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	int choix_atout   = 0; 
 	int choix_couleur = 0; 
 	int choix_points  = 0;
+	int choix_points_v= 0;
 
 	int choix_surenchere = 0;
 	int choix_couleur_surenchere = 0;
@@ -80,13 +82,13 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			break;
 	}
 
-	printf(title_barre);
-	printf(title_barre_top);
+	printf(title_barre1);
+	printf(title_barre_top1);
 	printf(title_g"Phase d'Enchère"title_d);
-	printf(title_barre_top);
+	printf(title_barre_top2);
 	printf(title_only);
 	printf(title_info" %s distribue, %s encherit en premier!\n",info_txt_distrib,info_txt_enchere);
-	printf(title_barre);
+	printf(title_barre2);
 
 	strcpy(atout, "undefined\0");
 
@@ -138,10 +140,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						do{
 							printf(side_only);
 							printf(side_question" Quelle couleur?\n");
-							printf(side_question" 1 | "carreau yellow" Carreau\n");
-							printf(side_question" 2 | "coeur yellow" Coeur\n");
-							printf(side_question" 3 | "pique yellow" Pique\n");
-							printf(side_question" 4 | "trefle yellow" Trèfle\n");
+							printf(side_question" 1 | "carreau black" Carreau\n");
+							printf(side_question" 2 | "coeur black" Coeur\n");
+							printf(side_question" 3 | "pique black" Pique\n");
+							printf(side_question" 4 | "trefle black" Trèfle\n");
 							printf(side_only);
 							printf(side_question" Votre choix : "); 
 
@@ -173,9 +175,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(side_question" 1 | Capôt     - "bold"250"nboldy" pts -> remporter tout les plis\n");
 						printf(side_question" 2 | Générale  - "bold"500"nboldy" pts -> remporter tout les plis a vous seul\n");
 						printf(side_only);
-						printf(side_question" Votre choix : "); 
 						
-						scanf("%d",&choix_points); 								// A ACTIVER
+						choix_goto:
+						printf(side_question" Votre choix : "); 
+						scanf("%d",&choix_points); // A ACTIVER
 						
 						switch(choix_points){
 							case 1 :
@@ -192,7 +195,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								printf(side_jeu" %s annonce une couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",nom_joueur,atout,choix_points);
 								points = (choix_points/10) * 10;
 								strcpy(contrat, team_north_south);
-							break;
+								break;
+							default:
+								goto choix_goto;
+								break;
 						}
 
 						break;
@@ -276,48 +282,50 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(side_question" 1 | Capôt     - "bold"250"nboldy" pts -> gagner tout les plis\n");
 						printf(side_question" 2 | Générale  - "bold"500"nboldy" pts -> doit gagner tout les plis a vous seul\n");
 						printf(side_only);
-						printf(side_question" Votre choix : ");
 
+						choix_goto_2:
+						printf(side_question" Votre choix : ");
 						scanf("%d",&choix_points_surenchere); // A ACTIVER
 						
 						switch(choix_points_surenchere){
 							case 1:
 								if(points >= 250){
 									// Le joueur ne respecte pas la regle de surenchere
-									printf(side_question" Vous devez annoncer plus que l'enchère précédente\n");
+									printf(side red" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
+									goto choix_goto_2;
 								}else{ valid = 1; points = 250;}
 
 								break;
 							case 2:
 								if(points >= 500){
 									// le joueur ne respecte pas les regles
-									printf(side_question" Vous devez annoncer plus que l'enchère précédente\n");
+									printf(side red" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
-									
+									goto choix_goto_2;
 								}else{ valid = 1; points = 500;}
 								
 								break;
 							case 80 ... 160:
 								if(points >= choix_points_surenchere){
-									printf(side_question" Vous devez annoncer plus que l'enchère précédente\n");
+									printf(side red" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
-
+									goto choix_goto_2;
 								}else{ valid = 1; points = choix_points_surenchere;}
 
 								break;
 							default :
-								printf(side_error" Switch(%d) choix_points_surenchere",choix_points_surenchere);
+								goto choix_goto_2;
 								break;
 						}
 
 						if(valid == 1){
 							do{
 								printf(side_question" Quelle couleur?\n");
-								printf(side_question" 1 | "carreau yellow" Carreau\n");
-								printf(side_question" 2 | "coeur yellow" Coeur\n");
-								printf(side_question" 3 | "pique yellow" Pique\n");
-								printf(side_question" 4 | "trefle yellow" Trèfle\n");
+								printf(side_question" 1 | "carreau black" Carreau\n");
+								printf(side_question" 2 | "coeur black" Coeur\n");
+								printf(side_question" 3 | "pique black" Pique\n");
+								printf(side_question" 4 | "trefle black" Trèfle\n");
 								printf(side_only);
 								printf(side_question" Votre choix : ");
 

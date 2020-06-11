@@ -22,12 +22,16 @@
 int main(void){
 
 	table_ascii;
+	printf(reset);
+	bbcolor;
+	printf(white);
+
 	clean;
 
 	srand(time(NULL));
 
-	printf(white);
 	menu();
+
 	printf(reset);
 	
 	return 0;
