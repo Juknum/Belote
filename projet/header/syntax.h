@@ -11,6 +11,7 @@
 	- Sides (§)
 	- Couleurs des cartes
 	- Titre
+	- Titre de fin
 
 */
 
@@ -61,5 +62,19 @@
 #define title_g			white"$ "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  !      "cyan
 #define title_d			white"      !  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau"  "trefle"  "coeur"  "pique"  "carreau" $\n"
 #define barre_small		white"§--------------------------------------------------------------\n"
+									  
+#define end_perdu1		side bold cyan"                              ██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗                        $\n"nboldw
+#define end_perdu2		side bold cyan"                              ██╔══██╗██╔════╝██╔══██╗██╔══██╗██║   ██║                        $\n"nboldw
+#define end_perdu3		side bold cyan"                              ██████╔╝█████╗  ██████╔╝██║  ██║██║   ██║                        $\n"nboldw
+#define end_perdu4		side bold cyan"                              ██╔═══╝ ██╔══╝  ██╔══██╗██║  ██║██║   ██║                        $\n"nboldw
+#define end_perdu5		side bold cyan"                              ██║     ███████╗██║  ██║██████╔╝╚██████╔╝                        $\n"nboldw
+#define end_perdu6		side bold cyan"                              ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝                         $\n"nboldw
 
+#define end_gagne1		side bold green"                            ██████╗  █████╗  ██████╗ ███╗   ██╗███████╗██╗                     $\n"nboldw
+#define end_gagne2		side bold green"                           ██╔════╝ ██╔══██╗██╔════╝ ████╗  ██║██╔════╝██║                     $\n"nboldw
+#define end_gagne3		side bold green"                           ██║  ███╗███████║██║  ███╗██╔██╗ ██║█████╗  ██║                     $\n"nboldw
+#define end_gagne4		side bold green"                           ██║   ██║██╔══██║██║   ██║██║╚██╗██║██╔══╝  ╚═╝                     $\n"nboldw
+#define end_gagne5		side bold green"                           ╚██████╔╝██║  ██║╚██████╔╝██║ ╚████║███████╗██╗                     $\n"nboldw
+#define end_gagne6		side bold green"                            ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═╝                     $\n"nboldw
+ 
 #endif

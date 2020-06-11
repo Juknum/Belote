@@ -13,6 +13,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	int depositaire = 0;
 
 	int choix_joueur = 0;
+	int choix = 0;
 
 	int ordre_jeu[4] = {0};
 	int tableau_pli[4]   = {0};
@@ -340,7 +341,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			pause_load; // 10ms
 		}
 		printf("\n");
-		for(int i = 0; i < 210; i++){
+		for(int i = 0; i < 10; i++){ // A mettre sur 210
 			if(i%2 == 0){
 				printf("=");
 			}
@@ -352,19 +353,55 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 
 	}while(numero_pli != 9);
 
+	printf(title_barre);
+	printf(title_barre_top);
+	printf(title_g"Fin de partie !"title_d);
+	printf(title_barre_top);
+	printf(title_only);
+
 	// Si le contrat est prit par Nord/Sud(joueur) et qu'il a atteint le nombre de pts annoncée, la partie est gagnée
 	// sinon c'est est/ouest qui gagne
-	if(strcmp(contrat, team_north_joueur) == 0 && points_north_joueur >= points){
-		printf("bravo vous avez gagné!");
+	if((strcmp(contrat, team_east_west) == 0 && points_north_joueur < points) || (strcmp(contrat, team_north_joueur) == 0 && points_north_joueur >= points)){
+		printf(end_gagne1);
+		printf(end_gagne2);
+		printf(end_gagne3);
+		printf(end_gagne4);
+		printf(end_gagne5);
+		printf(end_gagne6);
 	}
 	else{
-		printf("Hélas vous avez perdu :'(");
+		printf(end_perdu1);
+		printf(end_perdu2);
+		printf(end_perdu3);
+		printf(end_perdu4);
+		printf(end_perdu5);
+		printf(end_perdu6);
 	}
-	
-	if(strcmp(contrat, team_east_west) == 0 && points_west_east >= points){
-		printf("Hélas vous avez perdu :'(");
-	}
-	else{
-		printf("Bravo vous avez gagné!");
+
+	printf(title_only);
+	printf(title_barre);
+
+	printf(side_only);
+	printf(side_question" Que voulez-vous faire?\n");
+	printf(side_question" 1 | Rejouer\n");
+	printf(side_question" 2 | Menu\n");
+	printf(side_question" 3 | Quitter\n");
+	printf(side_only);
+
+	do{
+		printf(side_question" Votre choix : ");
+		scanf("%d",&choix);
+	}while(choix < 1 || choix > 3);
+
+	switch(choix){
+		case 1:
+			clean;
+			nouvelle_partie();
+		case 2:
+			clean;
+			menu();
+		case 3:
+			clean;
+			exit(0);
 	}
 }
