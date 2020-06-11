@@ -4,7 +4,7 @@
 // Traduction des cartes:
 char* dictionnaire(int);
 char* symbole(int);
-void afficher_carte(int*);
+void afficher_carte(int*, int, int);
 int dictionnaire_atout(int);
 int dictionnaire_non_atout(int);
 

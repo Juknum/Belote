@@ -56,6 +56,11 @@
 
 #define carte_top		 bold white"║ ╔══○O○══╦══○O○══╦══○O○══╦══○O○══╦══○O○══╦══○O○══╦══○O○══╦══○O○══╗\n"
 #define carte_bottom		  white"║ ╚══○"cyan"1"white"○══╩══○"cyan"2"white"○══╩══○"cyan"3"white"○══╩══○"cyan"4"white"○══╩══○"cyan"5"white"○══╩══○"cyan"6"white"○══╩══○"cyan"7"white"○══╩══○"cyan"8"white"○══╝\n" nboldw
+#define carte_top_4		 bold white"║ ╔══○O○══╦══○O○══╦══○O○══╦══○O○══╗\n"
+#define carte_bottom_4        white"║ ╚══○O○══╩══○O○══╩══○O○══╩══○O○══╝\n" nboldw
+#define carte_top_1		 bold white"║ ╔══○O○══╗\n"
+#define carte_bottom_1        white"║ ╚══○O○══╝\n" nboldw
+
 
 #define title_barre1 	 bold white"╔══════════════════════════════════════════════════○O○══════════════════════════════════════════════════╗\n"nboldw
 #define title_barre2	 bold white"╠══════════════════════════════════════════════════○O○══════════════════════════════════════════════════╝\n"nboldw

@@ -129,7 +129,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			switch(depositaire){
 				case 1:
 					printf(side_jeu" %s examine son jeu...\n",nom_joueur);
-					afficher_carte(cartes_joueur);
+					afficher_carte(cartes_joueur, numero_pli, 1);
 
 					do{
 						printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
@@ -183,11 +183,8 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					// On vérifie si la carte jouée et un atout
 					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 
-					printf(side" Vos cartes désormais :");
-					for(int i = 0; i < 8; i++){
-						printf(" %s",dictionnaire(cartes_joueur[i]));
-					}
-					printf("\n"side_only);
+					// On trie les cartes du joueur
+					tableau_tri(cartes_joueur);
 
 					nb_cartes_jouee++;
 					break;
@@ -220,12 +217,8 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			printf("\n");
 			*/
 		}
-		// DEBUG : affiche le tableau des cartes jouées:
-		printf(side" Cartes jouées durant la manche:");
-		for(int i = 0; i < 4; i++){
-			printf(" %s",dictionnaire(tableau_pli[i]));
-		}
-		printf("\n");
+		// Affiche les cartes jouées pendant la manche
+		afficher_carte(tableau_pli, 0, 2);
 
 		// Si personne n'a joué atout -> la 1ere carte la plus haute l'emporte
 		if(nb_atout == 0){

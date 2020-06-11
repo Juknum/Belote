@@ -114,11 +114,11 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			case 1:
 
 				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
-				afficher_carte(cartes_joueur);
+				afficher_carte(cartes_joueur, 1, 1);
 				
 				// Demande entre annoncer un contrat ou passer
 				do{
-					printf("\n"side_only);
+					printf(side_only);
 					printf(side_question" Souhaitez-vous annoncer un contrat ou passer?\n");
 					printf(side_question" 1 | Annoncer\n");
 					printf(side_question" 2 | Passer\n");
@@ -244,10 +244,10 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		switch(encherisseur){
 			case 1:
 				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
-				afficher_carte(cartes_joueur);
+				afficher_carte(cartes_joueur, 1, 1);
 
 				do{
-					printf("\n"side_only);
+					printf(side_only);
 					printf(side_question" Souhaitez-vous sur-encherir ou passer?\n");
 					printf(side_question" 1 | Sur-enchère\n");
 					printf(side_question" 2 | Passer\n");

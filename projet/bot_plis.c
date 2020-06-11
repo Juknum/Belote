@@ -63,7 +63,8 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 		break;
 	}
 
-	printf(" et pose %s !\n",dictionnaire(tableau_pli[nb_cartes_jouee]));
+	afficher_carte(tableau_pli, nb_cartes_jouee, 0);
+	//printf(" et pose %s !\n",dictionnaire(tableau_pli[nb_cartes_jouee]));
 
 	// DEBUG : Affiche les cartes du bot après son choix
 	/*
