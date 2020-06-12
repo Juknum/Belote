@@ -1,3 +1,17 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	afficher_carte.c : Affiche les cartes, en fonction de sa taille, d'un tableau contenant des int de 1 a 32
+	- main == 0 : On affiche une seule carte : utilisé dans plis.c
+	- main == 1 : On affiche les 8 cartes du joueur
+		- nb_carte 1 ... 8 : affiche le nombre de carte restante en fonction du plis
+	- main == 2 : On affiche 4 cartes, utilisé dans plis() à la fin d'un plis
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,18 +23,19 @@
 
 void afficher_carte(int * cartes, int nb_carte, int main){
 
-	if(main == 0){
-		printf(" et pose :\n");
-		printf(carte_top_1);
-		printf("║ ║ %s   %s ║\n",symbole(cartes[nb_carte]),symbole(cartes[nb_carte]));
-		printf("║ ║  %s  ║\n",dictionnaire(cartes[nb_carte]));
-		printf("║ ║ %s   %s ║\n",symbole(cartes[nb_carte]),symbole(cartes[nb_carte]));
-		printf(carte_bottom_1);
-	}
+	switch(main){
+		case 0:
+			printf(" et pose :\n");
+			printf(carte_top_1);
+			printf("║ ║ %s   %s ║\n",symbole(cartes[nb_carte]),symbole(cartes[nb_carte]));
+			printf("║ ║  %s  ║\n",dictionnaire(cartes[nb_carte]));
+			printf("║ ║ %s   %s ║\n",symbole(cartes[nb_carte]),symbole(cartes[nb_carte]));
+			printf(carte_bottom_1);
+			break;
 
-	if(main == 1){
-		printf(side" Vos cartes :\n");
-		switch(nb_carte){
+		case 1:
+			printf(side" Vos cartes :\n");
+			switch(nb_carte){
 			// Il ne manque aucune carte
 			case 1:
 				printf(carte_top);
@@ -78,16 +93,20 @@ void afficher_carte(int * cartes, int nb_carte, int main){
 				printf("║ ║░░░░░░░║░░░░░░░║░░░░░░░║░░░░░░░║░░░░░░░║░░░░░░░║░░░░░░░║ %s   %s ║\n",symbole(cartes[7]),symbole(cartes[7]));
 				printf(carte_bottom);
 				break;
-		}
-	}
+			}
+			break;
 
-	if(main == 2){
-		printf(side" Cartes jouées pendant la manche:\n");
-		printf(carte_top_4);
-		printf("║ ║ %s   %s ║ %s   %s ║ %s   %s ║ %s   %s ║\n",symbole(cartes[0]),symbole(cartes[0]),symbole(cartes[1]),symbole(cartes[1]),symbole(cartes[2]),symbole(cartes[2]),symbole(cartes[3]),symbole(cartes[3]));
-		printf("║ ║  %s  ║  %s  ║  %s  ║  %s  ║\n",dictionnaire(cartes[0]),dictionnaire(cartes[1]),dictionnaire(cartes[2]),dictionnaire(cartes[3]));
-		printf("║ ║ %s   %s ║ %s   %s ║ %s   %s ║ %s   %s ║\n",symbole(cartes[0]),symbole(cartes[0]),symbole(cartes[1]),symbole(cartes[1]),symbole(cartes[2]),symbole(cartes[2]),symbole(cartes[3]),symbole(cartes[3]));
-		printf(carte_bottom_4);
+		case 2:
+			printf(side" Cartes jouées pendant la manche:\n");
+			printf(carte_top_4);
+			printf("║ ║ %s   %s ║ %s   %s ║ %s   %s ║ %s   %s ║\n",symbole(cartes[0]),symbole(cartes[0]),symbole(cartes[1]),symbole(cartes[1]),symbole(cartes[2]),symbole(cartes[2]),symbole(cartes[3]),symbole(cartes[3]));
+			printf("║ ║  %s  ║  %s  ║  %s  ║  %s  ║\n",dictionnaire(cartes[0]),dictionnaire(cartes[1]),dictionnaire(cartes[2]),dictionnaire(cartes[3]));
+			printf("║ ║ %s   %s ║ %s   %s ║ %s   %s ║ %s   %s ║\n",symbole(cartes[0]),symbole(cartes[0]),symbole(cartes[1]),symbole(cartes[1]),symbole(cartes[2]),symbole(cartes[2]),symbole(cartes[3]),symbole(cartes[3]));
+			printf(carte_bottom_4);
+			break;
+		
+		default:
+			printf(side_error" Erreur lors du choix de la main dans afficher_carte()");
+			break;
 	}
-
 }

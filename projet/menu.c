@@ -5,8 +5,6 @@
 	- Ewen Bourdon
 	- Théo Silva
 
-	/////// CONTIENT DES SCANF A ACTIVER /////// ----- Fait
-
 	menu.c : 
 	- Impression du titre
 	- Proposition au joueur de choisir entre les options suivantes :
@@ -42,8 +40,7 @@ void menu(void){
 		printf(side_only);
 		printf(side_question" Votre choix : ");
 
-		scanf("%d", &choix); 						// A ACTIVER
-		//choix = 1; 								// A DESACTIVER
+		scanf("%d", &choix);
 
 		printf(side_only);
 

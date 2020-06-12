@@ -1,3 +1,17 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	atout_add.c : On compte les atout entre chaque carte posée (utile pour la gestion de bot_plis.c)
+	- on regarde de quel atout il sagit
+		- on regarde l'ensemble des cartes jouée
+			- si une des cartes jouées est un atout on incrémente nb_atout
+			- si ... on l'ajoute au tableau d'atout
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 

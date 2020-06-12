@@ -6,7 +6,6 @@
 	- Théo Silva
 
 	/////// CONTIENT DES SCANF A ACTIVER ///////
-	/////// CONTIENT DES GOTO ligne 199 & 317 ///////
 
 	enchere.c :
 	- Création des variables nécessaire pour la suite
@@ -381,8 +380,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	tableau_tri(cartes_east);
 
 	pause;
-	pause;
-
+	
 	clean;
 	plis(contrat,points,distributeur,atout,cartes_west,cartes_north,cartes_east,cartes_joueur,nom_joueur);
 

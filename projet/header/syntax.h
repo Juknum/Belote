@@ -10,6 +10,7 @@
 	- Mise en page (gras...)
 	- Sides (║)
 	- Couleurs des cartes
+	- Cartes
 	- Titre
 	- Titre de fin
 
@@ -26,7 +27,6 @@
 #define magenta "\x1B[35m"
 #define cyan    "\x1B[36m"
 #define white   "\x1B[37m"
-
 #define	bblack   "\x1B[40m"
 #define bred     "\x1B[41m"
 #define bgreen   "\x1B[42m"
@@ -35,7 +35,6 @@
 #define bmagenta "\x1B[45m"
 #define bcyan    "\x1B[46m"
 #define bwhite   "\x1B[47m"
-
 #define reset   "\x1B[0m"
 
 #define bold  "\x1b[1m"

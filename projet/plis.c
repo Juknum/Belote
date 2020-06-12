@@ -1,3 +1,31 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	plis.c : Organise les 8 plis de la partie
+	- Tant que le nb de plis != 9 :
+		- on demande à celui qui à la main ce qu'il veut faire :
+			- SSI c'est une IA : bot_plis()
+			- SSI c'est le joueur : 
+				- on affiche ces cartes avec afficher_cartes()
+				- on demande et on regarde la carte qu'il prend
+					- on ajoute cette carte dans tableau_pli (Carte jouée pendant la manche)
+					- on donne la valeur de -5 à l'emplacement de la carte
+					- on tri les cartes du joueur
+					- on incrémente le nombre de carte jouée de 1
+		- on regarde qui a posé la carte la plus forte et on lui donne les points des plis
+		- on incrémente le nb de plis de 1
+			- Lorsque c'est le dernier plis, celui qui le remporte gagne 10 pts supplémentaire (10 de der)
+	- Lorsque les plis sont finis :
+		- On calcul les points en fonction de si le contrat a été rempli ou non
+		- On affiche l'écran de fin en fonction des résultats (si on perd/gagne)
+		- On envoi nom_joueur et points_north_joueur a score_add()
+		- On affiche les scores des 2 équipes
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -65,7 +93,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		printf(title_ninfo" - Nord/%s : %d\n",nom_joueur,points_north_joueur);
 		printf(title_ninfo" - Ouest/Est : %d\n",points_west_east);
 		printf(title_barre2);
-		printf(side_only);
 
 		if(numero_pli == 1){
 			switch(distributeur){

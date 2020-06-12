@@ -5,8 +5,6 @@
 	- Ewen Bourdon
 	- Théo Silva
 
-	/////// CONTIENT DES SCANF A ACTIVER /////// ------ Fait
-
 	nouvelle_partie.c : 
 	- Impression du titre
 	- Création des variables nécessaire pour la suite
@@ -57,8 +55,7 @@ void nouvelle_partie(){
 										
 	printf(side_question" Entrez votre nom : ");					// Demande du nom du joueur
 	
-	scanf("%s",&nom_joueur); 										// A ACTIVER
-	//strcpy(nom_joueur, "Unnamed"); 								// A DESACTIVER
+	scanf("%s",&nom_joueur);
 
 	printf(side_info" Nom choisi : %s\n",nom_joueur);
 

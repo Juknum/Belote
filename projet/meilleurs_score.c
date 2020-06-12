@@ -1,3 +1,14 @@
+/*
+
+    BELOTE COINCHEE EN C : Groupe F
+    - Julien Constant
+    - Ewen Bourdon
+    - Théo Silva
+
+    meilleurs_score.c :
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
