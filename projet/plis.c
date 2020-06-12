@@ -217,18 +217,18 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					break;
 
 				case 2:
-					bot_plis("Ouest", cartes_west, nb_cartes_jouee, tableau_pli);
+					bot_plis("Ouest", cartes_west, nb_cartes_jouee, tableau_pli, tableau_atout, atout_n, nb_atout);
 					// On vérifie si la carte jouée et un atout à chaque fois que quelqu'un pose (et non pas juste à la fin)
 					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 				case 3:
-					bot_plis("Nord", cartes_north, nb_cartes_jouee, tableau_pli);
+					bot_plis("Nord", cartes_north, nb_cartes_jouee, tableau_pli, tableau_atout, atout_n, nb_atout);
 					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 				case 4:
-					bot_plis("Est", cartes_east, nb_cartes_jouee, tableau_pli);
+					bot_plis("Est", cartes_east, nb_cartes_jouee, tableau_pli, tableau_atout, atout_n, nb_atout);
 					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;

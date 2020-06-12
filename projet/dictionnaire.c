@@ -20,7 +20,7 @@ char * dictionnaire(int carte){
 
 	switch(carte){
 		case 1 :
-		result = " 7 ";
+		result = " 7 "; // Pique
 		break;
 		case 2 :
 		result = " 8 ";
@@ -45,7 +45,7 @@ char * dictionnaire(int carte){
 		break;
 
 		case 9 :
-		result = " 7 ";
+		result = " 7 "; // Carreau
 		break;
 		case 10 :
 		result = " 8 ";
@@ -70,7 +70,7 @@ char * dictionnaire(int carte){
 		break;
 
 		case 17 :
-		result = " 7 ";
+		result = " 7 "; // Coeur
 		break;
 		case 18 :
 		result = " 8 ";
@@ -95,7 +95,7 @@ char * dictionnaire(int carte){
 		break;
 
 		case 25 :
-		result = " 7 ";
+		result = " 7 "; // Trèfle
 		break;
 		case 26 :
 		result = " 8 ";
