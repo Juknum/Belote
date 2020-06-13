@@ -31,6 +31,8 @@ void melanger(int*, int);
 void distribuer(int, int*, char*,int*, int*, int*, int*);
 void ramasser(int, int, char*, int*, int*, int*, int*);
 void tableau_tri(int*);
+void tableau_tri_slave(int*, int*);
+void tableau_tri_slaves(int*, int*, int*);
 
 // Gestion du jeu:
 void menu(void);
@@ -38,7 +40,8 @@ void nouvelle_partie(void);
 void enchere(int, char*, int*, int*, int*, int*);
 void bot_enchere(int*, char*, char*, int*, int*, char*, char*);
 void bot_surenchere(int*, char*, char*, int*, int*, char*, char*);
-void bot_plis(char*, int*, int, int*, int*, int, int);
+//void bot_plis(char*, int*, int, int*, int*, int, int);
+void bot_plis2(char*, int*, int, int, int*, int*);
 void plis(char*,int, int, char*, int*, int*, int*, int*, char*);
 void atout_add(int, int, int*, int*, int*);
 

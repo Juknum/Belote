@@ -1,3 +1,31 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	- Au tour du bot, le bot check toutes les cartes du tableau et doit ensuite check son tableau de carte. 
+	- S'il a une carte plus élevée que celles déjà jouées (faire un tri préliminaire des tableau) :
+		- Il joue sa carte la plus faible pouvant lui permettre de l'emporter sauf s'il y a un atout sur la table
+		- S'il a un atout (le plus faible possible), il le joue
+	- S'il a une carte moins élevée que celles déjà jouées :
+		- Il pose sa carte la plus faible (de préférence une carte non atout)
+	- S'il est le premier a jouer : 
+		- Il joue sa carte la plus faible 
+		- Ou alors il joue n'imp
+
+	
+	- Une pseudo intelligence artificielle sera également réalisée pour jouer avec le joueur :
+		- L’IA joue en respectant les règles
+		- Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte
+		  la plus faible possible
+		- Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible
+		- Vous pouvez enrichir votre IA avec des règles heurisitiques que vous aurez élaborées et
+		- justifiées dans votre rapport.
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,65 +36,33 @@
 
 void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_pli, int* tableau_atout, int atout_n, int nb_atout){
 
-	
 	printf(side_jeu" %s Examine son jeu...",nom_bot);
 
-
-	/*
-
-	BELOTE COINCHEE EN C : Groupe F
-	- Julien Constant
-	- Ewen Bourdon
-	- Théo Silva
-
-	*/
-
-
-	// Au tour du bot, le bot check toutes les cartes du tableau et doit ensuite check son tableau de carte. 
-	// S'il a une carte plus élevée que celles déjà jouées (faire un tri préliminaire des tableau) :
-		// Il joue sa carte la plus faible pouvant lui permettre de l'emporter sauf s'il y a un atout sur la table
-		// S'il a un atout (le plus faible possible), il le joue
-	// S'il a une carte moins élevée que celles déjà jouées :
-		// Il pose sa carte la plus faible (de préférence une carte non atout)
-	// S'il est le premier a jouer : 
-		// Il joue sa carte la plus faible 
-		// Ou alors il joue n'imp
-
 	
-	//Une pseudo intelligence artificielle sera également réalisée pour jouer avec le joueur :
-		//• L’IA joue en respectant les règles
-		//• Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte
-		//la plus faible possible
-		//• Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible
-		//• Vous pouvez enrichir votre IA avec des règles heurisitiques que vous aurez élaborées et
-		//justifiées dans votre rapport.
-	
+	int couleur_jouee = 0;
 
-	int tableau_carte_jouable[8] = {0};
-	int symb = 0;
-	int tableau_carte_jouable_valeur[8] = {0};
+	int tableau_carte_jouable[8]          = {0};			// cartes atouts (entier entre 1 et 32)
+	int tableau_carte_jouable_valeur[8]   = {0};
 	int tableau_carte_jouable_valeur_f[8] = {0};
-	int tableau_carte_jouable_valeur_atout[8] = {0};
-	int tableau_carte_jouable_valeur_nonatout[8] = {0};
-	int carte_joue = 0;
+
+	int tableau_carte_jouable_valeur_atout[8]     = {0};
+	int tableau_carte_jouable_valeur_non_atout[8] = {0};
+
+	int carte_joue  = 0;
 	int carte_joue2 = 0;
 
+	int non_atout_jouee = 0;
+	int atout_joue = 0;
+	int atout_joue2 = 0;
 
-
-
-	printf("\nCartes du bot\n");
-	for(int i = 0; i < 8 ; i++){
-		printf("%d ",cartes_bot[i]);
-	}
+	// DEBUG : Affiche les cartes du bot
+	printf("\nCartes du bot :\n");
+	afficher_carte(cartes_bot, 1, 1);
 
 	if(nb_cartes_jouee > 0){
-
 		if(nb_atout > 0){
-		
-
-			// On va mettre toutes ses cartes atouts dans le tableau des cartes jouables
+			// On va mettre toutes ses cartes atouts dans : tableau_carte_jouable
 			for(int i = 0; i < 8; i++){
-				// On vérifie chaque carte du tableau jusqu'à tomber sur une carte atout
 				switch(atout_n){
 					case 1 : // Pique
 						if(cartes_bot[i] >= 1 && cartes_bot[i] <= 8){
@@ -89,54 +85,57 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 						}
 						break;
 				}	
-
 			}
 
 			// On tri ensuite de manière croissante le tableau des cartes jouables (qui sont des atouts)
+			// les emplacements vides se mettent à gauche pendant le tri
 			tableau_tri(tableau_carte_jouable);
-			// DEBUG
+
+			// DEBUG : Affiche le tableau de carte jouable
 			printf("TAB CARTE JOUABLE\n");
-			for(int i = 0; i < 8; i++){
-				printf("%d ",tableau_carte_jouable[i]);
-			}
+			afficher_carte(tableau_carte_jouabl, 1, 1);
 			
-			int non_atout_joue = 0;
-			if(tableau_carte_jouable[7] == 0){ // Si le bot n'a pas de carte atout (dernière valeur vaut 0) mais que la première carte jouée est un atout
-				for(int i = 0; i < 8; i++){ // On place la valeur non atout de ses cartes dans un autre tableau parce qu'on peut pas faire fct(fct(tab))
-					tableau_carte_jouable_valeur[i] = cartes_bot[i];
-				}
-				tableau_tri(tableau_carte_jouable_valeur);
-				tableau_tri(cartes_bot);
-				for(int i = 0; i < 8; i++){ // On place la valeur non atout de ses cartes dans un autre tableau parce qu'on peut pas faire fct(fct(tab))
-					dictionnaire_non_atout(tableau_carte_jouable_valeur[i]);
-				}
-				tableau_tri(tableau_carte_jouable_valeur);
+			// s'il ne possède aucun atout (cf com plus haut) et que la 1ere carte posée est un atout
+			if(tableau_carte_jouable[7] == 0){
+
+				// On place la valeur non atout de ses cartes dans un autre tableau parce qu'on peut pas faire fct(fct(tab))
 				for(int i = 0; i < 8; i++){
+					tableau_carte_jouable_valeur[i] = dictionnaire_non_atout(cartes_bot[i]);
+				
 					for(int h = 0; h < 8 ; h++){
+
 						if(tableau_carte_jouable_valeur[i] != -5){
-							if(tableau_carte_jouable_valeur[i] == cartes_bot[h] && non_atout_joue == 0){
+
+							if(tableau_carte_jouable_valeur[i] == cartes_bot[h] && non_atout_jouee == 0){
 								tableau_pli[nb_cartes_jouee] = cartes_bot[h];
-								cartes_bot[h] = -5;
-								non_atout_joue = 1;
+								cartes_bot[h]  = -5;
+								non_atout_jouee =  1;
 							}
-						}	
+						}
 					}
 				}
-			}
-			/* DEBUG
-			printf("\n TAB ATOUT ");
-			for(int i = 0;i < 4; i++){
-				printf("\n%d",tableau_atout[i]);
-			}
-			*/
-			int atout_joue = 0;
-			// Analyse des cartes jouées :
-			for(int i = 0; i < 8; i++){ // Pour toutes les cartes jouables du bot on va vérifier si :
-			
-				for(int j = nb_cartes_jouee; j > -1; j--){ // L'une de ses cartes est supérieure à une des cartes jouées en commencant par la plus petite de son jeu
-						
 
+				// DEBUG : Affiche le tableau de carte jouable une deuxieme fois
+				printf("TAB CARTE JOUABLE\n");
+				afficher_carte(tableau_carte_jouabl, 1, 1);
+			}
+
+			// DEBUG : Affiche le tableau d'atouts
+			/*
+			printf("\n TAB ATOUT ");
+			afficher_carte(tableau_atout, 1, 1);
+			*/
+			
+			// Analyse des cartes jouées :
+			// De gauche à droite
+			for(int i = 0; i < 8; i++){
+			
+				// De droite à gauche
+				for(int j = nb_cartes_jouee; j > -1; j--){ // L'une de ses cartes est supérieure à une des cartes jouées en commencant par la plus petite de son jeu
+					
+					
 					if(dictionnaire_atout(tableau_carte_jouable[i]) > dictionnaire_atout(tableau_atout[j])){
+						
 						for(int h = 0; h < 8 ; h++){
 							if(tableau_carte_jouable[i] == cartes_bot[h] && atout_joue == 0){
 								tableau_pli[nb_cartes_jouee] = tableau_carte_jouable[i];
@@ -148,7 +147,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 				}
 			}
 
-			int atout_joue2 = 0;
+			
 			if(atout_joue == 0){ // tableau_carte_jouable[i] <= tableau_atout[j]
 				int g = 0;
 				do{
@@ -168,21 +167,21 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 		else{
 			// Sinon, pli normal donc pareil que atout ou le bot doit jouer sa carte la plus faible ou forte SELON LA COULEUR
 
-			// On traduit numériquement les symboles
+			// On traduit numériquement la couleur jouée
 			if(tableau_pli[0] >= 1 && tableau_pli[0] <= 8){
-				symb = 1; // Pique
+				couleur_jouee = 1; // Pique
 			}
 			if(tableau_pli[0] >= 9 && tableau_pli[0] <= 16){
-				symb = 2; // Carreau
+				couleur_jouee = 2; // Carreau
 			}
 			if(tableau_pli[0] >= 17 && tableau_pli[0] <= 24){
-				symb = 3; // Coeur
+				couleur_jouee = 3; // Coeur
 			}
 			if(tableau_pli[0] >= 25 && tableau_pli[0] <= 32){
-				symb = 4; // Trèfle
+				couleur_jouee = 4; // Trèfle
 			}
 
-			switch(symb){
+			switch(couleur_jouee){
 				case 1: // La première carte est un Pique
 					for(int i = 0; i < 8;i++){ 	// On range toutes les cartes Pique du bot dans un tableau de carte jouable
 						if(cartes_bot[i] >= 1 && cartes_bot[i] <= 8){
@@ -244,14 +243,14 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 						tableau_tri(tableau_carte_jouable_valeur_atout);
 						for(int i = 0; i < 8; i++){
 							if( tableau_carte_jouable_valeur[i] == dictionnaire_non_atout(tableau_carte_jouable[i])){
-								tableau_carte_jouable_valeur_nonatout[i] = tableau_carte_jouable_valeur[i];
+								tableau_carte_jouable_valeur_non_atout[i] = tableau_carte_jouable_valeur[i];
 							}
 						}
-						tableau_tri(tableau_carte_jouable_valeur_nonatout);
+						tableau_tri(tableau_carte_jouable_valeur_non_atout);
 						
 						// magenta (1.1)
 
-						if(tableau_carte_jouable_valeur_nonatout[7] == 0){ // Si le bot n'a que des atouts
+						if(tableau_carte_jouable_valeur_non_atout[7] == 0){ // Si le bot n'a que des atouts
 							int i = 0;
 							do{
 								i++;
@@ -272,11 +271,11 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 							int i = 0;
 							do{
 								i++;
-							}while(tableau_carte_jouable_valeur_nonatout[i] != -5);
+							}while(tableau_carte_jouable_valeur_non_atout[i] != -5);
 
 							//Pose sa carte la plus faible
 							for(int j = 0; j < 8; j++){
-								if(tableau_carte_jouable_valeur_nonatout[i] == dictionnaire_non_atout(cartes_bot[j])){
+								if(tableau_carte_jouable_valeur_non_atout[i] == dictionnaire_non_atout(cartes_bot[j])){
 									tableau_pli[nb_cartes_jouee] = cartes_bot[j];
 									cartes_bot[j] = -5;
 								}
@@ -379,14 +378,14 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 						tableau_tri(tableau_carte_jouable_valeur_atout);
 						for(int i = 0; i < 8; i++){
 							if( tableau_carte_jouable_valeur[i] == dictionnaire_non_atout(tableau_carte_jouable[i])){
-								tableau_carte_jouable_valeur_nonatout[i] = tableau_carte_jouable_valeur[i];
+								tableau_carte_jouable_valeur_non_atout[i] = tableau_carte_jouable_valeur[i];
 							}
 						}
-						tableau_tri(tableau_carte_jouable_valeur_nonatout);
+						tableau_tri(tableau_carte_jouable_valeur_non_atout);
 						
 						// magenta (1.1)
 
-						if(tableau_carte_jouable_valeur_nonatout[7] == 0){ // Si le bot n'a que des atouts
+						if(tableau_carte_jouable_valeur_non_atout[7] == 0){ // Si le bot n'a que des atouts
 							int i = 0;
 							do{
 								i++;
@@ -407,11 +406,11 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 							int i = 0;
 							do{
 								i++;
-							}while(tableau_carte_jouable_valeur_nonatout[i] != -5);
+							}while(tableau_carte_jouable_valeur_non_atout[i] != -5);
 
 							//Pose sa carte la plus faible
 							for(int j = 0; j < 8; j++){
-								if(tableau_carte_jouable_valeur_nonatout[i] == dictionnaire_non_atout(cartes_bot[j])){
+								if(tableau_carte_jouable_valeur_non_atout[i] == dictionnaire_non_atout(cartes_bot[j])){
 									tableau_pli[nb_cartes_jouee] = cartes_bot[j];
 									cartes_bot[j] = -5;
 								}
@@ -515,14 +514,14 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 						tableau_tri(tableau_carte_jouable_valeur_atout);
 						for(int i = 0; i < 8; i++){
 							if( tableau_carte_jouable_valeur[i] == dictionnaire_non_atout(tableau_carte_jouable[i])){
-								tableau_carte_jouable_valeur_nonatout[i] = tableau_carte_jouable_valeur[i];
+								tableau_carte_jouable_valeur_non_atout[i] = tableau_carte_jouable_valeur[i];
 							}
 						}
-						tableau_tri(tableau_carte_jouable_valeur_nonatout);
+						tableau_tri(tableau_carte_jouable_valeur_non_atout);
 						
 						// magenta (1.1)
 
-						if(tableau_carte_jouable_valeur_nonatout[7] == 0){ // Si le bot n'a que des atouts
+						if(tableau_carte_jouable_valeur_non_atout[7] == 0){ // Si le bot n'a que des atouts
 							int i = 0;
 							do{
 								i++;
@@ -543,11 +542,11 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 							int i = 0;
 							do{
 								i++;
-							}while(tableau_carte_jouable_valeur_nonatout[i] != -5);
+							}while(tableau_carte_jouable_valeur_non_atout[i] != -5);
 
 							//Pose sa carte la plus faible
 							for(int j = 0; j < 8; j++){
-								if(tableau_carte_jouable_valeur_nonatout[i] == dictionnaire_non_atout(cartes_bot[j])){
+								if(tableau_carte_jouable_valeur_non_atout[i] == dictionnaire_non_atout(cartes_bot[j])){
 									tableau_pli[nb_cartes_jouee] = cartes_bot[j];
 									cartes_bot[j] = -5;
 								}
@@ -649,14 +648,14 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 						tableau_tri(tableau_carte_jouable_valeur_atout);
 						for(int i = 0; i < 8; i++){
 							if( tableau_carte_jouable_valeur[i] == dictionnaire_non_atout(tableau_carte_jouable[i])){
-								tableau_carte_jouable_valeur_nonatout[i] = tableau_carte_jouable_valeur[i];
+								tableau_carte_jouable_valeur_non_atout[i] = tableau_carte_jouable_valeur[i];
 							}
 						}
-						tableau_tri(tableau_carte_jouable_valeur_nonatout);
+						tableau_tri(tableau_carte_jouable_valeur_non_atout);
 						
 						// magenta (1.1)
 
-						if(tableau_carte_jouable_valeur_nonatout[7] == 0){ // Si le bot n'a que des atouts
+						if(tableau_carte_jouable_valeur_non_atout[7] == 0){ // Si le bot n'a que des atouts
 							int i = 0;
 							do{
 								i++;
@@ -677,11 +676,11 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int* tableau_
 							int i = 0;
 							do{
 								i++;
-							}while(tableau_carte_jouable_valeur_nonatout[i] != -5);
+							}while(tableau_carte_jouable_valeur_non_atout[i] != -5);
 
 							//Pose sa carte la plus faible
 							for(int j = 0; j < 8; j++){
-								if(tableau_carte_jouable_valeur_nonatout[i] == dictionnaire_non_atout(cartes_bot[j])){
+								if(tableau_carte_jouable_valeur_non_atout[i] == dictionnaire_non_atout(cartes_bot[j])){
 									tableau_pli[nb_cartes_jouee] = cartes_bot[j];
 									cartes_bot[j] = -5;
 								}

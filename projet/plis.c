@@ -12,7 +12,7 @@
 			- SSI c'est le joueur : 
 				- on affiche ces cartes avec afficher_cartes()
 				- on demande et on regarde la carte qu'il prend
-					- on ajoute cette carte dans tableau_pli (Carte jouée pendant la manche)
+					- on ajoute cette carte dans cartes_plis (Carte jouée pendant la manche)
 					- on donne la valeur de -5 à l'emplacement de la carte
 					- on tri les cartes du joueur
 					- on incrémente le nombre de carte jouée de 1
@@ -44,8 +44,8 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	int choix = 0;
 
 	int ordre_jeu[4] = {0};
-	int tableau_pli[4]   = {0};
-	int tableau_atout[4] = {0};
+	int cartes_plis[4]   = {0};
+	int cartes_atout[4] = {0};
 
 	int nb_atout        = 0;
 	int nb_cartes_jouee = 0;
@@ -135,8 +135,8 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		nb_atout = 0;
 		nb_cartes_jouee = 0;
 		for(int i = 0; i < 4; i++){
-			tableau_pli[i] = 0;
-			tableau_atout[i] = 0;
+			cartes_plis[i] = 0;
+			cartes_atout[i] = 0;
 		}
 
 		// DEBUG : on affichege l'ordre de jeu
@@ -173,42 +173,42 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 
 					switch(choix_joueur){
 						case 1 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[0];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[0];
 							cartes_joueur[0] = -5;
 							break;
 						case 2 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[1];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[1];
 							cartes_joueur[1] = -5;
 							break;
 						case 3 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[2];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[2];
 							cartes_joueur[2] = -5;
 							break;
 						case 4 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[3];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[3];
 							cartes_joueur[3] = -5;
 							break;
 						case 5 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[4];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[4];
 							cartes_joueur[4] = -5;
 							break;
 						case 6 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[5];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[5];
 							cartes_joueur[5] = -5;
 							break;
 						case 7 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[6];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[6];
 							cartes_joueur[6] = -5;
 							break;
 						case 8 :
-							tableau_pli[nb_cartes_jouee] = cartes_joueur[7];
+							cartes_plis[nb_cartes_jouee] = cartes_joueur[7];
 							cartes_joueur[7] = -5;
 							break;
 						default:
 							break;
 					}
 					// On vérifie si la carte jouée et un atout
-					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 
 					// On trie les cartes du joueur
 					tableau_tri(cartes_joueur);
@@ -217,19 +217,27 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					break;
 
 				case 2:
-					bot_plis("Ouest", cartes_west, nb_cartes_jouee, tableau_pli, tableau_atout, atout_n, nb_atout);
+					//bot_plis("Ouest", cartes_west, nb_cartes_jouee, cartes_plis, cartes_atout, atout_n, nb_atout);
+					
+					bot_plis2("Ouest", cartes_west, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
+
 					// On vérifie si la carte jouée et un atout à chaque fois que quelqu'un pose (et non pas juste à la fin)
-					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
+					
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 				case 3:
-					bot_plis("Nord", cartes_north, nb_cartes_jouee, tableau_pli, tableau_atout, atout_n, nb_atout);
-					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
+					//bot_plis("Nord", cartes_north, nb_cartes_jouee, cartes_plis, cartes_atout, atout_n, nb_atout);
+					bot_plis2("Nord", cartes_north, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
+
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 				case 4:
-					bot_plis("Est", cartes_east, nb_cartes_jouee, tableau_pli, tableau_atout, atout_n, nb_atout);
-					atout_add(nb_cartes_jouee, atout_n, tableau_pli, tableau_atout, &nb_atout);
+					//bot_plis("Est", cartes_east, nb_cartes_jouee, cartes_plis, cartes_atout, atout_n, nb_atout);
+					bot_plis2("Est", cartes_east, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
+
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 					nb_cartes_jouee++;
 					break;
 			}
@@ -239,28 +247,28 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			/*
 			printf(side" Cartes atout durant la manche:");
 			for(int i = 0; i < 4; i++){
-				printf(" %s",dictionnaire(tableau_atout[i]));
+				printf(" %s",dictionnaire(cartes_atout[i]));
 			}
 			printf("\n");
 			*/
 		}
 		// Affiche les cartes jouées pendant la manche
-		afficher_carte(tableau_pli, 0, 2);
+		afficher_carte(cartes_plis, 0, 2);
 
 		// Si personne n'a joué atout -> la 1ere carte la plus haute l'emporte
 		if(nb_atout == 0){
 			// si la 1ere est plus grande ou identique à celles d'après
-			if(dictionnaire_non_atout(tableau_pli[0]) >= dictionnaire_non_atout(tableau_pli[1]) && dictionnaire_non_atout(tableau_pli[0]) >= dictionnaire_non_atout(tableau_pli[2]) && dictionnaire_non_atout(tableau_pli[0]) >= dictionnaire_non_atout(tableau_pli[3])){
+			if(dictionnaire_non_atout(cartes_plis[0]) >= dictionnaire_non_atout(cartes_plis[1]) && dictionnaire_non_atout(cartes_plis[0]) >= dictionnaire_non_atout(cartes_plis[2]) && dictionnaire_non_atout(cartes_plis[0]) >= dictionnaire_non_atout(cartes_plis[3])){
 				depositaire = ordre_jeu[0];
 			}
 			else{
 				// sinon si la 2e est plus grande ou identique à celles d'après
-				if(dictionnaire_non_atout(tableau_pli[1]) >= dictionnaire_non_atout(tableau_pli[2]) && dictionnaire_non_atout(tableau_pli[1]) >= dictionnaire_non_atout(tableau_pli[3])){
+				if(dictionnaire_non_atout(cartes_plis[1]) >= dictionnaire_non_atout(cartes_plis[2]) && dictionnaire_non_atout(cartes_plis[1]) >= dictionnaire_non_atout(cartes_plis[3])){
 					depositaire = ordre_jeu[1];
 				}
 				else{
 					// sinon si la 3e est plus grande ou identique à celle d'après
-					if(dictionnaire_non_atout(tableau_pli[2]) >= dictionnaire_non_atout(tableau_pli[3])){
+					if(dictionnaire_non_atout(cartes_plis[2]) >= dictionnaire_non_atout(cartes_plis[3])){
 						depositaire = ordre_jeu[2];
 					}
 					// sinon la 3e est plus grande
@@ -272,16 +280,16 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		}
 		else{
 			// Si le premiere carte posée est la plus haute:
-			if(dictionnaire_atout(tableau_atout[0]) > dictionnaire_atout(tableau_atout[1]) && dictionnaire_atout(tableau_atout[0]) > dictionnaire_atout(tableau_atout[2]) && dictionnaire_atout(tableau_atout[0]) > dictionnaire_atout(tableau_atout[3])){
+			if(dictionnaire_atout(cartes_atout[0]) > dictionnaire_atout(cartes_atout[1]) && dictionnaire_atout(cartes_atout[0]) > dictionnaire_atout(cartes_atout[2]) && dictionnaire_atout(cartes_atout[0]) > dictionnaire_atout(cartes_atout[3])){
 				depositaire = ordre_jeu[0];
 			}
-			if(dictionnaire_atout(tableau_atout[1]) > dictionnaire_atout(tableau_atout[0]) && dictionnaire_atout(tableau_atout[1]) > dictionnaire_atout(tableau_atout[2]) && dictionnaire_atout(tableau_atout[1]) > dictionnaire_atout(tableau_atout[3])){
+			if(dictionnaire_atout(cartes_atout[1]) > dictionnaire_atout(cartes_atout[0]) && dictionnaire_atout(cartes_atout[1]) > dictionnaire_atout(cartes_atout[2]) && dictionnaire_atout(cartes_atout[1]) > dictionnaire_atout(cartes_atout[3])){
 				depositaire = ordre_jeu[1];
 			}
-			if(dictionnaire_atout(tableau_atout[2]) > dictionnaire_atout(tableau_atout[0]) && dictionnaire_atout(tableau_atout[2]) > dictionnaire_atout(tableau_atout[1]) && dictionnaire_atout(tableau_atout[2]) > dictionnaire_atout(tableau_atout[3])){
+			if(dictionnaire_atout(cartes_atout[2]) > dictionnaire_atout(cartes_atout[0]) && dictionnaire_atout(cartes_atout[2]) > dictionnaire_atout(cartes_atout[1]) && dictionnaire_atout(cartes_atout[2]) > dictionnaire_atout(cartes_atout[3])){
 				depositaire = ordre_jeu[2];
 			}
-			if(dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[0]) && dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[1]) && dictionnaire_atout(tableau_atout[3]) > dictionnaire_atout(tableau_atout[2])){
+			if(dictionnaire_atout(cartes_atout[3]) > dictionnaire_atout(cartes_atout[0]) && dictionnaire_atout(cartes_atout[3]) > dictionnaire_atout(cartes_atout[1]) && dictionnaire_atout(cartes_atout[3]) > dictionnaire_atout(cartes_atout[2])){
 				depositaire = ordre_jeu[3];
 			}
 		}
@@ -293,11 +301,11 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 3;
 				ordre_jeu[3] = 4;
 				for(int i = 0; i < 4; i++){
-					if(tableau_atout[i] == 0){
-						points_north_joueur += dictionnaire_non_atout(tableau_pli[i]);
+					if(cartes_atout[i] == 0){
+						points_north_joueur += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
-						points_north_joueur += dictionnaire_atout(tableau_pli[i]); 
+						points_north_joueur += dictionnaire_atout(cartes_plis[i]); 
 					}
 				}
 				if(numero_pli == 8){ points_north_joueur += 10;}
@@ -309,11 +317,11 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 4;
 				ordre_jeu[3] = 1;
 				for(int i = 0; i < 4; i++){
-					if(tableau_atout[i] == 0){
-						points_west_east += dictionnaire_non_atout(tableau_pli[i]);
+					if(cartes_atout[i] == 0){
+						points_west_east += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
-						points_west_east += dictionnaire_atout(tableau_pli[i]); 
+						points_west_east += dictionnaire_atout(cartes_plis[i]); 
 					}
 				}
 				if(numero_pli == 8){ points_west_east += 10;}
@@ -325,11 +333,11 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 1;
 				ordre_jeu[3] = 2;
 				for(int i = 0; i < 4; i++){
-					if(tableau_atout[i] == 0){
-						points_north_joueur += dictionnaire_non_atout(tableau_pli[i]);
+					if(cartes_atout[i] == 0){
+						points_north_joueur += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
-						points_north_joueur += dictionnaire_atout(tableau_pli[i]); 
+						points_north_joueur += dictionnaire_atout(cartes_plis[i]); 
 					}
 				}
 				if(numero_pli == 8){ points_north_joueur += 10;}
@@ -341,11 +349,11 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 2;
 				ordre_jeu[3] = 3;
 				for(int i = 0; i < 4; i++){
-					if(tableau_atout[i] == 0){
-						points_west_east += dictionnaire_non_atout(tableau_pli[i]);
+					if(cartes_atout[i] == 0){
+						points_west_east += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
-						points_west_east += dictionnaire_atout(tableau_pli[i]); 
+						points_west_east += dictionnaire_atout(cartes_plis[i]); 
 					}
 				}
 				if(numero_pli == 8){ points_west_east += 10;}
@@ -356,7 +364,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 
 		// barre de chargement avant l'affichage du prochain pli
 		printf("£ Load... £\n");
-		for(int i = 0; i < 210; i++){
+		for(int i = 0; i < 210; i++){ // a mettre sur 210
 			if(i%2 == 0){
 				printf("=");
 			}
@@ -364,7 +372,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		}
 		printf("\n");
 
-		//clean;
+		clean;
 
 	}while(numero_pli != 9);
 
@@ -387,10 +395,14 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		// si team west/east non pas rempli leur contrat
 		if(strcmp(contrat, team_west_east) == 0){
 			points_north_joueur = 162 + points;
+			// Enregistrement des scores dans score.txt
+			score_add(points_north_joueur, nom_joueur);
 		}
 		// si on rempli notre contrat
 		else{
 			points_north_joueur += points;
+			// Enregistrement des scores dans score.txt
+			score_add(points_north_joueur, nom_joueur);
 		}
 	}
 	else{
@@ -412,8 +424,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	printf(title_only);
 	printf(title_barre2);
 
-	// Enregistrement des scores dans score.txt
-	score_add(points_north_joueur, nom_joueur);
+	
 
 	printf(side_info" Scores Finaux: \n");
 	printf(side"        %d - Est/Ouest\n",points_west_east);
