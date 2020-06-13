@@ -30,7 +30,7 @@ void score_add(int score_gagnant, char * nom_gagnant){
         fclose(score_fichier);
     }
     else{
-        printf(side_error" Ouverture du fichier impossible - lecture");
+        printf(side_error" Ouverture du fichier impossible - lecture\n");
     }
 
     // si son nom est identique au premier
@@ -39,6 +39,8 @@ void score_add(int score_gagnant, char * nom_gagnant){
         // S'il bat son score précédent, on actualise
         if(score_gagnant > score[0]){
             score[0] = score_gagnant;
+
+            printf(side_info" Bravo, vous avez amélioré votre score de 1er!\n");
         }
     }
     else{
@@ -49,6 +51,8 @@ void score_add(int score_gagnant, char * nom_gagnant){
             // S'il bat son score précédent, on actualise
             if(score_gagnant > score[1]){
                 score[1] = score_gagnant;
+
+                printf(side_info" Vous avez amélioré votre score de 2e!\n");
 
                 // si son nouveau score est plus grand que celui du 1er on actualise les positions
                 if(score[1] > score[0]){
@@ -65,6 +69,8 @@ void score_add(int score_gagnant, char * nom_gagnant){
                     strcpy(nom_temp, nom_0);
                     strcpy(nom_0, nom_1);
                     strcpy(nom_1, nom_temp);
+
+                    printf(side_info" Bravo, vous avez dépassé votre ancien score et passez de 2e à 1er!\n");
                 }
             }
         }
@@ -84,45 +90,94 @@ void score_add(int score_gagnant, char * nom_gagnant){
                         score[2] = score[1];
                         score[1] = score[0];
                         score[0] = score_gagnant;
+
+                        temp = nbr[2];
+                        nbr[2] = nbr[1];
+                        nbr[1] = nbr[0];
+                        nbr[0] = temp;
+
+                        strcpy(nom_2, nom_1);
+                        strcpy(nom_1, nom_0);
+                        strcpy(nom_0, nom_gagnant);
                         
+                        printf(side_info" Bravo, vous avez dépassé votre ancien score et passez de 3e à 1er!\n");
+                    }
+                    else{
+                        // Si son nouveau score est plus grand que celui du 2e
+                        if(score[2] > score[1]){
+
+                            // on inverse les 2
+                            temp = score[1];
+                            score[1] = score[2];
+                            score[2] = temp;
+
+                            temp = nbr[1];
+                            nbr[1] = nbr[2];
+                            nbr[2] = temp;
+
+                            strcpy(nom_temp, nom_1);
+                            strcpy(nom_1, nom_2);
+                            strcpy(nom_2, nom_temp);
+
+                            printf(side_info" Bravo, vous avez dépassé votre ancien score et passez 2e!\n");
+                        }
+                    }
+                }
+            }
+            // Son nom ne correspond a aucun enregistré
+            else{
+                // Il dépasse le score du premier
+                if(score_gagnant > score[0]){
+                    score[2] = score[1];
+                    score[1] = score[0];
+                    score[0] = score_gagnant;
+
+                    nbr[2] = nbr[1];
+                    nbr[1] = nbr[0];
+                    nbr[0] = 0;
+
+                    strcpy(nom_2, nom_1);
+                    strcpy(nom_1, nom_0);
+                    strcpy(nom_0, nom_gagnant);
+
+                    printf(side_info" Le score obtenu vous mène à la 1ère place!\n");
+                }
+                // il depasse le score du deuxieme
+                else{
+                    if(score_gagnant > score[1]){
+                        score[2] = score[1];
+                        score[1] = score_gagnant;
+
+                        nbr[2] = nbr[1];
+                        nbr[1] = 0;
+
+                        strcpy(nom_2, nom_1);
+                        strcpy(nom_1, nom_gagnant);
+
+                        printf(side_info" Le score obtenu vous mène a la 2e place!\n");
+                    }
+                    // il dépasse le score du 3e
+                    else{
+                        if(score_gagnant > score[2]){
+                            score[2] = score_gagnant;
+                            nbr[2] = 0;
+                            strcpy(nom_2, nom_gagnant);
+
+                            printf(side_info" Le score obtenu vous mène à la 3e place !\n");
+                        }
+                        else{
+                            printf(side_info" Le score obtenu n'est pas suffisant pour obtenir une place!\n");
+                        }
                     }
                 }
             }
         }
     }
 
-    
-
-    /*
-    // Si le "nouveau" score dépasse le premier
-    if(score_gagnant >= score[0]){
-        score[2] = score[1];
-        score[1] = score[0];
-        score[0] = score_gagnant;
-
-        strcpy(nom_3, nom_2);
-        strcpy(nom_2, nom_1);
-        strcpy(nom_1, nom_gagnant);
-    }
-    // Si le "nouveau" score dépasse le deuxième
-    else if(score_gagnant >= score[1]){
-        score[2] = score[1];
-        score[1] = score_gagnant;
-
-        strcpy(nom_3, nom_2);
-        strcpy(nom_2, nom_gagnant);
-    }
-    // Si le "nouveau" score dépasse le troisième
-    else if(score_gagnant >= score[2]){
-        score[2] = score_gagnant;
-
-        strcpy(nom_3, nom_gagnant);
-    }*/
-
     score_fichier = fopen("./data/score.txt", "w+");
 
     if (score_fichier != NULL){
-        fprintf(score_fichier, "%d %s %d %s %d %s", score[0], nom_1, score[1], nom_2, score[2], nom_3);
+        fprintf(score_fichier, "%d %s %d %d %s %d %d %s %d", score[0], nom_0, nbr[0], score[1], nom_1, nbr[1], score[2], nom_2, nbr[2]);
         fclose(score_fichier);
     }
     else{

@@ -21,10 +21,11 @@ void meilleurs_score(void){
     FILE* score_fichier = NULL;
     char chaine[1000] = "";
 
-    int score[10] = {0};
+    int score[3] = {0};
+    int nbr[3] = {0};
+    char nom_0[20] = {0};
     char nom_1[20] = {0};
     char nom_2[20] = {0};
-    char nom_3[20] = {0};
     char nom_vide[20] = {0};
 
     int choix = 0;
@@ -32,22 +33,21 @@ void meilleurs_score(void){
     score_fichier = fopen("./data/score.txt", "r");
 
     if (score_fichier != NULL){
-        fscanf(score_fichier, "%d %s %d %s %d %s", &score[0], &nom_1, &score[1], &nom_2, &score[2], &nom_3);
+        fscanf(score_fichier, "%d %s %d %d %s %d %d %s %d", &score[0], &nom_0, &nbr[0], &score[1], &nom_1, &nbr[1], &score[2], &nom_2, &nbr[2]);
         fclose(score_fichier);
     }
     else{
         printf(side_error" Ouverture du fichier impossible");
     }
 
-    if(strcmp(nom_1, nom_vide) == 0){
+    if(strcmp(nom_0, nom_vide) == 0){
         printf(side" Aucun meilleurs score n'a encore été enregistré !\n");
     }
     else{
         printf(side" Les 3 meilleurs score obtenus à la Belote Coinchée sont :\n");
-        printf(side" - En n°1 : %s avec %d pts !\n",nom_1,score[0]);
-        printf(side" - En n°2 : %s avec %d pts !\n",nom_2,score[1]);
-        printf(side" - En n°3 : %s avec %d pts !\n",nom_3,score[2]);
-  
+        printf(side" - En n°1 : %s avec %d victoire et %d pts !\n",nom_0,nbr[0],score[0]);
+        printf(side" - En n°2 : %s avec %d victoire et %d pts !\n",nom_1,nbr[1],score[1]);
+        printf(side" - En n°3 : %s avec %d victoire et %d pts !\n",nom_2,nbr[2],score[2]);
     }
 
     printf(side_only);
