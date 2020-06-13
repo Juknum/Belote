@@ -122,7 +122,7 @@ void score_add(int score_gagnant, char * nom_gagnant){
     score_fichier = fopen("./data/score.txt", "w+");
 
     if (score_fichier != NULL){
-        fprintf(score_fichier, "%d %s %d %s %d %s", score[0], nom_1, score[1], nom_2, score[2], nom_3);
+        fprintf(score_fichier, "%d %s %d %s %d %s", score[0], nom_0, score[1], nom_1, score[2], nom_2);
         fclose(score_fichier);
     }
     else{
