@@ -115,6 +115,7 @@ int dictionnaire_non_atout(int carte){
 		case 32 :
 		result = 11;
 		break;
+		
 		default:
 		result = -2;
 		break;

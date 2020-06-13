@@ -22,9 +22,10 @@ void meilleurs_score(void){
     char chaine[1000] = "";
 
     int score[10] = {0};
-    char nom_1[100] = {0};
-    char nom_2[100] = {0};
-    char nom_3[100] = {0};
+    char nom_1[20] = {0};
+    char nom_2[20] = {0};
+    char nom_3[20] = {0};
+    char nom_vide[20] = {0};
 
     int choix = 0;
 
@@ -38,10 +39,17 @@ void meilleurs_score(void){
         printf(side_error" Ouverture du fichier impossible");
     }
 
-    printf(side" Les 3 meilleurs score obtenus à la Belote Coinchée sont :\n");
-    printf(side" - En n°1 : %s avec %d pts !\n",nom_1,score[0]);
-    printf(side" - En n°2 : %s avec %d pts !\n",nom_2,score[1]);
-    printf(side" - En n°3 : %s avec %d pts !\n",nom_3,score[2]);
+    if(strcmp(nom_1, nom_vide) == 0){
+        printf(side" Aucun meilleurs score n'a encore été enregistré !\n");
+    }
+    else{
+        printf(side" Les 3 meilleurs score obtenus à la Belote Coinchée sont :\n");
+        printf(side" - En n°1 : %s avec %d pts !\n",nom_1,score[0]);
+        printf(side" - En n°2 : %s avec %d pts !\n",nom_2,score[1]);
+        printf(side" - En n°3 : %s avec %d pts !\n",nom_3,score[2]);
+  
+    }
+
     printf(side_only);
     printf(side_question" Que voulez-vous faire?\n");
     printf(side_only);

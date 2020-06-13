@@ -43,13 +43,18 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	int choix_joueur = 0;
 	int choix = 0;
 
-	int ordre_jeu[4] = {0};
+	int ordre_jeu[4]     = {0};
 	int cartes_plis[4]   = {0};
-	int cartes_atout[4] = {0};
+	int cartes_atout[4]  = {0};
 
-	int nb_atout        = 0;
-	int nb_cartes_jouee = 0;
-	int atout_n         = 0;
+	int nb_atout          = 0;
+	int nb_atout_joueur   = 0;
+	int nb_cartes_jouee   = 0;
+	int nb_couleur_joueur = 0;
+	int atout_n           = 0;
+
+	int atout_joueur[8]   = {-10,-10,-10,-10,-10,-10,-10,-10};
+	int couleur_joueur[8] = {-10,-10,-10,-10,-10,-10,-10,-10};
 
 	int points_north_joueur = 0;
 	int points_west_east    = 0;
@@ -134,9 +139,15 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		// On réinitialise les variables entre chaque plis
 		nb_atout = 0;
 		nb_cartes_jouee = 0;
-		for(int i = 0; i < 4; i++){
-			cartes_plis[i] = 0;
-			cartes_atout[i] = 0;
+		nb_atout_joueur = 0;
+		nb_couleur_joueur = 0;
+		for(int k = 0; k < 4; k++){
+			cartes_plis[k] = 0;
+			cartes_atout[k] = 0;
+		}
+		for(int i = 0; i < 8; i++){
+			atout_joueur[i] = -10;
+			couleur_joueur[i] = -10;
 		}
 
 		// DEBUG : on affichege l'ordre de jeu
@@ -158,87 +169,186 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					printf(side_jeu" %s examine son jeu...\n",nom_joueur);
 					afficher_carte(cartes_joueur, numero_pli, 1);
 
-					do{
-						printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
-						scanf("%d",&choix_joueur);
-
-						while(cartes_joueur[choix_joueur-1] == -5){					
-							printf(side red" Entrez une carte que vous possédez : "yellow);
-							scanf("%d",&choix_joueur);
+					// Compte le nombre d'atout du joueur
+					for(int i = 0; i < 8; i++){
+						if(atout_n == 1 && (cartes_joueur[i] > 0 && cartes_joueur[i] <= 8)){
+							nb_atout_joueur++;
+							atout_joueur[i] = cartes_joueur[i];
 						}
+						if(atout_n == 2 && (cartes_joueur[i] > 8 && cartes_joueur[i] <= 16)){
+							nb_atout_joueur++;
+							atout_joueur[i] = cartes_joueur[i];
+						}
+						if(atout_n == 3 && (cartes_joueur[i] > 16 && cartes_joueur[i] <= 24)){
+							nb_atout_joueur++;
+							atout_joueur[i] = cartes_joueur[i];
+						}
+						if(atout_n == 4 && (cartes_joueur[i] > 24 && cartes_joueur[i] <= 32)){
+							nb_atout_joueur++;
+							atout_joueur[i] = cartes_joueur[i];
+						}
+					}
 
-					}while(choix_joueur < 1 || choix_joueur > 8);
+					/*
+					printf("\nCarte atout joueur: ");
+					for(int i = 0; i < 8; i++){
+						printf("%d ",atout_joueur[i]);
+					}
+					printf("\n");
+					*/
 
+					if(numero_pli != 8){
+						// si des atouts on été joués avant
+						if(nb_atout > 0){
+							// Il a des atouts; il doit les jouer
+							if(nb_atout_joueur > 0){
+								printf(side_question" Quelle atout voulez-vous jouer ? Entrez son emplacement : ");
+								scanf("%d",&choix_joueur);
+
+								while(cartes_joueur[choix_joueur-1] == -5 || choix_joueur < 1 || choix_joueur > 8 || atout_joueur[choix_joueur-1] == -10){					
+									printf(side red" Vous devez jouer un atout : "yellow);
+									scanf("%d",&choix_joueur);
+								}
+							}
+							else{
+								printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
+								scanf("%d",&choix_joueur);
+								while(cartes_joueur[choix_joueur-1] == -5 || choix_joueur < 1 || choix_joueur > 8){					
+									printf(side red" Entrez une carte que vous possédez : "yellow);
+									scanf("%d",&choix_joueur);
+								}
+							}
+						}
+						// Il n'y a pas d'atout joué ou il est le premier a jouer
+						// soit il doit respecter la couleur ou poser un atout
+						// Soit il joue ce qu'il veut
+						else{
+							if(nb_cartes_jouee > 0){
+
+								// DEBUG :
+								/*
+								for(int k=0; k<4; k++){
+									printf("%d ",cartes_plis[k]);
+								}
+								*/
+									
+								switch(cartes_plis[0]){
+									case 1 ... 8:
+										for(int i = 0; i < 8; i++){
+											if(cartes_joueur[i] > 0 && cartes_joueur[i] <= 8){
+												couleur_joueur[i] = cartes_joueur[i];
+												nb_couleur_joueur++;
+											}
+										}
+										break;
+									case 9 ... 16:
+										for(int i = 0; i < 8; i++){
+											if(cartes_joueur[i] > 8 && cartes_joueur[i] <= 16){
+												couleur_joueur[i] = cartes_joueur[i];
+												nb_couleur_joueur++;
+											}
+										}
+										break;
+									case 17 ... 24:
+										for(int i = 0; i < 8; i++){
+											if(cartes_joueur[i] > 16 && cartes_joueur[i] <= 24){
+												couleur_joueur[i] = cartes_joueur[i];
+												nb_couleur_joueur++;
+											}
+										}
+										break;
+									case 25 ... 32:
+										for(int i = 0; i < 8; i++){
+											if(cartes_joueur[i] > 24 && cartes_joueur[i] <= 32){
+												couleur_joueur[i] = cartes_joueur[i];
+												nb_couleur_joueur++;
+											}
+										}
+										break;
+									default :
+										printf(side_error" prblm switch");
+										break;
+								}
+
+								/*
+								printf("\nCarte couleur joueur: ");
+								for(int i = 0; i < 8; i++){
+									printf("%d ",couleur_joueur[i]);
+								}
+								printf("\n");
+								*/
+
+								if(nb_atout_joueur != 0 || nb_couleur_joueur != 0){
+									printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
+									scanf("%d",&choix_joueur);
+
+									while(cartes_joueur[choix_joueur-1] == -5 || choix_joueur < 1 || choix_joueur > 8 || (atout_joueur[choix_joueur-1] == -10 && couleur_joueur[choix_joueur-1] == -10)){					
+										printf(side red" Vous devez jouer la couleur ou un atout : "yellow);
+										scanf("%d",&choix_joueur);
+									}
+								}
+								else{
+									printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
+									scanf("%d",&choix_joueur);
+
+									while(cartes_joueur[choix_joueur-1] == -5 || choix_joueur < 1 || choix_joueur > 8){					
+										printf(side red" Entrez une carte que vous possédez : "yellow);
+										scanf("%d",&choix_joueur);
+									}
+								}
+								
+							}
+							else{
+								printf(side_question" Quelle carte voulez-vous jouer ? Entrez son emplacement : ");
+								scanf("%d",&choix_joueur);
+
+								while(cartes_joueur[choix_joueur-1] == -5 || choix_joueur < 1 || choix_joueur > 8){					
+									printf(side red" Entrez une carte que vous possédez : "yellow);
+									scanf("%d",&choix_joueur);
+								}
+							}
+								
+						}
+					}
+					// Dernier plis; il joue sa dernière carte automatiquement
+					else{
+						choix_joueur = 8;
+					}
+					
 					printf(side_only);
 
-					switch(choix_joueur){
-						case 1 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[0];
-							cartes_joueur[0] = -5;
-							break;
-						case 2 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[1];
-							cartes_joueur[1] = -5;
-							break;
-						case 3 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[2];
-							cartes_joueur[2] = -5;
-							break;
-						case 4 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[3];
-							cartes_joueur[3] = -5;
-							break;
-						case 5 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[4];
-							cartes_joueur[4] = -5;
-							break;
-						case 6 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[5];
-							cartes_joueur[5] = -5;
-							break;
-						case 7 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[6];
-							cartes_joueur[6] = -5;
-							break;
-						case 8 :
-							cartes_plis[nb_cartes_jouee] = cartes_joueur[7];
-							cartes_joueur[7] = -5;
-							break;
-						default:
-							break;
-					}
+					cartes_plis[nb_cartes_jouee] = cartes_joueur[choix_joueur-1];
+					cartes_joueur[choix_joueur-1] = -5;
+
+					nb_cartes_jouee++;
+
 					// On vérifie si la carte jouée et un atout
 					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 
 					// On trie les cartes du joueur
 					tableau_tri(cartes_joueur);
 
-					nb_cartes_jouee++;
+					
 					break;
 
 				case 2:
-					//bot_plis("Ouest", cartes_west, nb_cartes_jouee, cartes_plis, cartes_atout, atout_n, nb_atout);
-					
-					bot_plis2("Ouest", cartes_west, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
-
-					// On vérifie si la carte jouée et un atout à chaque fois que quelqu'un pose (et non pas juste à la fin)
-					
-					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
+		
+					bot_plis("Ouest", cartes_west, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 					nb_cartes_jouee++;
+					// On vérifie si la carte jouée et un atout à chaque fois que quelqu'un pose (et non pas juste à la fin)
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 					break;
 				case 3:
-					//bot_plis("Nord", cartes_north, nb_cartes_jouee, cartes_plis, cartes_atout, atout_n, nb_atout);
-					bot_plis2("Nord", cartes_north, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
-
-					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
+					
+					bot_plis("Nord", cartes_north, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 					nb_cartes_jouee++;
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 					break;
 				case 4:
-					//bot_plis("Est", cartes_east, nb_cartes_jouee, cartes_plis, cartes_atout, atout_n, nb_atout);
-					bot_plis2("Est", cartes_east, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 
-					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
+					bot_plis("Est", cartes_east, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 					nb_cartes_jouee++;
+					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
 					break;
 			}
 			depositaire++;
@@ -301,7 +411,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 3;
 				ordre_jeu[3] = 4;
 				for(int i = 0; i < 4; i++){
-					if(cartes_atout[i] == 0){
+					if(cartes_atout[i] == 0 || cartes_atout[i] == -10){
 						points_north_joueur += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
@@ -317,7 +427,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 4;
 				ordre_jeu[3] = 1;
 				for(int i = 0; i < 4; i++){
-					if(cartes_atout[i] == 0){
+					if(cartes_atout[i] == 0 || cartes_atout[i] == -10){
 						points_west_east += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
@@ -333,7 +443,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 1;
 				ordre_jeu[3] = 2;
 				for(int i = 0; i < 4; i++){
-					if(cartes_atout[i] == 0){
+					if(cartes_atout[i] == 0 || cartes_atout[i] == -10){
 						points_north_joueur += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
@@ -349,7 +459,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 				ordre_jeu[2] = 2;
 				ordre_jeu[3] = 3;
 				for(int i = 0; i < 4; i++){
-					if(cartes_atout[i] == 0){
+					if(cartes_atout[i] == 0 || cartes_atout[i] == -10){
 						points_west_east += dictionnaire_non_atout(cartes_plis[i]);
 					}
 					else{
@@ -364,7 +474,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 
 		// barre de chargement avant l'affichage du prochain pli
 		printf("£ Load... £\n");
-		for(int i = 0; i < 210; i++){ // a mettre sur 210
+		for(int i = 0; i < 2; i++){ // a mettre sur 210
 			if(i%2 == 0){
 				printf("=");
 			}
@@ -372,7 +482,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		}
 		printf("\n");
 
-		clean;
+		//clean;
 
 	}while(numero_pli != 9);
 

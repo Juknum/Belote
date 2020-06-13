@@ -18,7 +18,7 @@ LDFLAGS=
 EXEC=belote
 
 # Ajouter vos fonctions dans cette ligne :
-SRC= tableau_tri_slaves.c tableau_tri_slave.c bot_plis2.c afficher_carte.c symbole.c atout_add.c plis.c dictionnaire_non_atout.c bot_surenchere.c score_add.c meilleurs_score.c bot_enchere.c enchere.c nouvelle_partie.c menu.c tableau_tri.c ramasser.c distribuer.c melanger.c dictionnaire_atout.c dictionnaire.c main.c
+SRC= tableau_tri_slaves.c tableau_tri_slave.c bot_plis.c afficher_carte.c symbole.c atout_add.c plis.c dictionnaire_non_atout.c bot_surenchere.c score_add.c meilleurs_score.c bot_enchere.c enchere.c nouvelle_partie.c menu.c tableau_tri.c ramasser.c distribuer.c melanger.c dictionnaire_atout.c dictionnaire.c main.c
 
 OBJ= $(SRC: .c=.o)
 

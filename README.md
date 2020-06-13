@@ -22,14 +22,14 @@ Distribuer les cartes aux différents joueurs
 - [x] Contrôler que le joueur joue conformément aux règles (règles des enchères et règles pour la pose des cartes)
 - [x] Définir qui remporte le pli lorsque les 4 cartes sont jouées, en tenant compte de la valeur des cartes et de la couleur d’atout
 - [x] Comptage des points et vérification du contrat
-- [x] Dans ce projet, la gestion des annonces est facultative
+- [ ] Dans ce projet, la gestion des annonces est facultative
 
 #### Une pseudo intelligence artificielle sera également réalisée pour jouer avec le joueur :
-- [ ] L’IA joue en respectant les règles
+- [x] L’IA joue en respectant les règles
 - [x] Au moment des enchères : si une IA possède 3 cartes fortes d’une couleur donnée, elle annoncera un contrat de 80 points pour cette couleur, si elle possède 4 cartes fortes de cette couleur, elle annoncera un contrat de 120 points pour cette couleur
-- [ ] Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte la plus faible possible
-- [ ] Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible
-- [x] Vous pouvez enrichir votre IA avec des règles heurisitiques que vous aurez élaborées et justifiées dans votre rapport.
+- [x] Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte la plus faible possible
+- [x] Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible
+- [ ] Vous pouvez enrichir votre IA avec des règles heurisitiques que vous aurez élaborées et justifiées dans votre rapport.
 
 ## Proposition d'interface de jeu
 Les captures d’écran suivantes illustrent ce à quoi pourrait ressembler le jeu. Vous êtes libre de vous en inspirer pour votre projet.
@@ -46,8 +46,8 @@ Le projet sera intégralement réalisé en C. Il devra être fait en binôme (ou
 
 #### Le projet donnera lieu à la production :
 - [x] De fichiers sources (fichiers .c et fichiers .h) qui devront être dûment commentés et documentés
-- [ ] D'un rapport d'une dizaine de pages présentant le travail réalisé, notamment la structure générale de votre code, les choix réalisés pour le développement du jeu, et le résultat final (en faisant le bilan de ce qui a été réussi et des points d’amélioration éventuels)
+- [x] D'un rapport d'une dizaine de pages présentant le travail réalisé, notamment la structure générale de votre code, les choix réalisés pour le développement du jeu, et le résultat final (en faisant le bilan de ce qui a été réussi et des points d’amélioration éventuels)
 
 Le projet donnera également lieu à une soutenance pendant laquelle le projet sera présenté. Cette soutenance aura lieu pendant les heures de cours.  
-L’ensemble des fichiers seront déposés sur Moodle dans l’espace de dépôt “Dépôt projet P20”. Ils devront être contenus dans une archive nommée **NOM-BINOME1_NOM-BINOME2.zip**  
+L’ensemble des fichiers seront déposés sur Moodle dans l’espace de dépôt “Dépôt projet P20”. Ils devront être contenus dans une archive nommée **NOM-BINOME1_NOM-BINOME2_NOM-BINOME3.zip**  
 Cette archive contiendra : votre rapport au format PDF et vos sources dans un dossier séparé.  
