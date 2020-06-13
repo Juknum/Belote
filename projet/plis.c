@@ -505,7 +505,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 
 		// Barre de chargement avant l'affichage du prochain pli
 		printf("£ Load... £\n");
-		for(int i = 0; i < 2; i++){ // a mettre sur 210 pour laisser du temps entre chaque pli
+		for(int i = 0; i < 210; i++){ // a mettre sur 210 pour laisser du temps entre chaque pli
 			if(i%2 == 0){
 				printf("=");
 			}
@@ -513,7 +513,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 		}
 		printf("\n");
 
-		//clean;
+		clean;
 
 	}while(numero_pli != 9);
 

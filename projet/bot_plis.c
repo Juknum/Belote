@@ -13,9 +13,6 @@
 
 */
 
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -42,6 +39,8 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 	int cartes_bot_couleur[8]   = {-10,-10,-10,-10,-10,-10,-10,-10};		// Cartes couleur du bot selon la couleur jouée (seulement si aucun atout n'a été joué)
 
 	printf(side_jeu" %s examine son jeu...",nom_bot);
+
+	pause;
 
 	// Nous avons fait un schéma sur les différents ordres de décisions que doit prendre le bot selon le moment où il joue et des cartes déjà jouées.
 		// cf.schéma
@@ -443,6 +442,9 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 	}
 	// On affiche la carte du bot
 	//printf("\ncarte choisie : %d ",carte_jouee);
+
 	cartes_plis[nb_cartes_jouee] = carte_jouee;
 	afficher_carte(cartes_plis, nb_cartes_jouee, 0);
+
+	pause;
 }
