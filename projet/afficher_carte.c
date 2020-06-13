@@ -6,10 +6,10 @@
 	- Théo Silva
 
 	afficher_carte.c : Affiche les cartes, en fonction de sa taille, d'un tableau contenant des int de 1 a 32
-	- main == 0 : On affiche une seule carte : utilisé dans plis.c
-	- main == 1 : On affiche les 8 cartes du joueur
-		- nb_carte 1 ... 8 : affiche le nombre de carte restante en fonction du plis
-	- main == 2 : On affiche 4 cartes, utilisé dans plis() à la fin d'un plis
+		- main == 0 : On affiche une seule carte : utilisée dans plis.c
+		- main == 1 : On affiche les 8 cartes du joueur
+			- nb_carte 1 ... 8 : affiche le nombre de carte restante en fonction du pli
+		- main == 2 : On affiche 4 cartes, utilisées dans plis() à la fin d'un pli
 
 */
 

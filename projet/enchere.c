@@ -3,29 +3,30 @@
 	BELOTE COINCHEE EN C : Groupe F
 	- Julien Constant
 	- Ewen Bourdon
-	- Théo Silva
-
+	- Théo Silva 
+	
 	/////// CONTIENT DES SCANF A ACTIVER ///////
 
-	enchere.c :
-	- Création des variables nécessaire pour la suite
-	- Tant que l'atout n'est pas défini :
-		- On fait choisir à l'IA (ou au joueur) à droite du distributeur de faire l'annonce d'un contrat ou non
-			- Si IA : enchere_bot()
-			- Si Joueur : On lui fait choisir les différentes options:
-				- n°1 : la couleur 
-				- n°2 : le type de contrat (80-160 / Capôt / Général)
-			- SSI aucun n'a fait de contrat :
-				- Ramasse les cartes (sans mélanger)
-				- Redistribution et on recommence les enchères
-	- Lorsque l'atout est choisi (un contrat a été fait) :
-		- On fait le tour de la table pour savoir si les IA et le joueur peuvent sur-encherir
-			- Si IA : bot_surenchere()
-			- Si Joueur :
-				- On lui offre la possibilité de passer ou d'annoncer mieux
-					- On ne cherche pas à savoir s'il mens : ce serais de l'anti-jeu pour lui et son co-équipier
-			- SSI Aucune sur-enchere : plis()
-			- Si une surenchère est faite : on refait un tour de table (passe = 0 de nouveau)
+	enchere.c : Régit toutes les règles pour l'enchère et fait appel aux fonctions d'enchères des bots
+		- Création des variables nécessaire pour la suite
+		- Tant que l'atout n'est pas défini :
+			- On fait choisir à l'IA (ou au joueur) à droite du distributeur de faire l'annonce d'un contrat ou non
+				- Si IA : enchere_bot()
+				- Si Joueur : On lui fait choisir les différentes options:
+					- n°1 : la couleur 
+					- n°2 : le type de contrat (80-160 / Capôt / Général)
+				- SSI aucun n'a fait de contrat :
+					- Ramasse les cartes (sans mélanger)
+					- Redistribution et on recommence les enchères
+		- Lorsque l'atout est choisi (un contrat a été fait) :
+			- On fait le tour de la table pour savoir si les IA et le joueur veulent sur-encherir
+				- Si IA : bot_surenchere()
+				- Si Joueur :
+					- On lui offre la possibilitée de passer ou d'annoncer mieux
+						- On ne cherche pas à savoir s'il ment : ce serait de l'antijeu pour lui et son coéquipier
+				- SSI Aucune sur-enchere : plis()
+				- Si une surenchère est faite : on refait un tour de table (passe = 0 de nouveau)
+					- Si aucune autre sur-enchère (seulement possible par le joueur) : plis()
 
 */
 
@@ -62,6 +63,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	char info_txt_distrib[20];
 	char info_txt_enchere[20];
 
+
+	// Selon le distributeur on choisit qui a la possibilité d'enchérir en premier
 	switch(distributeur){
 		case 1:
 			strcpy(info_txt_distrib, nom_joueur);
@@ -81,6 +84,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 			break;
 	}
 
+	// Affichage de la phase d'enchère
 	printf(title_barre1);
 	printf(title_barre_top1);
 	printf(title_g"Phase d'Enchère"title_d);
@@ -91,10 +95,11 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 	strcpy(atout, "undefined\0");
 
-	// On assemble les deux chaines pour former le nom d'équipe du contrat
+	// On assemble les deux chaînes pour former le nom d'équipe du contrat
 	strcpy(team_north_south, "Nord/");
 	strcat(team_north_south, nom_joueur);
 
+	// On recommence tant qu'un contrat n'a pas été défini --> Si un contrat est défini, on passe à la surenchère
 	while( strcmp(atout,"undefined\0") == 0){
 		encherisseur++;
 		
@@ -108,14 +113,16 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		printf("\n");
 		*/
 
+		// Selon l'encherisseur, soit les bots --> bot_enchere() | soit le joueur --> case 1
 		switch(encherisseur){
 			// JOUEUR :
 			case 1:
 
 				printf(side_jeu" %s examine son jeu...\n",nom_joueur);
+				// On afiche les cartes du joueur
 				afficher_carte(cartes_joueur, 1, 1);
 				
-				// Demande entre annoncer un contrat ou passer
+				// Menu pour demander entre annoncer un contrat ou passer
 				do{
 					printf(side_only);
 					printf(side_question" Souhaitez-vous annoncer un contrat ou passer?\n");
@@ -125,10 +132,12 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 					printf(side_question" Votre choix : "); 
 
 					scanf("%d",&choix_annonce); 								// A ACTIVER
-					//choix_annonce = 2; 										// A DESACTIVER
+					//choix_annonce = 2; 										// A DESACTIVER 
 				}while(choix_annonce < 1 || choix_annonce > 2);
-			
+				
+				// On regarde ensuite le choix du joueur
 				switch(choix_annonce){
+					// Selon son annonce on propose un autre menu pour demander la couleur d'atout
 					case 1:
 						do{
 							printf(side_only);
@@ -143,6 +152,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 							scanf("%d",&choix_couleur); 						// A ACTIVER
 						}while(choix_couleur < 1 || choix_couleur > 4);
 
+						// On défini ensuite l'atout dans une chaîne (utile pour le reste des fonctions)
 						switch(choix_couleur){
 							case 1:
 								strcpy(atout,"Carreau\0");
@@ -161,7 +171,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								break;
 							}
 
-						// Annonce des points:
+						// Menu d'annonce des points:
 						printf(side_only);
 						printf(side_question" Annoncez vos points:\n");
 						printf(side_question" N | Classique - Entre "bold"80"nboldy" et "bold"160"nboldy" pts, par tranche de "bold"10"nboldy"!\n");
@@ -173,6 +183,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(side_question" Votre choix : "); 
 						scanf("%d",&choix_points); // A ACTIVER
 						
+						// Le joueur choisi le nombre de points pour son contrat
 						switch(choix_points){
 							case 1 :
 								printf(side_jeu" %s annonce "bold"Capôt"nboldw" avec une couleur de "bold"%s\n"nboldw,nom_joueur,atout);
@@ -195,7 +206,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						}
 
 						break;
-					case 2:
+					case 2: // Le joueur décide de ne pas passer de contrat, on passe au joueur suivant
 						printf(side_jeu" %s a choisit de passer son tours!\n",nom_joueur);
 						passe++;
 						break;
@@ -218,6 +229,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 				printf(side_error" switch(%d) dans while(atout=%s)",encherisseur,atout);
 		}
 
+		// Si personne n'a décidé de passer de contrat, on ramasse les cartes puis on les redistribue
 		if(passe > 3){
 			passe = 0;
 			printf(side_only);
@@ -233,9 +245,14 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 		}
 	}
 
+	// Si un contrat est passé, on passe à la phase de sur-enchère
 	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf(side_jeu magenta" Phase de sur-enchère!\n"white);}
 
+	// Tant qu'aucune sur-enchère n'est faite ou alors que personne a décider de sur-enchérir. Sinon on passe à plis()
 	while(passe < 3 && strcmp(atout,"undefined\0") != 0){
+
+		// Ici même fonctionnement que l'enchère simplement les joueurs voulant sur-enchérir doivent annoncer un contrat supérieur au précédent
+
 		encherisseur++;
 
 		if(encherisseur == 5){encherisseur = 1;}
@@ -274,6 +291,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						printf(side_question" Votre choix : ");
 						scanf("%d",&choix_points_surenchere); // A ACTIVER
 						
+						// Vérification entre le contrat annoncé et le contrat précédent
 						switch(choix_points_surenchere){
 							case 1:
 								if(points >= 250){
@@ -344,7 +362,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 						}
 
 						break;
-					case 2:
+					case 2: // Le joueur décide de passer son tour pour la sur-enchère
 						passe++;
 						printf(side_jeu" %s a choisit de passer son tours!\n",nom_joueur);
 						break;

@@ -8,8 +8,7 @@
 	bot_enchere.c :
 		- L'IA examine son jeu et décide si oui ou non elle annonce un contrat
 		* 
-		  Peux de chance de se produire car les règles définie sont peux élaborée pour définir si
-		  oui ou non l'IA possède un jeu fort.
+		  80 points si le bot possède 3 cartes fortes, 120 points si il en possède 4.
 		  PS : règles définies selon le sujet
 		  PSS : les règles étaient plus élaborée dans le passé, voir dans `/Belote_IFB/old/enchere_old_2.c`
 		  	£
@@ -56,8 +55,8 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 
 	char atout_bot[20]; 							// choix provisoire d'atout pour le bot
 
-	char atout_pre[20];								// Memoire de l'ancien atout (pour determiner si le bot a choisi de passer ou non)
-	int points_pre = 0;								// De meme avec les pts
+	char atout_pre[20];								// Mémoire de l'ancien atout (pour determiner si le bot a choisi de passer ou non)
+	int points_pre = 0;								// De même avec les points
 
 	// On compte le nombre carte forte par couleur
 	for(int i = 0; i < 8; i++){
@@ -120,14 +119,14 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	// DEBUG : Affiche le nombre de cartes fortes par couleur
 	//printf("\n%d/%d/%d/%d",pique_fort,carreau_fort,coeur_fort,trefle_fort);
 
-	// On détermine combien de couleur on le + grand nombre de carte haute
+	// On détermine combien de couleur on le plus grand nombre de carte haute
 	if(pique_fort   >= carreau_fort && pique_fort   >= coeur_fort   && pique_fort   >= trefle_fort){choix_couleur += 1   ;}
 	if(carreau_fort >= pique_fort   && carreau_fort >= coeur_fort   && carreau_fort >= trefle_fort){choix_couleur += 10  ;}
 	if(coeur_fort   >= pique_fort   && coeur_fort   >= carreau_fort && coeur_fort   >= trefle_fort){choix_couleur += 100 ;}
 	if(trefle_fort  >= pique_fort   && trefle_fort  >= carreau_fort && trefle_fort  >= coeur_fort ){choix_couleur += 1000;}
 
 	/*
-		Possibilitées : Permet d'avoir une solution en cas d'égalité de carte forte (en atout)
+		Possibilitées : Permet d'avoir une solution en cas d'égalité de carte forte (choix aléatoire entre les possibilitées)
 		   1 :                            PIQUE -------
 		  10 :                  CARREAU 		-------
 		  11 :                  CARREAU + PIQUE
@@ -207,6 +206,7 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	strcpy(atout_pre, atout);			// On sauvegarde l'ancien atout et les points d'avant
 	points_pre = *points;
 
+	// Annonce du contrat par le bot (et donc son équipe)
 	if(strcmp(atout_bot, "Pique") == 0 && pique_fort == 3){
 		strcpy(atout, atout_bot);
 		if(pique_fort == 4){*points = 120;}else{*points = 80;}
@@ -255,7 +255,7 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 		}
 	}
 
-	if(strcmp(atout, atout_pre) == 0 && *points == points_pre){ // Si vrai : le bot n'a pas changer l'atout et les pts -> il passe son tours
+	if(strcmp(atout, atout_pre) == 0 && *points == points_pre){ // Si vrai : le bot n'a pas changer l'atout et les pts -> il passe son tour
 		printf(" et a choisit de passer son tours!\n");
 		*passe = *passe +1;
 	}

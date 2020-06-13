@@ -5,13 +5,9 @@
 	- Ewen Bourdon
 	- Théo Silva
 
-	bot_surenchere.c :
+	bot_surenchere.c : Permet la sur-enchère par les bots
 		- L'IA réexamine son jeu et décide si oui ou non elle surencherit
-		* 
-		  Peux de chance de se produire car les règles définie sont peux élaborée pour définir si
-		  oui ou non l'IA possède un jeu fort.
-		  PS : règles définies selon le sujet
-		*
+		- Ici l'IA est obligée de choisir un contrat à 120 points
 
 */
 
@@ -23,7 +19,6 @@
 #include "./header/fonctions.h"
 #include "./header/syntax.h"
 
-//bot_enchere(cartes_west, "Ouest", atout, &points, &passe);
 void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points_prev, int *passe, char *contrat, char * team_north_south){
 	printf(side_jeu" %s examine son jeu...",bot);
 
@@ -42,7 +37,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 	int choix_couleur = 0;							// Combinaison de couleurs
 	int result        = 0;
 
-	// On compte le nombre carte forte par couleur
+	// On compte le nombre de carte(s) forte(s) par couleur
 	for(int i = 0; i < 8; i++){
 		
 		switch(cartes_bot[i]){
@@ -117,7 +112,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 		1111 : TREFLE + COEUR + CARREAU + PIQUE
 	*/
 	
-	// On analyse result et on choisit la couleur:
+	// On analyse result et on choisit la couleur (de manière aléatoire s'il y a égalité)
 	switch(choix_couleur){
 		case 1:
 			strcpy(atout, "Pique");
@@ -184,7 +179,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 		points = 120;
 	}
 
-	// Points supérieur a ceux actuels
+	// Le bot annonce son contrat
 	if(points > points_pre){
 		printf("\n"side_jeu" %s annonce "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",bot,atout,points);
 		*passe = 0;

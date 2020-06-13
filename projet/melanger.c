@@ -6,9 +6,9 @@
 	- Théo Silva
 
 	melanger.c : 
-	- On coupe le tableau en 2
-	- On choisi au hasard une position dans chaque partie du tableau
-	- On les inverses et on recommence un grand nombre de fois (1000 fois)
+		- On coupe le tableau en 2
+		- On choisi au hasard une position dans chaque partie du tableau
+		- On les inverses et on recommence un grand nombre de fois (1000 fois)
 
 */
 

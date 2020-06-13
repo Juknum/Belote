@@ -1,3 +1,14 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	symbole.c : Permet la traduction numérique d'une couleur
+
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>

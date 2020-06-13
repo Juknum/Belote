@@ -5,15 +5,10 @@
 	- Ewen Bourdon
 	- Théo Silva
 
+	distribuer.c : Attribue les différentes cartes du jeu aux joueurs
+
 	/////// CONTIENT DES SCANF A ACTIVER /////// ------ Fait
 
-	nouvelle_partie.c : 
-	- Impression du titre
-	- Création des variables nécessaire pour la suite
-	- Demande au joueur de son nom
-	- Melange des cartes : melanger()
-	- Distribution des cartes : distribuer()
-	- Début des enchères avec : enchere()
 
 */
 
@@ -27,7 +22,8 @@ void distribuer(int distrib, int * cartes, char * nom_joueur, int * cartes_west,
 
 	int distributeur = 0;
 
-	// Si le distributeur précédent était Est alors 4 + 1 = 5 sauf que Joueur == 1;
+	// On choisit le distributeur
+		// Si le distributeur précédent était Est alors 4 + 1 = 5 sauf que Joueur == 1 donc on remet la variable à 1.
 	if(distrib == 5){distrib = 1;} 
 
 	switch(distrib){
@@ -148,6 +144,7 @@ void distribuer(int distrib, int * cartes, char * nom_joueur, int * cartes_west,
 			break;
 	}
 
+	// Annonce la fin de la distribution du jeu
 	printf("Fait!\n");
 
 }

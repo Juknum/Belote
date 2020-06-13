@@ -6,11 +6,11 @@
 	- Théo Silva
 
 	menu.c : 
-	- Impression du titre
-	- Proposition au joueur de choisir entre les options suivantes :
-		- nouvelle_partie()
-		- meilleurs_score()
-		- quitter
+		- Impression du titre
+		- Proposition au joueur de choisir entre les options suivantes :
+			- nouvelle_partie()
+			- meilleurs_score()
+			- quitter
 
 */
 
@@ -46,6 +46,7 @@ void menu(void){
 
 	}while(choix < 1 || choix > 3);
 
+	// On lance les différentes fonctions selon le choix du joueur
 	switch(choix){
 		case 1:
 			clean;

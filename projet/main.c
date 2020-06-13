@@ -6,9 +6,9 @@
 	- Théo Silva
 
 	main.c : 
-	- Changement de la table de caractère (si Windows)
-	- Lancement de la fonction menu()
-	- Reset des couleurs (remet sur la couleur par défaut du cmd == choisi par l'utilisateur )
+		- Changement de la table de caractère (si Windows)
+		- Lancement de la fonction menu()
+		- Reset des couleurs (remet sur la couleur par défaut du cmd == choisi par l'utilisateur )
 
 */
 

@@ -56,7 +56,7 @@ void ramasser(int redistribue, int distributeur, char * nom_joueur, int * cartes
 			break;
 	}
 	
-	// Les mains sont vides donc on vides chaque joueur (on met à 0)
+	// Les mains sont vides donc on vide chaque joueur (on met à 0)
 	for(int i = 0; i < 8; i++){
 		cartes_joueur[i] = 0;
 		cartes_west[i]   = 0;

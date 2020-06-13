@@ -6,12 +6,12 @@
 	- Théo Silva
 
 	nouvelle_partie.c : 
-	- Impression du titre
-	- Création des variables nécessaire pour la suite
-	- Demande au joueur de son nom
-	- Melange des cartes : melanger()
-	- Distribution des cartes : distribuer()
-	- Début des enchères avec : enchere()
+		- Impression du titre
+		- Création des variables nécessaire pour la suite
+		- Demande au joueur de son nom
+		- Melange des cartes : melanger()
+		- Distribution des cartes : distribuer()
+		- Début des enchères avec : enchere()
 
 */
 

@@ -5,12 +5,12 @@
 #	- Théo Silva
 #
 #	makefile : Sert à la compilation du projet en utilisant MingW
-# 	- Pour ajouter une fonction : ajouter le nom du fichier et son extension dans SRC= ... main.c
-# 	- Pour ajouter un header : ajouter le chemin du fichier et son extension dans main.o : header/fonctions.h ...
-# 		*
-#		  Peut importe l'odre des fichiers
-#		*
-#	- Tout ce qu'il se passe après .PHONY sert à la suppresion des fichier .o (créés pendant la compilation)
+# 		- Pour ajouter une fonction : ajouter le nom du fichier et son extension dans SRC= ... main.c
+# 		- Pour ajouter un header : ajouter le chemin du fichier et son extension dans main.o : header/fonctions.h ...
+# 			*
+#			  Peut importe l'odre des fichiers
+#			*
+#		- Tout ce qu'il se passe après .PHONY sert à la suppresion des fichier .o (créés pendant la compilation)
 
 CC=gcc
 CFLAGS= -W -Wall -ansi -pedantic

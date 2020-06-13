@@ -6,10 +6,10 @@
 	- Théo Silva
 
 	atout_add.c : On compte les atout entre chaque carte posée (utile pour la gestion de bot_plis.c)
-	- on regarde de quel atout il sagit
-		- on regarde l'ensemble des cartes jouée
+	- on regarde de quel atout il s'agit
+		- on regarde l'ensemble des cartes jouées
 			- si une des cartes jouées est un atout on incrémente nb_atout
-			- si ... on l'ajoute au cartes d'atout
+			- si ... on l'ajoute aux cartes d'atouts
 */
 
 #include <stdio.h>

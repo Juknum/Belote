@@ -1,3 +1,23 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	Cette fonction régit toutes les règles sur la manière de jouer des bots en respectant les règles de la belote et des consignes données
+
+	Rappel des consignes : 
+		• L’IA joue en respectant les règles.
+		• Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte la plus faible possible.
+		• Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible.
+
+
+*/
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -24,12 +44,17 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 	int cartes_bot_couleur[8]   = {-10,-10,-10,-10,-10,-10,-10,-10};		// Cartes couleur du bot selon la couleur jouée (seulement si aucun atout n'a été joué)
 
 	printf(side_jeu" %s examine son jeu...",nom_bot);
+
+	// Nous avons fait un schéma sur les différents ordres de décisions que doit prendre le bot selon le moment où il joue et des cartes déjà jouées.
+		// cf.schéma
 	
+	// On compte dans ce switch le nombre d'atout du bot (utile pour plus tard dans les décisions du bot) et s'il en a, on les range dans un tableau.
+	// On regarde aussi les cartes déjà jouées pour savoir si le bot devra ensuite jouer ses atouts ou pas.
 	switch(atout){
 		// Pique est atout
 		case 1:
 			// On compte le nombre d'atouts possédés par le bot
-			// On associe les pts atout a cartes_bot_atout_val
+			// On associe les points atout à cartes_bot_atout_val
 			for(int i = 0; i < 8; i++){
 				if(cartes_bot[i] > 0 && cartes_bot[i] <= 8){
 					nb_atout_bot++;
@@ -115,6 +140,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			break;
 	}
 
+	// Si aucun atout n'a été joué du pli, on regarde la couleur du pli (= première carte jouée).
 	if(is_atout == 0){
 		switch(cartes_plis[0]){
 			case 0 ... 8 :
@@ -138,7 +164,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 	//printf(side" couleur = %d\n",couleur);
 
 
-	// Debug : Affiche les tableau
+	// Debug : Affiche les tableaux
 	/*
 	afficher_carte(cartes_bot, 1, 1);
 	printf("\nCartes bot          : ");
@@ -157,12 +183,12 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 	printf("is_atout = %d\n",is_atout);
 	*/
 
-	// Premier a jouer
+	// Le bot entre dans cette condition si il est le premier à jouer.
 	if(nb_cartes_jouee == 0){
 		// Si le bot possède des atouts, il pose son atout le + faible
 		if(nb_atout_bot > 0){
 
-			// dans ce cas on tri son jeu en fonction de ses pts d'atout
+			// dans ce cas on tri son jeu en fonction de ses points d'atout(s)
 			tableau_tri_slaves(cartes_bot_atout_val, cartes_bot_val, cartes_bot);
 
 			// Debug : Affiche les tableau
@@ -182,7 +208,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			printf("\n");
 			*/
 
-			// On parcourt ses cartes atout triées jusqu'à prendre la première diff de -10
+			// On parcourt ses cartes atouts triées jusqu'à prendre la première différente de -10 (c'est à dire jusqu'à tomber sur une carte)
 			do{
 				pos_carte_jouee++;
 			}while(cartes_bot_atout_val[pos_carte_jouee] == -10);
@@ -190,7 +216,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			carte_jouee = cartes_bot[pos_carte_jouee];
 			cartes_bot[pos_carte_jouee] = -5;
 		}
-		// le bot n'a pas d'atout
+		// Autrement, le bot est toujours premier à jouer mais n'a pas d'atout à jouer :
 		else{
 
 			// On tri le jeu du bot en fonction de ses valeurs non atout;
@@ -209,6 +235,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			printf("\n");
 			*/
 
+			// Le bot va donc jouer sa carte la plus faible
 			do{
 				pos_carte_jouee++;
 			}while(cartes_bot_val[pos_carte_jouee] == -10 || cartes_bot_val[pos_carte_jouee] == -5);
@@ -217,16 +244,19 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			cartes_bot[pos_carte_jouee] = -5;
 		}
 	}
-	// Le bot n'est pas le 1er a jouer
+	// Le bot n'est pas le premier à jouer
 	else{
-		// Si un atout a été posé
+		// Un atout a déjà été joué :
+			// Le bot doit alors soit poser son atout le plus faible lui permettant de l'emporter sur les cartes déjà jouées.
+			// 					 soit poser sa carte la plus faible (car dans tous les cas il ne gagnera pas sans atout).
+
 		if(is_atout == 1){
 
-			// On sauvegarde les atout du plis pour pouvoir les mélanger sans changer qui les a joués
+			// On sauvegarde les atout du pli pour pouvoir les mélanger sans changer qui les a joués
 			for(int k = 0; k < 4; k++){
 				cartes_atout_triee[k] = dictionnaire_atout(cartes_atout[k]);
 			}
-			// L'atout le + fort se trouve en [3]
+			// L'atout le + fort se trouve en [3] (le tableau étant trié de manière croissante avec la valeur des cartes)
 			tableau_tri(cartes_atout_triee);
 
 			tableau_tri_slave(cartes_bot_atout_val, cartes_bot);
@@ -248,6 +278,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			*/
 
 			// Le bot possède des atouts
+				// Il joue sa carte la plus faible lui permettant de l'emporter
 			if(nb_atout_bot > 0){
 				for(int i = 0; i < 8; i++){
 					if(cartes_bot_atout_val[i] != -10 && cartes_bot_atout_val[i] > dictionnaire_atout(cartes_atout_triee[3])){
@@ -257,7 +288,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 					}
 				}
 
-				// si il n'a aucun atout plus fort que celui posé (plus faible atout joué)
+				// Il n'a pas d'atout lui permettant de l'emporter donc il joue son plus faible atout
 				if(carte_jouee == 0){
 					tableau_tri_slave(cartes_bot_atout_val, cartes_bot);
 
@@ -269,7 +300,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 					cartes_bot[pos_carte_jouee] = -5;
 				}
 			}
-			// Le bot n'a pas d'atout (il joue sa carte la + faible)
+			// Le bot n'a pas d'atout donc il joue sa carte la + faible
 			else{
 				tableau_tri_slave(cartes_bot_val, cartes_bot);
 
@@ -281,10 +312,12 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 				cartes_bot[pos_carte_jouee] = -5;
 			}
 		}
-		// Si aucun atout n'a été posé
+		// Aucun atout n'a été posé : 
+			// Le bot va alors soit poser son atout le plus faible afin de tenter de l'emporter.
+			//				   soit poser la couleur du pli en tentant de la manière de l'emporter ou alors de poser sa carte la plus faible de cette couleur.
 		else{
 
-			// S'il a des atouts il pose le + faible
+			// S'il a des atouts il pose le plus faible
 			if(nb_atout_bot > 0){
 				tableau_tri_slave(cartes_bot_atout_val, cartes_bot);
 
@@ -298,7 +331,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			}
 			// Sinon il pose la couleur adéquate
 			else{
-				// On remplie le tableau de couleur selon la couleur jouée précédement
+				// On remplie le tableau de couleur selon la couleur jouée en premier
 				switch(couleur){
 					// Pique
 					case 1:
@@ -334,13 +367,14 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 						break;
 				}
 
+				// On compte ensuite le nombre de cartes de la couleur imposée que le bot possède
 				for(int i = 0; i < 8; i++){
 					if(cartes_bot_couleur[i] != -10){
 						nb_couleur++;
 					}
 				}
 
-				// Il a des cartes dans la couleur à jouer
+				// Il a des cartes dans la couleur à jouer : on les place de la même manière dans un tableau pour conserver la place des cartes.
 				if(nb_couleur > 0){
 					for(int k = 0; k < 4; k++){
 						switch(cartes_plis[k]){
@@ -387,7 +421,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 					cartes_bot[pos_carte_jouee] = -5;
 
 				}
-				// Il n'a pas de cartes de la couleur du plis
+				// Il n'a pas de cartes de la couleur du pli, il joue alors sa carte la plus faible
 				else{
 					tableau_tri_slave(cartes_bot_val, cartes_bot);
 
@@ -409,7 +443,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			}
 		}
 	}
-
+	// On affiche la carte du bot
 	//printf("\ncarte choisie : %d ",carte_jouee);
 	cartes_plis[nb_cartes_jouee] = carte_jouee;
 	afficher_carte(cartes_plis, nb_cartes_jouee, 0);

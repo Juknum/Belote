@@ -1,3 +1,17 @@
+/*
+
+	BELOTE COINCHEE EN C : Groupe F
+	- Julien Constant
+	- Ewen Bourdon
+	- Théo Silva
+
+	tableau_tri_slave.c : Permet de trier un tableau selon un autre
+
+
+*/
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
