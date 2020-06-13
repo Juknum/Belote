@@ -6,13 +6,13 @@
 	- Théo Silva
 
 	syntax.h : Contient l'ensemble des diverses syntaxe, couleur du programme
-	- Couleurs
-	- Mise en page (gras...)
-	- Sides (║)
-	- Couleurs des cartes
-	- Cartes
-	- Titre
-	- Titre de fin
+		- Couleurs
+		- Mise en page (gras...)
+		- Sides (║)
+		- Couleurs des cartes
+		- Cartes
+		- Titre
+		- Titre de fin
 
 */
 

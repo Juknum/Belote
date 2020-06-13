@@ -5,14 +5,14 @@
 	- Ewen Bourdon
 	- Théo Silva
 
-	fonctions.h : contient l'ensemble des fonctions et des macro de fonctions
-	- fonctions Traduction et Affichage des cartes
-	- fonctions Gestion des cartes
-	- fonctions Gestion du jeu
-	- fonctions concernant les scores
-	- macros:
-		- Lors de l'utilisation de Windows
-		- Lors de l'utilisation de Linux
+	fonctions.h : Contient l'ensemble des fonctions et des macro de fonctions
+		- fonctions Traduction et Affichage des cartes
+		- fonctions Gestion des cartes
+		- fonctions Gestion du jeu
+		- fonctions concernant les scores
+		- macros:
+			- Lors de l'utilisation de Windows
+			- Lors de l'utilisation de Linux
 
 */
 

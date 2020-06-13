@@ -5,12 +5,10 @@
 	- Ewen Bourdon
 	- Théo Silva
 
-	Cette fonction régit toutes les règles sur la manière de jouer des bots en respectant les règles de la belote et des consignes données
-
-	Rappel des consignes : 
-		• L’IA joue en respectant les règles.
-		• Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte la plus faible possible.
-		• Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible.
+	bot_plis() : Régit toutes les règles sur la manière de jouer des bots en respectant les règles de la belote et des consignes données
+		- L’IA joue en respectant les règles.
+		- Si l’IA est en mesure de remporter le pli avec une de ses cartes, elle le fait en posant la carte la plus faible possible.
+		- Si l’IA n’est pas en mesure de remporter le pli, elle joue sa carte la plus faible.
 
 
 */
