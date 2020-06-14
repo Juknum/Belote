@@ -14,7 +14,7 @@ void afficher_carte_joueur(int * cartes, int nb_carte_jouee, int a_jouee, char* 
 
 	printf(bold);
 
-	// Le bot nord n'a pas joué, on affiche la carte retournée
+	// Le joueur n'a pas joué, on affiche la carte retournée
 	if(a_jouee == 0){
 		carte_joueur = fopen("./data/not_carte_joueur.txt", "r");
 

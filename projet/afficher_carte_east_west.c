@@ -18,7 +18,7 @@ void afficher_carte_east_west(int* cartes, int nb_carte_jouee, int ordre_jeu, in
 	printf(bold);
 
 	if(east_a_jouee == 0 && west_a_jouee == 0){
-		not_carte_west_east = fopen("data/not_carte_west_east.txt", "r");
+		not_carte_west_east = fopen("./data/not_carte_west_east.txt", "r");
 
 		if(not_carte_west_east != NULL){
 
@@ -35,7 +35,7 @@ void afficher_carte_east_west(int* cartes, int nb_carte_jouee, int ordre_jeu, in
 	}
 	else{
 		if(east_a_jouee == 1 && west_a_jouee == 0){
-			not_carte_west = fopen("data/not_carte_west.txt", "r");
+			not_carte_west = fopen("./data/not_carte_west.txt", "r");
 
 			if(not_carte_west != NULL){
 				
@@ -60,7 +60,7 @@ void afficher_carte_east_west(int* cartes, int nb_carte_jouee, int ordre_jeu, in
 		}
 		else{
 			if(east_a_jouee == 0 && west_a_jouee == 1){
-				not_carte_east = fopen("data/not_carte_east.txt", "r");
+				not_carte_east = fopen("./data/not_carte_east.txt", "r");
 
 				if(not_carte_east != NULL){
 					
@@ -86,7 +86,7 @@ void afficher_carte_east_west(int* cartes, int nb_carte_jouee, int ordre_jeu, in
 			else{
 				if(east_a_jouee == 1 && west_a_jouee == 1){
 
-					carte_west_east = fopen("data/carte_west_east.txt", "r");
+					carte_west_east = fopen("./data/carte_west_east.txt", "r");
 
 					if(carte_west_east != NULL){
 						
