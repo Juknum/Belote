@@ -62,8 +62,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	char team_north_joueur[30];
 	char team_west_east[30];
 
-	char* symbole = "x\0";
-
 	strcpy(team_north_joueur, "Nord/");
 	strcat(team_north_joueur, nom_joueur);
 	strcpy(team_west_east, "Est/Ouest");
@@ -71,37 +69,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 	// Les plis sont dans une boucle do while : Une boucle fait un pli et on incrémente le nombre de plis à la fin de cette boucle
 		// On y sort lorsque le nombre de pli est de 8
 	do{
-		// Partie concernant l'entête
-		printf(title_barre1);
-		printf(title_barre_top1);
-		printf(title_g" Phase de Jeu! "title_d);
-		printf(title_pli_left"%d",numero_pli);
-		printf(title_pli_right);
-
-		// On traduit numériquement l'atout pour plus tard (1 = Pique, 2 = Carreau, ...)
-		if(strcmp(atout, "Pique") == 0){
-			atout_n = 1;
-			symbole = pique;
-		}
-		if(strcmp(atout, "Carreau") == 0){
-			atout_n = 2;
-			symbole = carreau;
-		}
-		if(strcmp(atout, "Coeur") == 0){
-			atout_n = 3;
-			symbole = coeur;
-		}
-		if(strcmp(atout, "Trèfle") == 0){
-			atout_n = 4;
-			symbole = trefle;
-		}
-
-		printf(title_info" - Atout  : %s %s\n",atout,symbole);
-		printf(title_ninfo" - Contrat: %s (%d pts)\n",contrat,points);
-		printf(title_ninfo" - Nord/%s : %d\n",nom_joueur,points_north_joueur);
-		printf(title_ninfo" - Ouest/Est : %d\n",points_west_east);
-		printf(title_barre2);
-
 		// Si on se trouve au premier pli on choisit qui commence en premier (celui se trouvant à droite du distributeur)
 		if(numero_pli == 1){
 			switch(distributeur){
@@ -111,7 +78,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					ordre_jeu[1] = 1;
 					ordre_jeu[2] = 2;
 					ordre_jeu[3] = 3;
-					printf(side_info" Est joue en 1er\n");
 					break;
 				case 2:
 					depositaire = 1;
@@ -119,7 +85,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					ordre_jeu[1] = 2;
 					ordre_jeu[2] = 3;
 					ordre_jeu[3] = 4;
-					printf(side_info" %s joue en 1er\n",nom_joueur);
 					break;
 				case 3:
 					depositaire = 2;
@@ -127,7 +92,6 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					ordre_jeu[1] = 3;
 					ordre_jeu[2] = 4;
 					ordre_jeu[3] = 1;
-					printf(side_info" Ouest joue en 1er\n");
 					break;
 				case 4:
 					depositaire = 3;
@@ -135,9 +99,21 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					ordre_jeu[1] = 4;
 					ordre_jeu[2] = 1;
 					ordre_jeu[3] = 2;
-					printf(side_info" Nord joue en 1er\n");
 					break;
 			}
+		}
+
+		if(strcmp(atout, "Pique") == 0){
+			atout_n = 1;
+		}
+		if(strcmp(atout, "Carreau") == 0){
+			atout_n = 2;
+		}
+		if(strcmp(atout, "Coeur") == 0){
+			atout_n = 3;
+		}
+		if(strcmp(atout, "Trèfle") == 0){
+			atout_n = 4;
 		}
 
 		// On réinitialise les variables entre chaque pli
@@ -173,6 +149,31 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 			switch(depositaire){
 
 				case 1: // JOUEUR
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 0:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+							
+						case 1:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,1,0,0,1);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,2,0,0,1);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,2,1);
+							afficher_carte_east_west(cartes_plis,3,1,1,1);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+					}
 
 					printf(side_jeu" %s examine son jeu...\n",nom_joueur);
 					afficher_carte(cartes_joueur, numero_pli, 1);
@@ -280,7 +281,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 										}
 										break;
 									default :
-										printf(side_error" prblm switch");
+										printf(side_error" prblm switch\n");
 										break;
 								}
 
@@ -348,28 +349,200 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 					// On trie les cartes du joueur
 					tableau_tri(cartes_joueur);
 
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 1:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,1,0,0,1);
+							afficher_carte_joueur(cartes_plis,2,1,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,2,0,0,1);
+							afficher_carte_joueur(cartes_plis,3,1,nom_joueur);
+							break;
+						case 4:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,3,1,1,1);
+							afficher_carte_joueur(cartes_plis,4,1,nom_joueur);
+							break;
+					}
 					
 					break;
 				
 				// Il y a ensuite le tour des bots qui se fait via la fonction bot_pli()
 					// On incrémente aussi le nombre d'atout si le bot en joue un et le nombre de cartes jouées
 				case 2:
-		
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 0:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 1:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,1,0,0,1);
+							afficher_carte_joueur(cartes_plis,2,1,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,2,0,0,1);
+							afficher_carte_joueur(cartes_plis,3,1,nom_joueur);
+							break;
+					}
+					
 					bot_plis("Ouest", cartes_west, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 					nb_cartes_jouee++;
 					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 1:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,1,0,1,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,2,0,1,0);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,3,0,1,1);
+							afficher_carte_joueur(cartes_plis,2,1,nom_joueur);
+							break;
+						case 4:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,4,0,1,1);
+							afficher_carte_joueur(cartes_plis,3,1,nom_joueur);
+							break;
+					}
+
 					break;
 				case 3:
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 0:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 1:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,1,0,1,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,2,0,0,1);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,3,0,1,1);
+							afficher_carte_joueur(cartes_plis,2,1,nom_joueur);
+							break;
+					}
+					
 					
 					bot_plis("Nord", cartes_north, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 					nb_cartes_jouee++;
 					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 1:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,2,1);
+							afficher_carte_east_west(cartes_plis,1,0,1,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,3,1);
+							afficher_carte_east_west(cartes_plis,2,0,1,0);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+						case 4:
+							afficher_carte_north(cartes_plis,4,1);
+							afficher_carte_east_west(cartes_plis,3,0,1,1);
+							afficher_carte_joueur(cartes_plis,2,1,nom_joueur);
+							break;
+					}
+
 					break;
 				case 4:
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 0:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+							
+						case 1:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,0,0,0,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,2,1);
+							afficher_carte_east_west(cartes_plis,1,0,1,0);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,3,1);
+							afficher_carte_east_west(cartes_plis,2,0,1,0);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+					}
 
 					bot_plis("Est", cartes_east, nb_cartes_jouee, atout_n, cartes_plis, cartes_atout);
 					nb_cartes_jouee++;
 					atout_add(nb_cartes_jouee, atout_n, cartes_plis, cartes_atout, &nb_atout);
+
+					afficher_entete(atout, atout_n, numero_pli, contrat, points, team_north_joueur, points_north_joueur, points_west_east);
+					switch(nb_cartes_jouee){
+						case 1:
+							afficher_carte_north(cartes_plis,0,0);
+							afficher_carte_east_west(cartes_plis,1,0,0,1);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 2:
+							afficher_carte_north(cartes_plis,1,1);
+							afficher_carte_east_west(cartes_plis,2,0,0,1);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 3:
+							afficher_carte_north(cartes_plis,2,1);
+							afficher_carte_east_west(cartes_plis,1,0,1,1);
+							afficher_carte_joueur(cartes_plis,0,0,nom_joueur);
+							break;
+						case 4:
+							afficher_carte_north(cartes_plis,3,1);
+							afficher_carte_east_west(cartes_plis,4,0,1,1);
+							afficher_carte_joueur(cartes_plis,1,1,nom_joueur);
+							break;
+					}
+
 					break;
 			}
 			// La variable "depositaire" est incrémentée pour faire passer au tour du prochain joueur

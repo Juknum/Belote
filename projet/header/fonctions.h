@@ -22,7 +22,11 @@
 // Traduction des cartes:
 char* dictionnaire(int);
 char* symbole(int);
+void afficher_entete(char*, int, int, char*, int, char*, int, int);
 void afficher_carte(int*, int, int);
+void afficher_carte_north(int*, int, int);
+void afficher_carte_joueur(int*, int, int, char*);
+void afficher_carte_east_west(int*, int, int, int, int);
 int dictionnaire_atout(int);
 int dictionnaire_non_atout(int);
 
@@ -40,7 +44,6 @@ void nouvelle_partie(void);
 void enchere(int, char*, int*, int*, int*, int*);
 void bot_enchere(int*, char*, char*, int*, int*, char*, char*);
 void bot_surenchere(int*, char*, char*, int*, int*, char*, char*);
-//void bot_plis(char*, int*, int, int*, int*, int, int);
 void bot_plis(char*, int*, int, int, int*, int*);
 void plis(char*,int, int, char*, int*, int*, int*, int*, char*);
 void atout_add(int, int, int*, int*, int*);

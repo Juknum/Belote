@@ -208,7 +208,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			// On parcourt ses cartes atouts triées jusqu'à prendre la première différente de -10 (c'est à dire jusqu'à tomber sur une carte)
 			do{
 				pos_carte_jouee++;
-			}while(cartes_bot_atout_val[pos_carte_jouee] == -10);
+			}while(cartes_bot_atout_val[pos_carte_jouee] == -10 || cartes_bot[pos_carte_jouee] == -5);
 
 			carte_jouee = cartes_bot[pos_carte_jouee];
 			cartes_bot[pos_carte_jouee] = -5;
@@ -303,7 +303,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 
 				do{
 					pos_carte_jouee++;
-				}while(cartes_bot_val[pos_carte_jouee] == -10 || cartes_bot_val[pos_carte_jouee] == -5);
+				}while(cartes_bot_val[pos_carte_jouee] == -10 || cartes_bot_val[pos_carte_jouee] == -5 || cartes_bot[pos_carte_jouee] == -5);
 
 				carte_jouee = cartes_bot[pos_carte_jouee];
 				cartes_bot[pos_carte_jouee] = -5;
@@ -320,7 +320,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 
 				do{
 					pos_carte_jouee++;
-				}while(cartes_bot_atout_val[pos_carte_jouee] == -10);
+				}while(cartes_bot_atout_val[pos_carte_jouee] == -10 || cartes_bot[pos_carte_jouee] == -5);
 
 				carte_jouee = cartes_bot[pos_carte_jouee];
 				cartes_bot[pos_carte_jouee] = -5;
