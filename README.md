@@ -35,11 +35,11 @@ Distribuer les cartes aux différents joueurs
 Les captures d’écran suivantes illustrent ce à quoi pourrait ressembler le jeu. Vous êtes libre de vous en inspirer pour votre projet.
 
 ### Menu principal
-img
+![Menu](https://raw.githubusercontent.com/Juknum/Belote/master/img/menu.png)
 ### Ecran d'enchère
-img
+![Encheres](https://raw.githubusercontent.com/Juknum/Belote/master/img/enchere.png)
 ### Phase de jeu
-img
+![Pli](https://raw.githubusercontent.com/Juknum/Belote/master/img/pli.png)
 
 ## Conditions de réalisation du projet
 Le projet sera intégralement réalisé en C. Il devra être fait en binôme (ou trinôme sur dérogation) de membres d'un même groupe.
