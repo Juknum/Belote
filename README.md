@@ -14,7 +14,7 @@ L’objectif du projet est de réaliser le programme permettant de jouer à ce j
 - [x] Un affichage permettant d’afficher les cartes du pli en cours
 - [x] Un menu permettant d'annoncer un contrat ou de passer pendant le tour d’enchère
 - [x] Un menu permettant de jouer une carte parmi les cartes en main, tout en respectant les règles
-- [ ] Une sauvegarde du nombre de victoires d’un joueur dans un fichier : chaque joueur identifié par son nom sera enregistré dans un fichier, avec son nombre total de victoire.
+- [x] Une sauvegarde du nombre de victoires d’un joueur dans un fichier : chaque joueur identifié par son nom sera enregistré dans un fichier, avec son nombre total de victoire.
 - [x] Un affichage présentant les meilleurs scores (accessible à partir du menu principal) 
 
 #### Les règles de la Coinche devront être appliquées par l’ordinateur :
