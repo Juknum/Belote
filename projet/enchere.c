@@ -196,8 +196,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 								strcpy(contrat, team_north_south);
 								break;
 							case 80 ... 160 : 
+								points = (choix_points/10) * 10; // On perd l'unité, on oblige indirectement le joueur à choisir par tranche de 10
 								printf(side_jeu" %s annonce une couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts\n",nom_joueur,atout,choix_points);
-								points = (choix_points/10) * 10;
 								strcpy(contrat, team_north_south);
 								break;
 							default:
@@ -207,11 +207,11 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 						break;
 					case 2: // Le joueur décide de ne pas passer de contrat, on passe au joueur suivant
-						printf(side_jeu" %s a choisit de passer son tours!\n",nom_joueur);
+						printf(side_jeu" %s a choisi de passer son tours!\n",nom_joueur);
 						passe++;
 						break;
 					default:
-						printf(side_error" switch(%d) annonce/passer joueur choix_annonce",choix_annonce);
+						printf(side_error" switch(%d) annoncer/passer joueur choix_annonce",choix_annonce);
 						break;
 				}
 				
@@ -246,7 +246,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 	}
 
 	// Si un contrat est passé, on passe à la phase de sur-enchère
-	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf(side_jeu magenta" Phase de sur-enchère!\n"white);}
+	if(strcmp(atout,"undefined\0") != 0){passe = 0; printf(side_jeu magenta" Phase de surenchère!\n"white);}
 
 	// Tant qu'aucune sur-enchère n'est faite ou alors que personne a décider de sur-enchérir. Sinon on passe à plis()
 	while(passe < 3 && strcmp(atout,"undefined\0") != 0){
@@ -264,8 +264,8 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 
 				do{
 					printf(side_only);
-					printf(side_question" Souhaitez-vous sur-encherir ou passer?\n");
-					printf(side_question" 1 | Sur-enchère\n");
+					printf(side_question" Souhaitez-vous surencherir ou passer?\n");
+					printf(side_question" 1 | Surenchère\n");
 					printf(side_question" 2 | Passer\n");
 					printf(side_only);
 					printf(side_question" Votre choix : ");
@@ -316,7 +316,7 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 									printf(side red" Vous devez annoncer plus que l'enchère précédente\n");
 									valid = 0;
 									goto choix_goto_2;
-								}else{ valid = 1; points = choix_points_surenchere;}
+								}else{ valid = 1; points = (choix_points_surenchere/10) * 10;}
 
 								break;
 							default :
@@ -352,11 +352,11 @@ void enchere(int encherisseur, char *nom_joueur, int *cartes_joueur, int *cartes
 									strcpy(atout,"Trèfle\0");
 									break;
 								default:
-									printf(side_error" Switch(%d) couleur surenchere",choix_couleur);
+									printf(side_error" Switch(%d) couleur surenchère",choix_couleur);
 									break;
 							}
 
-							printf(side_jeu" %s sur-encherit avec une Couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts!\n",nom_joueur,atout,points);
+							printf(side_jeu" %s surencherit avec une Couleur de "bold"%s"nboldw" avec "bold"%d"nboldw" pts!\n",nom_joueur,atout,points);
 							strcpy(contrat, team_north_south);
 							passe = 0;
 						}

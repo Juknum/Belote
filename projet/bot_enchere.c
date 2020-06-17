@@ -256,7 +256,7 @@ void bot_enchere(int * cartes_bot, char * bot, char * atout, int *points, int *p
 	}
 
 	if(strcmp(atout, atout_pre) == 0 && *points == points_pre){ // Si vrai : le bot n'a pas changer l'atout et les pts -> il passe son tour
-		printf(" et a choisit de passer son tours!\n");
+		printf(" et a choisi de passer son tours!\n");
 		*passe = *passe +1;
 	}
 }

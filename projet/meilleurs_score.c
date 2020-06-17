@@ -64,16 +64,12 @@ void meilleurs_score(void){
     
     switch(choix){
         case 1:
-            #ifdef _WIN32
-                system("cls");
-            #endif
+            clean;
             menu();
             break;
         case 2:
             printf(reset);
-            #ifdef _WIN32
-                system("cls");
-            #endif
+            clean;
             exit(0);
             break;
         default:

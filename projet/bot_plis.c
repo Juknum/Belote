@@ -219,7 +219,7 @@ void bot_plis(char* nom_bot, int* cartes_bot, int nb_cartes_jouee, int atout, in
 			// On tri le jeu du bot en fonction de ses valeurs non atout;
 			tableau_tri_slave(cartes_bot_val, cartes_bot);
 
-			// Debug : Affiche les tableau
+			// Debug : Affiche les tableaux
 			/*
 			printf("\nCartes bot          : ");
 			for(int i = 0; i < 8; i++){

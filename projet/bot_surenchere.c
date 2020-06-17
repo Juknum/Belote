@@ -193,7 +193,7 @@ void bot_surenchere(int * cartes_bot, char * bot, char * atout_pre, int * points
 		}
 		
 	}else{
-		printf(" et a choisit de passer son tours!\n");
+		printf(" et a choisi de passer son tours!\n");
 		*passe = *passe +1;
 	}
 

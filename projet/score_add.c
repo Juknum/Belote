@@ -82,7 +82,7 @@ void score_add(int score_gagnant, char * nom_gagnant){
                     strcpy(nom_0, nom_1);
                     strcpy(nom_1, nom_temp);
 
-                    printf(side_info" Bravo, vous avez dépassé votre ancien score et passez de 2e à 1er!\n");
+                    printf(side_info" Bravo, vous avez dépassé votre ancien score et passez 1er!\n");
                 }
             }
         }

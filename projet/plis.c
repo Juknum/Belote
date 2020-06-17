@@ -212,7 +212,7 @@ void plis(char* contrat, int points, int distributeur, char * atout, int * carte
 						if(nb_atout > 0){
 							// Il a des atouts, il doit les jouer
 							if(nb_atout_joueur > 0){
-								printf(side_question" Quelle atout voulez-vous jouer ? Entrez son emplacement : ");
+								printf(side_question" Quel atout voulez-vous jouer ? Entrez son emplacement : ");
 								scanf("%d",&choix_joueur);
 
 								// Tant que le joueur ne respecte pas ces conditions il ne joue pas
